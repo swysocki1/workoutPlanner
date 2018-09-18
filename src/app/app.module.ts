@@ -15,6 +15,7 @@ import {NotificationService} from '../services/notification.service';
 import {HelperService} from '../services/helper.service';
 import {CalendarModule} from "./component/calendar/calendar.module";
 import {MealService} from "../services/meal.service";
+import {AccountSignupComponent} from "./component/accountSignup/accountSignup.component";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {MealService} from "../services/meal.service";
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    AccountSignupComponent
   ],
   imports: [
     ReactiveFormsModule,
