@@ -16,6 +16,14 @@ import {HelperService} from '../services/helper.service';
 import {CalendarModule} from "./component/calendar/calendar.module";
 import {MealService} from "../services/meal.service";
 import {AccountSignupComponent} from "./component/accountSignup/accountSignup.component";
+import {WorkoutComponent} from "./component/workout/workout.component";
+import {ExerciseComponent} from "./component/exercise/exercise.component";
+import {ExerciseService} from "./component/exercise/exercise.service";
+import {WorkoutService} from "./component/workout/workout.service";
+
+
+
+
 
 
 @NgModule({
@@ -24,7 +32,9 @@ import {AccountSignupComponent} from "./component/accountSignup/accountSignup.co
     NavbarComponent,
     HomeComponent,
     AdminComponent,
-    AccountSignupComponent
+    AccountSignupComponent,
+    WorkoutComponent,
+    ExerciseComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -38,7 +48,9 @@ import {AccountSignupComponent} from "./component/accountSignup/accountSignup.co
     NavbarSearchService,
     NotificationService,
     HelperService,
-    MealService
+    MealService,
+    WorkoutService, 
+    ExerciseService
   ],
   bootstrap: [AppComponent]
 })
