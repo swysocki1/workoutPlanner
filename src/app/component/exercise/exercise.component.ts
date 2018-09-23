@@ -6,7 +6,8 @@ import { Workout } from '../workout/workout.model';
 @Component({
   moduleId: module.id,
   selector: 'exercise',
-  templateUrl: './exercise.html'
+  templateUrl: './exercise.html',
+  styleUrls: ['./exercise.css']
 })
 
 export class ExerciseComponent { 
