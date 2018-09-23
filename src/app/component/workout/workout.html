@@ -1,0 +1,34 @@
+<form class="well container-fluid">
+    <div class="form-group">
+      <input type="text" name="workout_name" class="form-control" placeholder="Add New Workout...">    
+    </div>  
+</form>
+
+<div class="workout-list" >
+  <div *ngFor="let workout of workouts" style="margin-top: 25px;">
+    <div class="panel panel-default">
+      
+      <div class="panel-heading bg-secondary text-white" style="cursor: pointer;" (click)="workout.expanded = !workout.expanded">
+          <h1 style="margin-left: 10px">{{workout.name}}</h1>
+      </div> 
+      
+      <div class="panel-body bg-light" *ngIf="workout.expanded">
+        <h4>{{workout.description}}</h4>
+        <div class="workout-excercise-list">
+            <exercise [exercises]=workout.exercises></exercise>
+        </div>
+      </div>
+
+      <div class="panel-footer bg-light text-white" *ngIf="workout.expanded" style="padding: 10px;">
+          <div *ngIf="!workout.edit_delete">
+                <input type="button" value="Edit" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete">    
+                <input type="button" value="Delete" class="btn btn-danger" style="margin-left: 10px;">    
+          </div>
+          <div *ngIf="workout.edit_delete">
+                <input type="button" value="Save" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete">    
+                <input type="button" value="Cancel" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete" style="margin-left: 10px;">   
+          </div>
+      </div>
+  </div>
+</div>
+</div>
