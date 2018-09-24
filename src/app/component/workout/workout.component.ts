@@ -6,14 +6,13 @@ import {Exercise} from '../exercise/exercise.model';
 @Component({
   moduleId: module.id,
   selector: 'workout',
-  templateUrl: './workout.html'
+  templateUrl: './workout.html',
+  styleUrls: ['../exercise/exercise.css']
 })
 
 export class WorkoutComponent { 
     workouts: Workout[];
-    panel_expand = true;
-    edit_delete = true;
-    save_cancel = false;
+    
     
     
     constructor(private workoutService:WorkoutService){
