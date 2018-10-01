@@ -18,5 +18,22 @@ export class ExerciseComponent {
         this.exercises = this.excerciseService.getExercises();
           
     }
+
+    cancel(exercise: Exercise) {
+        exercise.edit_delete = !exercise.edit_delete;
+        (<HTMLInputElement>document.getElementById(`e_name_${exercise.id}`)).value = exercise.name;
+        (<HTMLInputElement>document.getElementById(`e_desc_${exercise.id}`)).value = !exercise.description? "": exercise.description;
+        (<HTMLInputElement>document.getElementById(`e_reps_${exercise.id}`)).value = exercise.reps.toString();
+        (<HTMLInputElement>document.getElementById(`e_sets_${exercise.id}`)).value = exercise.sets.toString();
+        
+    }
+
+    save(exercise: Exercise) {
+
+    }
+
+    delete(exercise: Exercise) {
+        
+    }
     
 }

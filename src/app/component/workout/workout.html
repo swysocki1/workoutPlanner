@@ -10,13 +10,19 @@
       
       <div class="panel-heading bg-secondary text-white" style="cursor: pointer;" (click)="!workout.edit_delete && workout.expanded = !workout.expanded">
             
-          <h1 style="margin-left: 10px;"><label *ngIf="workout.edit_delete" style="margin-right: 5px;">Name: </label><input [ngClass]="!workout.edit_delete? 'exercise-text-input text-white': ''" type="text" value={{workout.name}} [disabled]="!workout.edit_delete" style="margin-top: 5px;"></h1>
+          <h1 style="margin-left: 10px;">
+            <label *ngIf="workout.edit_delete" style="margin-right: 5px;">Name: </label>
+            <input id="{{'w_name_' + workout.id}}" [ngClass]="!workout.edit_delete? 'exercise-text-input text-white': ''" type="text" value={{workout.name}} [disabled]="!workout.edit_delete" style="margin-top: 5px;">
+        </h1>
       </div> 
       
       <div class="panel-body bg-light" *ngIf="workout.expanded">
         
         
-        <h4 style="margin-left: 10px;"><label *ngIf="workout.edit_delete" style="margin-right: 5px;">Description: </label><input [ngClass]="!workout.edit_delete? 'exercise-text-input': ''" type="text" value={{workout.description}} [disabled]="!workout.edit_delete" style="margin-top: 5px;"></h4>
+        <h4 style="margin-left: 10px;">
+            <label *ngIf="workout.edit_delete" style="margin-right: 5px;">Description: </label>
+            <input id="{{'w_desc_' + workout.id}}" [ngClass]="!workout.edit_delete? 'exercise-text-input': ''" type="text" value={{workout.description}} [disabled]="!workout.edit_delete" style="margin-top: 5px;">
+        </h4>
         <div class="workout-excercise-list" style="margin-left: 10px;">
             <exercise [exercises]=workout.exercises></exercise>
         </div>
@@ -29,7 +35,7 @@
           </div>
           <div *ngIf="workout.edit_delete">
                 <input type="button" value="Save" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete">    
-                <input type="button" value="Cancel" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete" style="margin-left: 10px;">   
+                <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(workout)" style="margin-left: 10px;">   
           </div>
       </div>
   </div>

@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <td>Name</td>
-                <td>description</td>
+                <td>Description</td>
                 <td>Sets</td>
                 <td>Reps</td>
                 <td></td>
@@ -21,10 +21,10 @@
     
   <tbody *ngFor="let exercise of exercises">
       <tr>
-          <td><input [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.name}} [disabled]="!exercise.edit_delete"></td>
-          <td><input [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.description}} [disabled]="!exercise.edit_delete"></td>
-          <td><input [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.sets}} [disabled]="!exercise.edit_delete"></td>
-          <td><input [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.reps}} [disabled]="!exercise.edit_delete"></td>
+          <td><input id="{{'e_name_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.name}} [disabled]="!exercise.edit_delete"></td>
+          <td><input id="{{'e_desc_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.description}} [disabled]="!exercise.edit_delete"></td>
+          <td><input id="{{'e_sets_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="number" value={{exercise.sets}} [disabled]="!exercise.edit_delete"></td>
+          <td><input id="{{'e_reps_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="number" value={{exercise.reps}} [disabled]="!exercise.edit_delete"></td>
           
           <td>
               <input type="button" value="Edit" class="btn btn-primary" (click)="exercise.edit_delete = !exercise.edit_delete" *ngIf="!exercise.edit_delete">
@@ -32,7 +32,7 @@
           </td>
           <td>
                 <input type="button" value="Delete" class="btn btn-danger" (click)="exercise.edit_delete = !exercise.edit_delete" *ngIf="!exercise.edit_delete">
-                <input type="button" value="Cancel" class="btn btn-primary" (click)="exercise.edit_delete = !exercise.edit_delete" *ngIf="exercise.edit_delete">
+                <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)" *ngIf="exercise.edit_delete">
           </td>
       </tr>
       

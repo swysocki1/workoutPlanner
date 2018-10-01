@@ -8,7 +8,7 @@ export class Workout {
     description: string;
     exercises: Array<Exercise>;
     owner: string;
-    expanded: false;
-    edit_delete: true;
+    expanded: boolean;
+    edit_delete: boolean;
     
 }

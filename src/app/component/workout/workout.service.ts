@@ -6,6 +6,13 @@ import {Exercise} from '../exercise/exercise.model';
 @Injectable()
 export class WorkoutService {
 
+  getWorkoutsForuser(userId) {
+
+  }
+
+  getWorkoutsForDay(userId, day) {
+
+  }
   getWorkouts(){
 
     let workouts: Workout[] = [];
@@ -19,18 +26,34 @@ export class WorkoutService {
 
     var b = new Exercise();
 
-    b.id = "1";
+    b.id = "2";
     b.name = "Exer 2";
     b.reps = 14;
     b.sets = 5;
 
     var c = new Exercise();
 
-    c.id = "1";
-    c.name = "Exer 2";
+    c.id = "3";
+    c.name = "Exer 3";
     c.reps = 14;
     c.sets = 5;
-    c.description = "Description"
+    c.description = "Description";
+
+    var f = new Exercise();
+
+    f.id = "4";
+    f.name = "Exer 4";
+    f.reps = 14;
+    f.sets = 5;
+    f.description = "Description"
+
+    var g = new Exercise();
+
+    g.id = "5";
+    g.name = "Exer 5";
+    g.reps = 14;
+    g.sets = 5;
+    g.description = "Description"
 
     var d = new Workout();
     d.id = "1";
@@ -44,7 +67,7 @@ export class WorkoutService {
     e.name = "Triceps!";
     e.description="Tricep workout"
     e.exercises = new Array<Exercise>();
-    e.exercises.push(a, b, c, a, b, c);
+    e.exercises.push(a, b, c, f, g);
     
     workouts.push(d, e);
 
