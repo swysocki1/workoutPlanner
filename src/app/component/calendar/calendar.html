@@ -3,7 +3,7 @@
   <div class="col">
     <button type="button" class="btn btn-primary pull-right" (click)="toggleToday()">Today</button>
     <div class="btn-group pull-right">
-      <button type="button" class="btn btn-primary" (click)="goBackMonth()"><</button>
+      <button type="button" class="btn btn-primary" (click)="goBackMonth()"></button>
       <button type="button" class="btn btn-primary" (click)="goNextMonth()">></button>
     </div>
   </div>
@@ -18,7 +18,7 @@
     <tbody>
     <tr *ngFor="let week of month.weeks;">
       <td *ngFor="let day of week.days">
-        <calendar-day [day]="day" [meals]="getMeal(day)"></calendar-day>
+        <calendar-day [day]="day" [workouts]="getWorkouts()" [modal]="this.modalComponent"></calendar-day>
       </td>
     </tr>
     </tbody>

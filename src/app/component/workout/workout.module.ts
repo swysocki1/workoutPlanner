@@ -6,12 +6,10 @@ import { WorkoutService } from './workout.service';
 
 @NgModule({
   declarations: [
-    WorkoutComponent,
-    
+    WorkoutComponent
   ],
   imports: [
-    BrowserModule,
-    
+    BrowserModule
   ],
   exports: [WorkoutComponent],
   providers: [WorkoutService]

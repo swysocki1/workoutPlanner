@@ -20,6 +20,9 @@ import {WorkoutComponent} from "./component/workout/workout.component";
 import {ExerciseComponent} from "./component/exercise/exercise.component";
 import {ExerciseService} from "./component/exercise/exercise.service";
 import {WorkoutService} from "./component/workout/workout.service";
+import {ModalComponent} from "./component/modal/modal.component";
+import {ModalService} from "./component/modal/modal.service";
+
 
 
 
@@ -34,7 +37,8 @@ import {WorkoutService} from "./component/workout/workout.service";
     AdminComponent,
     AccountSignupComponent,
     WorkoutComponent,
-    ExerciseComponent
+    ExerciseComponent,
+    ModalComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -43,14 +47,19 @@ import {WorkoutService} from "./component/workout/workout.service";
     RouterModule.forRoot(routes),
     CalendarModule
   ],
-  providers: [LoginService,
+  entryComponents: [
+    ModalComponent
+],
+  providers: [
+    LoginService,
     ValidationService,
     NavbarSearchService,
     NotificationService,
     HelperService,
     MealService,
     WorkoutService, 
-    ExerciseService
+    ExerciseService,
+    ModalService
   ],
   bootstrap: [AppComponent]
 })

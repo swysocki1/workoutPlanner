@@ -40,11 +40,11 @@ export class WorkoutService {
     d.exercises.push(a, b, c);
 
     var e = new Workout();
-    e.id = "1";
-    e.name = "Biceps!";
-    e.description="Bicep workout"
+    e.id = "2";
+    e.name = "Triceps!";
+    e.description="Tricep workout"
     e.exercises = new Array<Exercise>();
-    e.exercises.push(a, b, c);
+    e.exercises.push(a, b, c, a, b, c);
     
     workouts.push(d, e);
 
