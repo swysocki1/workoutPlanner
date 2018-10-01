@@ -20,6 +20,9 @@ import {ModalComponent} from "../../modal/modal.component";
     .day.valid-month {
       opacity: 1;
     }
+    .workout {
+      margin: 5px;
+    }
     .breakfast, .lunch, .dinner, .snack { }
   `]
 })
