@@ -5,6 +5,10 @@
     display:block;
 }
 
+.show-inline { 
+    display:inline;
+}
+
 #modal-container {
     
     position:  fixed;

@@ -1,7 +1,7 @@
 <form class="well">
     <div class="form-group">
-      <input type="text"  name="title" class="form-control" placeholder="Add Excercise...">    
-    </div>  
+        <input type="text" name="title" class="form-control" placeholder="Add Excercise...">
+    </div>
 </form>
 
 <div class="exercise-list">
@@ -13,30 +13,28 @@
                 <td>Sets</td>
                 <td>Reps</td>
                 <td></td>
-                <td></td>
-                
             </tr>
         </thead>
-        
-    
-  <tbody *ngFor="let exercise of exercises">
-      <tr>
-          <td><input id="{{'e_name_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.name}} [disabled]="!exercise.edit_delete"></td>
-          <td><input id="{{'e_desc_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="text" value={{exercise.description}} [disabled]="!exercise.edit_delete"></td>
-          <td><input id="{{'e_sets_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="number" value={{exercise.sets}} [disabled]="!exercise.edit_delete"></td>
-          <td><input id="{{'e_reps_' + exercise.id}}" [ngClass]="!exercise.edit_delete? 'exercise-text-input': ''" type="number" value={{exercise.reps}} [disabled]="!exercise.edit_delete"></td>
-          
-          <td>
-              <input type="button" value="Edit" class="btn btn-primary" (click)="exercise.edit_delete = !exercise.edit_delete" *ngIf="!exercise.edit_delete">
-              <input type="button" value="Save" class="btn btn-primary" (click)="exercise.edit_delete = !exercise.edit_delete" *ngIf="exercise.edit_delete">
-          </td>
-          <td>
-                <input type="button" value="Delete" class="btn btn-danger" (click)="exercise.edit_delete = !exercise.edit_delete" *ngIf="!exercise.edit_delete">
-                <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)" *ngIf="exercise.edit_delete">
-          </td>
-      </tr>
-      
+        <tbody *ngFor="let exercise of exercises">
+            <tr>
+                <td><input id="{{'e_name_' + exercise.id}}" class="exercise-text-input" type="text" value={{exercise.name}}
+                        [disabled]="true"></td>
+                <td><input id="{{'e_desc_' + exercise.id}}" class="exercise-text-input" type="text" value={{exercise.description}}
+                        [disabled]="true"></td>
+                <td><input id="{{'e_sets_' + exercise.id}}" class="exercise-text-input" type="number" value={{exercise.sets}}
+                        [disabled]="true"></td>
+                <td><input id="{{'e_reps_' + exercise.id}}" class="exercise-text-input" type="number" value={{exercise.reps}}
+                        [disabled]="true"></td>
 
-    </tbody>
+                <td id="{{'e_edit_delete_' + exercise.id}}">
+                    <input type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">
+                    <input type="button" value="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;">
+                </td>
+                <td id="{{'e_save_cancel_' + exercise.id}}" class="hidden">
+                    <input type="button" value="Save" class="btn btn-primary" (click)="save(exercise)">
+                    <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)"  style="margin-left: 10px;">
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>

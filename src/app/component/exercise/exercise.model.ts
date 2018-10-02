@@ -6,6 +6,6 @@ export class Exercise {
     description: string;
     sets: number;
     reps: number;
-    edit_delete: boolean;
+    workout_id: string;
   }
 

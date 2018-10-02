@@ -50,7 +50,7 @@ export class DayComponent {
   
     var count = 1;
     var temp;
-    workout.exercises.forEach(function(exercise) {
+    workout.exercises.forEach((exercise) => {
       if (count == 4) {
         count = 1;
         html +=`
