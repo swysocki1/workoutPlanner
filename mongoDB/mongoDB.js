@@ -1,20 +1,11 @@
 const MongoClient = require('mongodb').MongoClient;
 
 // replace the uri string with your connection string.
-const uri = 'mongodb+srv://swysocki:workout!123@workoutplanner-gerei.mongodb.net/test?retryWrites=true'
-MongoClient.connect(uri, function(err, client) {
-  if(err) {
-    console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
-  }
-  console.log('Connected...');
-  const collection = client.db('test').collection('devices');
-  // perform actions on the collection object
-  client.close();
-});
+const uri = 'mongodb+srv://swysocki:workout!123@workoutplanner-gerei.mongodb.net/test?retryWrites=true';
 function getCollection(client, collection) {
   return client.db('test').collection(collection);
 }
-export function getAllWorkouts(funct) {
+exports.getAllWorkouts = function getAllWorkouts(funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
@@ -24,8 +15,8 @@ export function getAllWorkouts(funct) {
       client.close();
     });
   });
-}
-export function getWorkout(id: string, funct) {
+};
+exports.getWorkout = function getWorkout(id, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
@@ -35,8 +26,8 @@ export function getWorkout(id: string, funct) {
       client.close();
     });
   });
-}
-export function updateWorkout(workout, funct) {
+};
+exports.updateWorkout = function updateWorkout(workout, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
@@ -46,4 +37,4 @@ export function updateWorkout(workout, funct) {
       client.close();
     });
   });
-}
+};

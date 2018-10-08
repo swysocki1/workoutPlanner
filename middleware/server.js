@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-import {getAllWorkouts, getWorkout, updateWorkout} from '../mongoDB/mongoDB';
-// const mongoDB = require('../mongoDB/mongoDB');
-import {respond} from './expressHelper';
-// const helper = require('./expressHelper');
+const mongoDB = require("../mongoDB/mongoDB");
+const helper = require("./expressHelper");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -14,19 +12,19 @@ app.get('/test', (req, res) => {
   res.send('Success');
 });
 app.get(`${basepath}/getAll`, (req, res) => {
-  getAllWorkouts((err, result) => {
+  mongoDB.getAllWorkouts((err, result) => {
     console.log(result);
-    respond(res, err, result);
+    helper.respond(res, err, result);
   });
 });
 app.get(`${basepath}/getById/:id`, (req, res) => {
-  getWorkout(req.params.id, (err, result) => {
-    respond(res, err, result);
+  mongoDB.getWorkout(req.params.id, (err, result) => {
+    helper.respond(res, err, result);
   });
 });
 app.post(`${basepath}/update`, (req, res) => {
-  updateWorkout(req.body, (err, result) => {
-    respond(res, err, result);
+  mongoDB.updateWorkout(req.body, (err, result) => {
+    helper.respond(res, err, result);
   });
 });
 

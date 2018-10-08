@@ -36,6 +36,4 @@ ________________________________________________________________________________
 
 To Run Middleware/API Connection to MongoDB: 
 
-cd ./middleware
-tsc ./*.ts 
-node ./workoutcontroller.js
+nodemon ./middleware/server.js
