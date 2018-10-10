@@ -21,6 +21,8 @@ export class WorkoutComponent implements OnInit {
       // this.workouts = this.workoutService.getWorkouts() as [Workout];
       this.workoutService.getAllWorkouts().subscribe(workouts => {
         this.workouts = workouts as [Workout];
+      }, error => {
+        console.error(error);
       });
     }
     
