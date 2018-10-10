@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WorkoutService} from './workout.service';
 import {Workout} from './workout.model';
 import {Exercise} from '../exercise/exercise.model';
@@ -10,16 +10,20 @@ import {Exercise} from '../exercise/exercise.model';
   styleUrls: ['../exercise/exercise.css', '../modal/modal.css']
 })
 
-export class WorkoutComponent { 
-    workouts: Workout[];
+export class WorkoutComponent implements OnInit {
+    workouts: [Workout];
     
     
     
-    constructor(private workoutService:WorkoutService){
-        this.workouts = this.workoutService.getWorkouts();
-          
-    }
+    constructor(private workoutService:WorkoutService) { }
 
+    ngOnInit() {
+      // this.workouts = this.workoutService.getWorkouts() as [Workout];
+      this.workoutService.getAllWorkouts().subscribe(workouts => {
+        this.workouts = workouts as [Workout];
+      });
+    }
+    
     cancel(workout: Workout) {
         (<HTMLInputElement>document.getElementById(`w_name_${workout.id}`)).value = workout.name;
         (<HTMLInputElement>document.getElementById(`w_desc_${workout.id}`)).value = workout.description;
@@ -67,7 +71,7 @@ export class WorkoutComponent {
     }
 
     delete(workout: Workout) {
-        
+    
     }
     
     

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -22,12 +22,8 @@ import {ExerciseService} from "./component/exercise/exercise.service";
 import {WorkoutService} from "./component/workout/workout.service";
 import {ModalComponent} from "./component/modal/modal.component";
 import {ModalService} from "./component/modal/modal.service";
-
-
-
-
-
-
+import {ExternalRequestsService} from "../services/externalRequests.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -45,11 +41,13 @@ import {ModalService} from "./component/modal/modal.service";
     FormsModule,
     BrowserModule,
     RouterModule.forRoot(routes),
-    CalendarModule
+    CalendarModule,
+    HttpClientModule
   ],
   entryComponents: [
     ModalComponent
-],
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     LoginService,
     ValidationService,
@@ -57,9 +55,10 @@ import {ModalService} from "./component/modal/modal.service";
     NotificationService,
     HelperService,
     MealService,
-    WorkoutService, 
+    WorkoutService,
     ExerciseService,
-    ModalService
+    ModalService,
+    ExternalRequestsService
   ],
   bootstrap: [AppComponent]
 })

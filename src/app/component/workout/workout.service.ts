@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Workout} from './workout.model';
 import {Exercise} from '../exercise/exercise.model';
+import {ExternalRequestsService} from "../../../services/externalRequests.service";
 
 
 @Injectable()
 export class WorkoutService {
-
+  constructor(private er: ExternalRequestsService) { }
   getWorkoutsForuser(userId) {
 
   }
@@ -13,8 +14,10 @@ export class WorkoutService {
   getWorkoutsForDay(userId, day) {
 
   }
+  getAllWorkouts() {
+    return this.er.getAllWorkouts();
+  }
   getWorkouts(){
-
     let workouts: Workout[] = [];
 
     var a = new Exercise();
