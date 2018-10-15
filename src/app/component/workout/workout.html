@@ -1,37 +1,50 @@
 <form class="well container-fluid">
     <div class="form-group">
-      <input type="text" name="workout_name" class="form-control" placeholder="Add New Workout...">    
-    </div>  
+        <input type="text" name="workout_name" class="form-control" placeholder="Add New Workout...">
+    </div>
 </form>
 
-<div class="workout-list" >
-  <div *ngFor="let workout of workouts" style="margin-top: 25px;">
-    <div class="panel panel-default">
-      
-      <div class="panel-heading bg-secondary text-white" style="cursor: pointer;" (click)="!workout.edit_delete && workout.expanded = !workout.expanded">
-            
-          <h1 style="margin-left: 10px;"><label *ngIf="workout.edit_delete" style="margin-right: 5px;">Name: </label><input [ngClass]="!workout.edit_delete? 'exercise-text-input text-white': ''" type="text" value={{workout.name}} [disabled]="!workout.edit_delete" style="margin-top: 5px;"></h1>
-      </div> 
-      
-      <div class="panel-body bg-light" *ngIf="workout.expanded">
-        
-        
-        <h4 style="margin-left: 10px;"><label *ngIf="workout.edit_delete" style="margin-right: 5px;">Description: </label><input [ngClass]="!workout.edit_delete? 'exercise-text-input': ''" type="text" value={{workout.description}} [disabled]="!workout.edit_delete" style="margin-top: 5px;"></h4>
-        <div class="workout-excercise-list" style="margin-left: 10px;">
-            <exercise [exercises]=workout.exercises></exercise>
-        </div>
-      </div>
+<div class="workout-list">
+    <div *ngFor="let workout of workouts" style="margin-top: 25px;">
+        <div class="panel panel-default">
 
-      <div class="panel-footer bg-light text-white" *ngIf="workout.expanded" style="padding: 10px;">
-          <div *ngIf="!workout.edit_delete">
-                <input type="button" value="Edit" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete">    
-                <input type="button" value="Delete" class="btn btn-danger" style="margin-left: 10px;">    
-          </div>
-          <div *ngIf="workout.edit_delete">
-                <input type="button" value="Save" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete">    
-                <input type="button" value="Cancel" class="btn btn-primary" (click)="workout.edit_delete = !workout.edit_delete" style="margin-left: 10px;">   
-          </div>
-      </div>
-  </div>
-</div>
+            <a data-toggle="collapse" href="{{'#collapse_' + workout.id}}" style="cursor: pointer;" role="button"
+                aria-expanded="false">
+                <div class="panel-heading bg-secondary text-white">
+
+                    <h1 style="margin-left: 10px;">
+                        <label id="{{'w_label1_' + workout.id}}" style="margin-right: 5px;" class="hidden">Name: </label>
+                        <input id="{{'w_name_' + workout.id}}" class="exercise-text-input text-white"
+                            type="text" value={{workout.name}} [disabled]="true" style="margin-top: 5px; margin-bottom: 5px;">
+                    </h1>
+
+                </div>
+            </a>
+
+            <div class="collapse" id="{{'collapse_' + workout.id}}">
+                <div class="panel-body bg-light">
+
+                    <h4 style="margin-left: 10px;">
+                        <label id="{{'w_label2_' + workout.id}}" style="margin-right: 5px;" class="hidden">Description: </label>
+                        <input id="{{'w_desc_' + workout.id}}" class="exercise-text-input"
+                            type="text" value={{workout.description}} [disabled]="true" style="margin-top: 5px;">
+                    </h4>
+                    <div class="workout-excercise-list" style="margin-left: 10px;">
+                        <exercise [exercises]=workout.exercises></exercise>
+                    </div>
+                </div>
+
+                <div class="panel-footer bg-light text-white" style="padding: 10px;">
+                    <div id="{{'w_edit_delete_' + workout.id}}">
+                        <input type="button" value="Edit" class="btn btn-primary" (click)="edit(workout)">
+                        <input type="button" value="Delete" class="btn btn-danger" style="margin-left: 10px;" (click)="delete(workout)">
+                    </div>
+                    <div id="{{'w_save_cancel_' + workout.id}}" class="hidden">
+                        <input type="button" value="Save" class="btn btn-primary" (click)="save(workout)">
+                        <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(workout)" style="margin-left: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

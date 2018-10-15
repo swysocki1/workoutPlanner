@@ -7,8 +7,5 @@ export class Workout {
     name: string;
     description: string;
     exercises: Array<Exercise>;
-    owner: string;
-    expanded: false;
-    edit_delete: true;
-    
+    owner: string; 
 }
