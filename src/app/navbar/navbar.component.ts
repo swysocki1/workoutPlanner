@@ -12,7 +12,7 @@ import {Notification} from "../../models/notification.model";
   templateUrl: './navbar.html'
 })
 export class NavbarComponent {
-  notifications = [] as [Notification];
+  notifications = [];
   userSession: UserSession;
   userSessionChange: EventEmitter<UserSession> = new EventEmitter<UserSession>();
   loginErrorMessage: string;
