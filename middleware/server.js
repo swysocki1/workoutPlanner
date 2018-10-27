@@ -59,8 +59,8 @@ app.post(`${exercisePath}/add`, (req, res) => {
   });
 });
 
-app.post(`${exercisePath}/updateForWorkout`, (req, res) => {
-  mongoDB.updateExercisesForWorkout(req.body, (err, result) => {
+app.post(`${exercisePath}/delete`, (req, res) => {
+  mongoDB.deleteExercise(req.body, (err, result) => {
     helper.respond(res, err, result);
   });
 });

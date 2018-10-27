@@ -11,8 +11,12 @@ export class ExerciseService {
     return this.er.addExercise(obj);
   }
 
-  updateExercisesForWorkout(workout) {
-    return this.er.updateExercisesForWorkout(workout);
+  update(exercise) {
+    return this.er.updateExercise(exercise);
+  }
+
+  delete(obj) {
+    return this.er.deleteExercise(obj);
   }
   
 }

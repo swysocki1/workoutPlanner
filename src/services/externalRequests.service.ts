@@ -37,7 +37,7 @@ export class ExternalRequestsService {
     return this.http.post(`${this.api}${this.exercisePath}/update`, exercise);
   }
 
-  updateExercisesForWorkout(workout) {
-    return this.http.post(`${this.api}${this.exercisePath}/updateForWorkout`, workout);
+  deleteExercise(obj): Observable<Object> {
+    return this.http.post(`${this.api}${this.exercisePath}/delete`, obj);
   }
 }

@@ -81,10 +81,6 @@ export class WorkoutComponent implements OnInit {
     }
 
     save(workout: Workout) {
-        //w_save_cancel_' + workout._id}}
-
-        //update workout call
-        
         workout.name = (<HTMLInputElement>document.getElementById(`w_name_${workout._id}`)).value;
         workout.description = (<HTMLInputElement>document.getElementById(`w_desc_${workout._id}`)).value;
 
@@ -131,8 +127,6 @@ export class WorkoutComponent implements OnInit {
         this.workouts.splice(this.workouts.indexOf(workout), 1);
         console.log("deleted workout...");
       })
-      
-
     }
 
     clone(workout: Workout) {
@@ -147,8 +141,5 @@ export class WorkoutComponent implements OnInit {
         this.workouts.push(workout as Workout);
         console.log("clones workout...");
       });
-
     }
-    
-    
 }

@@ -41,28 +41,27 @@ exports.deleteWorkout = function deleteWorkout(workout, funct) {
   });
 };
 
+exports.deleteExercise = function deleteWorkout(obj, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'workout').updateOne({_id: ObjectId(obj.workoutId)}, {$pull: {exercises: {_id: ObjectId(obj.exerciseId)}}}, (err, res) => {
+      funct(err, res);
+      client.close();
+    });
+  });
+};
+
 exports.addExercise = function addExercise(obj, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
     }
     var exercise = obj.exercise;
-    getCollection(client, 'workout').updateOne({_id: ObjectId(obj.workoutId)}, {$push: {exercises: {name: exercise.name, 
-      description: exercise.description, reps: exercise.reps, sets: exercise.sets}}}, (error, result) => {
-      funct(error, result);
-      client.close();
-    });
-  });
-};
-
-exports.updateExercisesForWorkout = function updateExercisesForWorkout(workout, funct) {
-  MongoClient.connect(uri, (err, client) => {
-    if (err) {
-      funct(err);
-    }
-    var exercises = workout.exercises;
-    getCollection(client, 'workout').updateOne({_id: ObjectId(workout._id)}, {$set: {exercises: workout.exercises}}, (error, result) => {
-      funct(error, result);
+    getCollection(client, 'workout').findOneAndUpdate({_id: ObjectId(obj.workoutId)}, {$push: {exercises: {_id: new ObjectId(), name: exercise.name, 
+      description: exercise.description, reps: exercise.reps, sets: exercise.sets}}}, {returnOriginal: false}, (error, result) => {
+      funct(error, result.value);
       client.close();
     });
   });
@@ -73,7 +72,7 @@ exports.getWorkout = function getWorkout(id, funct) {
     if (err) {
       funct(err);
     }
-    getCollection(client, 'workout').findOne({id: id}, (error, result) => {
+    getCollection(client, 'workout').findOne({_id: ObjectId(id)}, (error, result) => {
       funct(error, result);
       client.close();
     });
@@ -101,27 +100,17 @@ exports.updateWorkout = function updateWorkout(workout, funct) {
     });
   });
 };
-exports.updateExercise = function updateWorkout(exercise, funct) {
+
+exports.updateExercise = function updateExercise(exercise, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
     }
-    getCollection(client, 'exercise').update({id: exercise._id}, {$set: exercise}, (error, result) => {
-      funct(error, result);
+    getCollection(client, 'workout').updateOne({'exercises._id': exercise._id}, 
+      {$set: {'exercises.$.name': exercise.name, 'exercises.$.reps': exercise.reps, 
+      'exercises.$.sets': exercise.sets, 'exercises.$.description': exercise.description}}, (err, res) => {
+      funct(err, res);
       client.close();
     });
   });
 };
-exports.getExercisesForWorkout = function getExercisesForWorkout(workoutId, funct) {
-  MongoClient.connect(uri, (err, client) => {
-    if (err) {
-      funct(err);
-    }
-    var s = "" + workoutId; 
-    console.log("BS... " + s);
-    getCollection(client, 'exercise').find({workout_id: "\"" + workoutId + "\""}).toArray((error, result) => {
-      funct(error, result);
-      client.close();
-    });
-  });
-}

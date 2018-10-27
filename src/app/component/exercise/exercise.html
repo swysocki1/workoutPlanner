@@ -18,22 +18,22 @@
         </thead>
         <tbody *ngFor="let exercise of workout.exercises; let idx = index">
             <tr>
-                <td><input id="{{'e_name_' + idx + workout._id}}" class="exercise-text-input" type="text" value={{exercise.name}}
+                <td><input id="{{'e_name_' + exercise._id}}" class="exercise-text-input" type="text" value={{exercise.name}}
                         [disabled]="true"></td>
-                <td><input id="{{'e_desc_' + idx + workout._id}}" class="exercise-text-input" type="text" value={{exercise.description}}
+                <td><input id="{{'e_desc_' + exercise._id}}" class="exercise-text-input" type="text" value={{exercise.description}}
                         [disabled]="true"></td>
-                <td><input id="{{'e_sets_' + idx + workout._id}}" class="exercise-text-input" type="number" value={{exercise.sets}}
+                <td><input id="{{'e_sets_' + exercise._id}}" class="exercise-text-input" type="number" value={{exercise.sets}}
                         [disabled]="true"></td>
-                <td><input id="{{'e_reps_' + idx + workout._id}}" class="exercise-text-input" type="number" value={{exercise.reps}}
+                <td><input id="{{'e_reps_' + exercise._id}}" class="exercise-text-input" type="number" value={{exercise.reps}}
                         [disabled]="true"></td>
 
-                <td id="{{'e_edit_delete_' + idx + workout._id}}">
-                    <input type="button" value="Edit" class="btn btn-primary" (click)="edit(idx)">
-                    <input type="button" value="Delete" class="btn btn-danger" (click)="delete(idx)" style="margin-left: 10px;">
+                <td id="{{'e_edit_delete_' + exercise._id}}">
+                    <input type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">
+                    <input type="button" value="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;">
                 </td>
-                <td id="{{'e_save_cancel_' + idx + workout._id}}" class="hidden">
-                    <input type="button" value="Save" class="btn btn-primary" (click)="save(exercise, idx)">
-                    <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise, idx)"  style="margin-left: 10px;">
+                <td id="{{'e_save_cancel_' + exercise._id}}" class="hidden">
+                    <input type="button" value="Save" class="btn btn-primary" (click)="save(exercise)">
+                    <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)"  style="margin-left: 10px;">
                 </td>
             </tr>
         </tbody>
