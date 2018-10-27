@@ -7,6 +7,7 @@ import {MealService} from '../../../services/meal.service';
 import {ModalService} from '../modal/modal.service';
 import {WorkoutService} from '../workout/workout.service';
 import {ModalComponent} from "../modal/modal.component";
+import { Workout } from '../workout/workout.model';
 
 
 
@@ -16,7 +17,7 @@ import {ModalComponent} from "../modal/modal.component";
   templateUrl: './calendar.html'
 })
 export class CalendarComponent {
-  
+  workouts: [Workout];
   daysOfWeek: [string] = [] as [string];
   monthsOfYear: [string] = [] as [string];
   month: CalendarMonth = new CalendarMonth();
@@ -51,6 +52,17 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
 
     this.modalComponent = ref.instance;
   }
+
+  ngOnInit() {
+    // this.workouts = this.workoutService.getWorkouts() as [Workout];
+    this.workoutService.getAllWorkouts().subscribe(ws => {
+      this.workouts = ws as [Workout];
+      console.log(this.workouts.length + " **********");
+    }, error => {
+      console.error(error);
+    });
+    
+  }
   goBackMonth() {
     this.selectedDate = moment(this.selectedDate).subtract(1, 'months').toDate();
     const year = moment(this.selectedDate).year();
@@ -75,7 +87,8 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
     return [] as [Meal];
   }
   getWorkouts() {
-    return this.workoutService.getWorkouts();
+    return this.workouts;
+    //return this.workoutService.getWorkouts();
   }
   getMealCalendar(start?: Date, end?: Date) {
     if (start && end) {

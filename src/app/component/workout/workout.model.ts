@@ -3,9 +3,10 @@ import {Exercise} from '../exercise/exercise.model'
 
 
 export class Workout {
-    id: string;
+    _id: string;
     name: string;
     description: string;
-    exercises: Array<Exercise>;
+    exercises: Exercise[];
     owner: string; 
+    color: string;
 }
