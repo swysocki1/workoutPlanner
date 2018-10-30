@@ -26,6 +26,7 @@ export class Permission {
 }
 
 export class UserSession {
+  token: string;
   user: User = new User();
   lastLogin: Date;
   created: Date;

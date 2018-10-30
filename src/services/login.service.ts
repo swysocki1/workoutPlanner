@@ -6,6 +6,7 @@ import {Injectable} from '@angular/core';
 import {User, UserSession} from '../models/user.model';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
+import {ExternalRequestsService} from "./externalRequests.service";
 
 @Injectable()
 export class LoginService {
@@ -30,11 +31,12 @@ export class LoginService {
     }
   }
 
-  constructor() {
+  constructor(private es: ExternalRequestsService) {
     const cachedSession: UserSession = JSON.parse(localStorage.getItem('CFBlocks'));
     if (cachedSession && cachedSession.user.username && cachedSession.lastLogin &&
       moment(cachedSession.lastLogin).isSameOrAfter(moment().subtract(1, 'days'))) {
       this.setUserSession(cachedSession);
+      this.es.updateToken(cachedSession.token);
     }
   }
 
@@ -46,6 +48,7 @@ export class LoginService {
       const cachedSession: UserSession = JSON.parse(localStorage.getItem('CFBlocks'));
       if (cachedSession && cachedSession.user.username === username && cachedSession.lastLogin &&
         moment(cachedSession.lastLogin).isSameOrAfter(moment().subtract(1, 'days'))) {
+        this.es.updateToken(cachedSession.token);
         subscriber.next(cachedSession);
         subscriber.complete();
       } else if (cachedSession) {
@@ -55,14 +58,23 @@ export class LoginService {
       // TODO auth user and cache
 
       const userSession = new UserSession();
-      userSession.setTestUser(); // Setting test user // Needs to be deleted
-
-
-      localStorage.setItem('CFBlocks', JSON.stringify(userSession));
-      this.setUserSession(userSession);
-
-      subscriber.next(userSession);
-      subscriber.complete();
+      this.es.login(username, password).subscribe(res => {
+        // userSession.setTestUser(); // Setting test user // Needs to be deleted
+        userSession.token = res['token'];
+        userSession.authenticated = true;
+        userSession.lastLogin = new Date();
+        userSession.created = new Date();
+        userSession.userAgent = navigator.userAgent;
+        userSession.user = res['user'];
+        localStorage.setItem('CFBlocks', JSON.stringify(userSession));
+        this.setUserSession(userSession);
+  
+        subscriber.next(userSession);
+        subscriber.complete();
+      }, error => {
+        subscriber.error(error);
+        subscriber.complete();
+      })
     });
   }
   logout(): Observable<UserSession> {
