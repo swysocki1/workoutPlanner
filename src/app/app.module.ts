@@ -24,6 +24,7 @@ import {ModalComponent} from "./component/modal/modal.component";
 import {ModalService} from "./component/modal/modal.service";
 import {ExternalRequestsService} from "../services/externalRequests.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { ProfileComponent } from './component/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     AccountSignupComponent,
     WorkoutComponent,
     ExerciseComponent,
-    ModalComponent
+    ModalComponent,
+    ProfileComponent
   ],
   imports: [
     ReactiveFormsModule,

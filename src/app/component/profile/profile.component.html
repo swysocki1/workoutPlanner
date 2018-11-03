@@ -1,0 +1,43 @@
+<div class="card-group">
+    <div class="card" *ngIf='showUserDetails'>
+        <!-- TODO: REPLACE WITH PROFILE PHOTO-->
+        <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ pTestUser.firstName}} {{pTestUser.lastName}}</h5>
+            <ul>
+                <li><span>Email: </span> {{pTestUser.email}}</li>
+                <!--TODO FIGURE OUT HOW TO GET FOLLOW INFORMATION IN HERE-->
+                <li>Following: 35</li>
+                <li>Followers: 87</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" *ngIf='showFeed'>
+        <div class="card-body">
+            <!--TODO GET THE FOLLOWER DETAILS SOMEHOW-->
+            <h5 class="card-title">News Feed</h5>
+            <p class="card-text">Latest from followed users here.</p>
+        </div>
+
+    </div>
+    <div class="card" *ngIf='showMeals'>
+        <div class="card-body">
+            <!--TODO GET THE MEAL STUFF SOMEHOW-->
+            <h5 class="card-title">Meal Plan This Week:</h5>
+            <p class="card-text">Meal plans</p>
+        </div>
+
+    </div>
+    <div class="card" *ngIf='showSchedule'>
+        <div class="card-body">
+            <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
+            <h5 class="card-title">Workouts This Week:</h5>
+            <ul class="list-group">
+                <li *ngFor="let date of next7Dates" class="list-group-item">
+                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(pTestUser.id, date) }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
