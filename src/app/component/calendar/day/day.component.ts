@@ -39,7 +39,7 @@ export class DayComponent {
     var html = 
     `
     <div class='card'>
-      <div class='card-header bg-secondary text-white'>
+      <div class='card-header text-white' style='background-color: ${workout.color};'>
         <h2>${workout.name}</h2>
         <h4>${workout.description}</h4>
       </div>

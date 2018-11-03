@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ExerciseComponent} from './exercise.component';
 import { ExerciseService } from './exercise.service';
 
-
 @NgModule({
   declarations: [
     ExerciseComponent,

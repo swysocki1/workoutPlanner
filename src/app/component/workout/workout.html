@@ -1,50 +1,95 @@
-<form class="well container-fluid">
-    <div class="form-group">
-        <input type="text" name="workout_name" class="form-control" placeholder="Add New Workout...">
-    </div>
-</form>
+<div style="padding-top: 15px;">
+    <form class="well container-fluid">
+        <div class="form-inline" style="margin-top: 10px;">
+            <input type="text" name="workout_name" class="form-control" id="add_workout_name" placeholder="Add New Workout..."
+                style="width:95%;">
+            <input type="button" value="+" class="btn btn-primary" (click)="add()" style="margin-left: 10px; width: 4%;">
+        </div>
 
-<div class="workout-list">
-    <div *ngFor="let workout of workouts" style="margin-top: 25px;">
-        <div class="panel panel-default">
 
-            <a data-toggle="collapse" href="{{'#collapse_' + workout.id}}" style="cursor: pointer;" role="button"
-                aria-expanded="false">
-                <div class="panel-heading bg-secondary text-white">
+        <div class="workout-list">
+            <div *ngFor="let workout of workouts;" style="margin-top: 25px;">
+                <div class="panel panel-default" id="{'w_collapse' + workout._id}}">
 
-                    <h1 style="margin-left: 10px;">
-                        <label id="{{'w_label1_' + workout.id}}" style="margin-right: 5px;" class="hidden">Name: </label>
-                        <input id="{{'w_name_' + workout.id}}" class="exercise-text-input text-white"
-                            type="text" value={{workout.name}} [disabled]="true" style="margin-top: 5px; margin-bottom: 5px;">
-                    </h1>
+                    <a data-toggle="collapse" href="{{'#collapse_' + workout._id}}" style="cursor: pointer;" role="button"
+                        aria-expanded="false" id="{{'w_collapse_' + workout._id}}">
+                        <div  [ngStyle]="{'background-color': workout.color}" class="panel-heading text-white form-inline">
+                            
+                                <h1 style="margin-left: 10px;">
+                                        <label>{{workout.name}}</label>
+                                    </h1>
 
-                </div>
-            </a>
+                        </div>
+                    </a>
 
-            <div class="collapse" id="{{'collapse_' + workout.id}}">
-                <div class="panel-body bg-light">
+                    <div class="collapse" id="{{'collapse_' + workout._id}}">
+                        <div class="form-inline">
+                                <h2 style="margin-left: 10px;">
+                                        <label id="{{'w_label1_' + workout._id}}" style="margin-right: 5px;" class="hidden">Name:
+                                        </label>
+                                        <input id="{{'w_name_' + workout._id}}" class="exercise-text-input" type="text"
+                                            value={{workout.name}} [disabled]="true" style="margin-top: 5px; margin-bottom: 5px;">
+                                    </h2>
+                                    
+                                        <!-- Order verification, and authorization -->
+                                    <div id="{{'w_color_' + workout._id}}" class="hidden" style="margin-left: 40px;">
+                                        <label>Color: 
+                                            <input type="button" value="" class="btn" style="background-color: #6c086d; margin-left: 5px; width:20px; height: 20px;" (click)="updateColor(workout, '#6c086d')">
+                                            <input type="button" value="" class="btn" style="background-color: #1d61ae; margin-left: 5px; width:20px; height: 20px;" (click)="updateColor(workout, '#1d61ae')">
+                                            <input type="button" value="" class="btn" style="background-color: #319a2d; margin-left: 5px; width:20px; height: 20px;" (click)="updateColor(workout, '#319a2d')">
+                                            <input type="button" value="" class="btn" style="background-color: #c91010; margin-left: 5px; width:20px; height: 20px;" (click)="updateColor(workout, '#c91010')">
+                                            <input type="button" value="" class="btn" style="background-color: #f2d042; margin-left: 5px; width:20px; height: 20px;" (click)="updateColor(workout, '#f2d042')">
+                                            <input type="button" value="" class="btn" style="background-color: #818181; margin-left: 5px; width:20px; height: 20px;" (click)="updateColor(workout, '#818181')">
+                                        </label>
+                                    </div>
+                                    <!--
+                                    <input type="color" list="presetColors" id="{{'w_color_' + workout._id}}" (change)="updateColor(workout, $event)" class="hidden"
+                                     value="{{workout.color}}" style="margin-left: 20px;">
+                                    <datalist id="presetColors">
+                                        <option value="#6c086d" style="background-color: #6c086d;"></option>/>
+                                        <option value="#1d61ae" style="background-color: #1d61ae;"></option>/>
+                                        <option value="#319a2d" style="background-color: #319a2d;"></option>/>
+                                        <option value="#c91010" style="background-color: #c91010;"></option>/>
+                                        <option value="#2d042" style="background-color: #f2d042;"></option>/>
+                                        <option value="#818181" style="background-color: #818181;"></option>/>
+                                    </datalist>
+                                    -->
+                        </div>
+                        <div class="panel-body bg-light">
 
-                    <h4 style="margin-left: 10px;">
-                        <label id="{{'w_label2_' + workout.id}}" style="margin-right: 5px;" class="hidden">Description: </label>
-                        <input id="{{'w_desc_' + workout.id}}" class="exercise-text-input"
-                            type="text" value={{workout.description}} [disabled]="true" style="margin-top: 5px;">
-                    </h4>
-                    <div class="workout-excercise-list" style="margin-left: 10px;">
-                        <exercise [exercises]=workout.exercises></exercise>
-                    </div>
-                </div>
+                            <h4 style="margin-left: 10px;">
+                                <label id="{{'w_label2_' + workout._id}}" style="margin-right: 5px;" class="hidden">Description:
+                                </label>
+                                <input id="{{'w_desc_' + workout._id}}" class="exercise-text-input" type="text" value={{workout.description}}
+                                    [disabled]="true" style="margin-top: 5px;">
+                            </h4>
+                            <div class="workout-excercise-list" style="margin-left: 10px;">
+                                <exercise [workout]=workout></exercise>
+                            </div>
+                        </div>
 
-                <div class="panel-footer bg-light text-white" style="padding: 10px;">
-                    <div id="{{'w_edit_delete_' + workout.id}}">
-                        <input type="button" value="Edit" class="btn btn-primary" (click)="edit(workout)">
-                        <input type="button" value="Delete" class="btn btn-danger" style="margin-left: 10px;" (click)="delete(workout)">
-                    </div>
-                    <div id="{{'w_save_cancel_' + workout.id}}" class="hidden">
-                        <input type="button" value="Save" class="btn btn-primary" (click)="save(workout)">
-                        <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(workout)" style="margin-left: 10px;">
+                        <div class="panel-footer bg-light text-white" style="overflow: auto; padding: 10px;">
+                            <div  class="clear-fix">
+                                <div id="{{'w_edit_delete_' + workout._id}}" class="float-left">
+                                    <input type="button" value="Edit" class="btn btn-primary" (click)="edit(workout)">
+                                    <input type="button" value="Delete" class="btn btn-danger" style="margin-left: 10px;"
+                                        (click)="delete(workout)">
+                                </div>
+                                <div id="{{'w_save_cancel_' + workout._id}}" class="hidden float-left">
+                                    <input type="button" value="Save" class="btn btn-primary" (click)="save(workout)">
+                                    <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(workout)"
+                                        style="margin-left: 10px;">
+                                </div>
+                                <div class="float-right">
+                                    <input type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    </form>
 </div>
