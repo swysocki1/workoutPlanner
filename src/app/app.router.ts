@@ -4,10 +4,10 @@ import {AdminComponent} from "./containers/admin/admin.component";
 import {AccountSignupComponent} from "./component/accountSignup/accountSignup.component";
 import {WorkoutComponent} from "./component/workout/workout.component";
 
+
+
 import {ProfileComponent} from "./component/profile/profile.component";
-
 import {CalendarComponent} from "./component/calendar/calendar.component";
-
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
