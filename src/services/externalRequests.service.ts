@@ -61,6 +61,10 @@ export class ExternalRequestsService {
     return this.post(`${this.api}${this.exercisePath}/add`, obj);
   }
 
+ getExercise(obj): Observable<Object> {
+    return this.post(`${this.api}${this.exercisePath}/getById`, obj);
+  }
+
   updateWorkout(workout) {
     return this.post(`${this.api}${this.workoutPath}/update`, workout);
   }
@@ -77,6 +81,7 @@ export class ExternalRequestsService {
     headers = headers.append('Authorization', `Bearer ${this.authorization}`);
     return this.http.get(url, {headers});
   }
+
   private post(url, data) {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');

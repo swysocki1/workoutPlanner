@@ -109,6 +109,18 @@ exports.deleteExercise = function deleteWorkout(obj, funct) {
   });
 };
 
+exports.getExercise = function getExercise(exercise, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'workout').findOne({"exercises._id" : exercise._id}, (err, res) => {
+      funct(err, res);
+      client.close();
+    });
+  });
+};
+
 exports.addExercise = function addExercise(obj, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {

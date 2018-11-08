@@ -35,11 +35,21 @@ export class ExerciseComponent {
     }
 
     cancel(exercise: Exercise) {
+        var idx = this.workout.exercises.indexOf(exercise);
+        this.excerciseService.get(exercise).subscribe(workout => {
+            let w: Workout;
+            w = workout as Workout;
+            //console.log(w.exercises[idx]);
+
+            let e: Exercise;
+            e = w.exercises[idx] as Exercise;
+            (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).value = e.name;
+            (<HTMLInputElement>document.getElementById(`e_desc_${exercise._id}`)).value = e.description;
+            (<HTMLInputElement>document.getElementById(`e_reps_${exercise._id}`)).value = e.reps.toString();
+            (<HTMLInputElement>document.getElementById(`e_sets_${exercise._id}`)).value = e.sets.toString();
+            console.log("cancelling ...");
+        });
         
-        (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).value = exercise.name;
-        (<HTMLInputElement>document.getElementById(`e_desc_${exercise._id}`)).value = !exercise.description? "": exercise.description;
-        (<HTMLInputElement>document.getElementById(`e_reps_${exercise._id}`)).value = exercise.reps.toString();
-        (<HTMLInputElement>document.getElementById(`e_sets_${exercise._id}`)).value = exercise.sets.toString();
 
 
         (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).disabled = true;
@@ -57,17 +67,10 @@ export class ExerciseComponent {
         
     }
 
-    
-
     save(exercise: Exercise) {
         document.getElementById(`e_save_cancel_${exercise._id}`).className = 'hidden';
         document.getElementById(`e_edit_delete_${exercise._id}`).className = 'show';
-        let e = this.workout.exercises[this.workout.exercises.indexOf(exercise)];
-
-        e.name = (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).value;
-        e.description = (<HTMLInputElement>document.getElementById(`e_desc_${exercise._id}`)).value;
-        e.reps = parseInt((<HTMLInputElement>document.getElementById(`e_reps_${exercise._id}`)).value);
-        e.sets = parseInt((<HTMLInputElement>document.getElementById(`e_sets_${exercise._id}`)).value);
+        
 
         this.excerciseService.update(exercise).subscribe(obj => {
             console.log("saved exercise...");
@@ -89,8 +92,7 @@ export class ExerciseComponent {
         document.getElementById(`e_save_cancel_${exercise._id}`).className = 'show';
         document.getElementById(`e_edit_delete_${exercise._id}`).className = 'hidden';
 
-        
-
+    
         (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).disabled = false;
         (<HTMLInputElement>document.getElementById(`e_desc_${exercise._id}`)).disabled = false;
         (<HTMLInputElement>document.getElementById(`e_reps_${exercise._id}`)).disabled = false;
@@ -108,16 +110,6 @@ export class ExerciseComponent {
             this.workout.exercises.splice(this.workout.exercises.indexOf(exercise), 1);
             console.log("removed exercise...");
         });
-
-
-        /*
- // Update first matching array element using the positional operator ($)
-    {
-        $set: {
-            'cours_reussis.$.name_school': 'ENSA',
-        }
-    }
-        */
     }
     
 }

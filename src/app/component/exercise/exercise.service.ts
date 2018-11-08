@@ -18,5 +18,8 @@ export class ExerciseService {
   delete(obj) {
     return this.er.deleteExercise(obj);
   }
+  get(exercise) {
+    return this.er.getExercise(exercise);
+  }
   
 }

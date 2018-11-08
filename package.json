@@ -42,7 +42,8 @@
     "rxjs": "^5.5.6",
     "url": "^0.11.0",
     "uuid": "^3.3.2",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "cors": "^2.8.4"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.4",

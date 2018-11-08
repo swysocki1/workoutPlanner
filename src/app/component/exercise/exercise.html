@@ -19,13 +19,13 @@
         <tbody *ngFor="let exercise of workout.exercises; let idx = index">
             <tr>
                 <td><input id="{{'e_name_' + exercise._id}}" class="exercise-text-input" type="text" value={{exercise.name}}
-                        [disabled]="true"></td>
+                        [disabled]="true" [(ngModel)]="exercise.name"></td>
                 <td><input id="{{'e_desc_' + exercise._id}}" class="exercise-text-input" type="text" value={{exercise.description}}
-                        [disabled]="true"></td>
+                        [disabled]="true" [(ngModel)]="exercise.description"></td>
                 <td><input id="{{'e_sets_' + exercise._id}}" class="exercise-text-input" type="number" value={{exercise.sets}}
-                        [disabled]="true"></td>
+                        [disabled]="true" [(ngModel)]="exercise.sets"></td>
                 <td><input id="{{'e_reps_' + exercise._id}}" class="exercise-text-input" type="number" value={{exercise.reps}}
-                        [disabled]="true"></td>
+                        [disabled]="true" [(ngModel)]="exercise.reps"></td>
 
                 <td id="{{'e_edit_delete_' + exercise._id}}">
                     <input type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">

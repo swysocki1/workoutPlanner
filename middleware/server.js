@@ -102,6 +102,11 @@ app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
     helper.respond(res, err, result);
   });
 });
+app.post(`${exercisePath}/getById`, authenticate, (req, res) => {
+  mongoDB.getExercise(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
 app.post(`${workoutPath}/update`, authenticate, (req, res) => {
   mongoDB.updateWorkout(req.body, (err, result) => {
     helper.respond(res, err, result);
