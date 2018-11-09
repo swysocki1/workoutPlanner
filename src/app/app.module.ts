@@ -25,6 +25,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { ProfileComponent } from './component/profile/profile.component';
 import {ExerciseModule} from "./component/exercise/exercise.module";
 import {WorkoutModule} from "./component/workout/workout.module";
+import {WorkoutModalModule} from "./component/workoutModal/workoutModal.module";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {WorkoutModule} from "./component/workout/workout.module";
     CalendarModule,
     ExerciseModule,
     WorkoutModule,
-    HttpClientModule
+    HttpClientModule,
+    WorkoutModalModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
