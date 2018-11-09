@@ -9,14 +9,14 @@
 
         <div class="workout-list">
             <div *ngFor="let workout of workouts;" style="margin-top: 25px;">
-                <div class="panel panel-default" id="{'w_collapse' + workout._id}}">
+                <div class="panel panel-default" id="{{'w_collapse' + workout._id}}">
 
                     <a data-toggle="collapse" href="{{'#collapse_' + workout._id}}" style="cursor: pointer;" role="button"
                         aria-expanded="false" id="{{'w_collapse_' + workout._id}}">
-                        <div  [ngStyle]="{'background-color': workout.color}" class="panel-heading text-white form-inline">
+                        <div [ngStyle]="{'background-color': workout.color}" class="panel-heading text-white form-inline">
                             
                                 <h1 style="margin-left: 10px;">
-                                        <label>{{workout.name}}</label>
+                                        <label id="{{'w_label_' + workout._id}}">{{workout.name}}</label>
                                     </h1>
 
                         </div>
@@ -28,7 +28,8 @@
                                         <label id="{{'w_label1_' + workout._id}}" style="margin-right: 5px;" class="hidden">Name:
                                         </label>
                                         <input id="{{'w_name_' + workout._id}}" class="exercise-text-input" type="text"
-                                            value={{workout.name}} [disabled]="true" style="margin-top: 5px; margin-bottom: 5px;" [(ngModel)]="workout.name">
+                                            value={{workout.name}} [disabled]="true" style="margin-top: 5px; margin-bottom: 5px;" 
+                                            [(ngModel)]="workout.name" [ngModelOptions]="{standalone: true}">
                                     </h2>
                                 
                                     <div id="{{'w_color_' + workout._id}}" class="hidden" style="margin-left: 40px;">
@@ -60,7 +61,7 @@
                                 <label id="{{'w_label2_' + workout._id}}" style="margin-right: 5px;" class="hidden">Description:
                                 </label>
                                 <input id="{{'w_desc_' + workout._id}}" class="exercise-text-input" type="text" value={{workout.description}}
-                                    [disabled]="true" style="margin-top: 5px;" [(ngModel)]="workout.description">
+                                    [disabled]="true" style="margin-top: 5px;" [(ngModel)]="workout.description" [ngModelOptions]="{standalone: true}">
                             </h4>
                             <div class="workout-excercise-list" style="margin-left: 10px;">
                                 <exercise [workout]=workout></exercise>
@@ -79,7 +80,7 @@
                                     <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(workout)"
                                         style="margin-left: 10px;">
                                 </div>
-                                <div class="float-right">
+                                <div class="float-right" *ngIf="!workout.isShared">
                                     <input type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)">
                                 </div>
                             </div>

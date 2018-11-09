@@ -61,12 +61,12 @@ exports.verifyPassword = function verifyPassword(user, password) {
     return false;
   }
 };
-exports.getAllWorkouts = function getAllWorkouts(funct) {
+exports.getAllWorkouts = function getAllWorkouts(userId, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
     }
-    getCollection(client, 'workout').find({}).toArray((error, result) => {
+    getCollection(client, 'workout').find({'owner': `${userId}`}).toArray((error, result) => {
       funct(error, result);
       client.close();
     });
@@ -109,12 +109,12 @@ exports.deleteExercise = function deleteWorkout(obj, funct) {
   });
 };
 
-exports.getExercise = function getExercise(exercise, funct) {
+exports.getExercise = function getExercise(id, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
       funct(err);
     }
-    getCollection(client, 'workout').findOne({"exercises._id" : exercise._id}, (err, res) => {
+    getCollection(client, 'workout').findOne({"exercises._id" : ObjectId(id)}, (err, res) => {
       funct(err, res);
       client.close();
     });
@@ -162,7 +162,7 @@ exports.updateWorkout = function updateWorkout(workout, funct) {
     if (err) {
       funct(err);
     }
-    getCollection(client, 'workout').update({_id: ObjectId(workout._id)}, {$set: {name: workout.name, description: workout.description, color: workout.color}}, (error, result) => {
+    getCollection(client, 'workout').updateOne({_id: ObjectId(workout._id)}, {$set: {name: workout.name, description: workout.description, color: workout.color}}, (error, result) => {
       funct(error, result);
       client.close();
     });
@@ -174,7 +174,7 @@ exports.updateExercise = function updateExercise(exercise, funct) {
     if (err) {
       funct(err);
     }
-    getCollection(client, 'workout').updateOne({'exercises._id': exercise._id},
+    getCollection(client, 'workout').updateOne({'exercises._id': ObjectId(exercise._id)},
       {$set: {'exercises.$.name': exercise.name, 'exercises.$.reps': exercise.reps,
       'exercises.$.sets': exercise.sets, 'exercises.$.description': exercise.description}}, (err, res) => {
       funct(err, res);

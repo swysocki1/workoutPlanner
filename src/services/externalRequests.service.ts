@@ -45,8 +45,8 @@ export class ExternalRequestsService {
     return this.post(`${this.api}/updateAccount`, user);
   }
   
-  getAllWorkouts(): Observable<Object> {
-    return this.get(`${this.api}${this.workoutPath}/getAll`);
+  getAllWorkouts(userId): Observable<Object> {
+    return this.get(`${this.api}${this.workoutPath}/getAll?userId=${userId}`);
   }
   
   addWorkout(workout) {
@@ -62,7 +62,11 @@ export class ExternalRequestsService {
   }
 
  getExercise(obj): Observable<Object> {
-    return this.post(`${this.api}${this.exercisePath}/getById`, obj);
+    return this.get(`${this.api}${this.exercisePath}/get?id=${obj}`);
+  }
+
+  getWorkout(obj): Observable<Object> {
+    return this.get(`${this.api}${this.workoutPath}/get?id=${obj}`);
   }
 
   updateWorkout(workout) {

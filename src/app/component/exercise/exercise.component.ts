@@ -36,7 +36,7 @@ export class ExerciseComponent {
 
     cancel(exercise: Exercise) {
         var idx = this.workout.exercises.indexOf(exercise);
-        this.excerciseService.get(exercise).subscribe(workout => {
+        this.excerciseService.get(exercise._id).subscribe(workout => {
             let w: Workout;
             w = workout as Workout;
             //console.log(w.exercises[idx]);

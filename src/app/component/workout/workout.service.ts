@@ -7,9 +7,7 @@ import {ExternalRequestsService} from "../../../services/externalRequests.servic
 @Injectable()
 export class WorkoutService {
   constructor(private er: ExternalRequestsService) { }
-  getWorkoutsForuser(userId) {
 
-  }
   update(workout) {
     return this.er.updateWorkout(workout);
   }
@@ -26,8 +24,12 @@ export class WorkoutService {
 
   }
 
-  getAllWorkouts() {
-    return this.er.getAllWorkouts();
+  getAllWorkouts(userId) {
+    return this.er.getAllWorkouts(userId);
+  }
+
+  get(id) {
+    return this.er.getWorkout(id);
   }
   
 }

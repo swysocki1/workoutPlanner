@@ -93,7 +93,7 @@ app.get('/test', (req, res) => {
   res.send('Success');
 });
 app.get(`${workoutPath}/getAll`, authenticate, (req, res) => {
-  mongoDB.getAllWorkouts((err, result) => {
+  mongoDB.getAllWorkouts(req.query.userId, (err, result) => {
     helper.respond(res, err, result);
   });
 });
@@ -102,8 +102,13 @@ app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
     helper.respond(res, err, result);
   });
 });
-app.post(`${exercisePath}/getById`, authenticate, (req, res) => {
-  mongoDB.getExercise(req.body, (err, result) => {
+app.get(`${exercisePath}/get`, authenticate, (req, res) => {
+  mongoDB.getExercise(req.query.id, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.get(`${workoutPath}/get`, authenticate, (req, res) => {
+  mongoDB.getWorkout(req.query.id, (err, result) => {
     helper.respond(res, err, result);
   });
 });
