@@ -20,11 +20,11 @@ import {WorkoutComponent} from "./component/workout/workout.component";
 import {ExerciseComponent} from "./component/exercise/exercise.component";
 import {ExerciseService} from "./component/exercise/exercise.service";
 import {WorkoutService} from "./component/workout/workout.service";
-import {ModalComponent} from "./component/modal/modal.component";
-import {ModalService} from "./component/modal/modal.service";
 import {ExternalRequestsService} from "../services/externalRequests.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { ProfileComponent } from './component/profile/profile.component';
+import {ExerciseModule} from "./component/exercise/exercise.module";
+import {WorkoutModule} from "./component/workout/workout.module";
 
 @NgModule({
   declarations: [
@@ -33,9 +33,6 @@ import { ProfileComponent } from './component/profile/profile.component';
     HomeComponent,
     AdminComponent,
     AccountSignupComponent,
-    WorkoutComponent,
-    ExerciseComponent,
-    ModalComponent,
     ProfileComponent
   ],
   imports: [
@@ -44,10 +41,9 @@ import { ProfileComponent } from './component/profile/profile.component';
     BrowserModule,
     RouterModule.forRoot(routes),
     CalendarModule,
+    ExerciseModule,
+    WorkoutModule,
     HttpClientModule
-  ],
-  entryComponents: [
-    ModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -59,7 +55,6 @@ import { ProfileComponent } from './component/profile/profile.component';
     MealService,
     WorkoutService,
     ExerciseService,
-    ModalService,
     ExternalRequestsService
   ],
   bootstrap: [AppComponent]

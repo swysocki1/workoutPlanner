@@ -8,7 +8,7 @@ import {Exercise} from '../exercise/exercise.model';
   moduleId: module.id,
   selector: 'workout',
   templateUrl: './workout.html',
-  styleUrls: ['../exercise/exercise.css', '../modal/modal.css']
+  styleUrls: ['../exercise/exercise.css']
 })
 
 export class WorkoutComponent implements OnInit {

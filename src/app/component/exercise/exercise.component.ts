@@ -7,18 +7,18 @@ import { Workout } from '../workout/workout.model';
   moduleId: module.id,
   selector: 'exercise',
   templateUrl: './exercise.html',
-  styleUrls: ['./exercise.css', '../modal/modal.css']
+  styleUrls: ['./exercise.css']
 })
 
-export class ExerciseComponent { 
+export class ExerciseComponent {
     
     @Input() workout: Workout;
     
 
-    constructor(private excerciseService:ExerciseService){  
+    constructor(private excerciseService:ExerciseService){
     }
 
-    add(exercise: Exercise) {
+    add(exercise?: Exercise) {
         
         let e: Exercise;
         e = new Exercise();

@@ -4,11 +4,9 @@ import {CalendarService} from './calendar.service';
 import * as moment from 'moment';
 import {Meal, MealCalendar} from '../../../models/meal.module';
 import {MealService} from '../../../services/meal.service';
-import {ModalService} from '../modal/modal.service';
 import {WorkoutService} from '../workout/workout.service';
-import {ModalComponent} from "../modal/modal.component";
 import { Workout } from '../workout/workout.model';
-
+declare var $:any;
 
 
 
@@ -16,14 +14,14 @@ import { Workout } from '../workout/workout.model';
   selector: 'calendar',
   templateUrl: './calendar.html'
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   workouts: [Workout];
   daysOfWeek: [string] = [] as [string];
   monthsOfYear: [string] = [] as [string];
   month: CalendarMonth = new CalendarMonth();
   selectedDate = moment().toDate();
   mealCalendar: [MealCalendar];
-  modalComponent: ModalComponent;
+  workout: Workout;
 
   /*
 
@@ -37,7 +35,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
         ref.changeDetectorRef.detectChanges();
     }
   */
-  constructor(private cs: CalendarService, private mealService: MealService, 
+  constructor(private cs: CalendarService, private mealService: MealService,
     private workoutService: WorkoutService, private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef) {
 
@@ -46,11 +44,11 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
     this.month = this.cs.getMonth(moment(this.selectedDate).year(), moment(this.selectedDate).month());
     this.getMealCalendar();
 
-    const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
-    const ref = this.viewContainerRef.createComponent(factory);
-    ref.changeDetectorRef.detectChanges();
-
-    this.modalComponent = ref.instance;
+    // const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+    // const ref = this.viewContainerRef.createComponent(factory);
+    // ref.changeDetectorRef.detectChanges();
+    //
+    // this.modalComponent = ref.instance;
   }
 
   ngOnInit() {
@@ -62,6 +60,9 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
       console.error(error);
     });
     
+  }
+  toggleToday() {
+  
   }
   goBackMonth() {
     this.selectedDate = moment(this.selectedDate).subtract(1, 'months').toDate();
@@ -89,6 +90,11 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
   getWorkouts() {
     return this.workouts;
     //return this.workoutService.getWorkouts();
+  }
+  showWorkout(workout) {
+    console.log(workout);
+    this.workout = workout;
+    $('#workout-modal').modal('show');
   }
   getMealCalendar(start?: Date, end?: Date) {
     if (start && end) {
