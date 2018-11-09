@@ -6,6 +6,7 @@ import {Meal, MealCalendar} from '../../../models/meal.module';
 import {MealService} from '../../../services/meal.service';
 import {WorkoutService} from '../workout/workout.service';
 import { Workout } from '../workout/workout.model';
+import { LoginService } from '../../../services/login.service';
 declare var $:any;
 
 
@@ -37,7 +38,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
   */
   constructor(private cs: CalendarService, private mealService: MealService,
     private workoutService: WorkoutService, private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef) {
+    private viewContainerRef: ViewContainerRef, private loginService: LoginService) {
 
     this.daysOfWeek = this.cs.getDaysOfWeek();
     this.monthsOfYear = this.cs.getMonthsOfYear();
@@ -53,7 +54,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
 
   ngOnInit() {
     // this.workouts = this.workoutService.getWorkouts() as [Workout];
-    this.workoutService.getAllWorkouts().subscribe(ws => {
+    this.workoutService.getAllWorkouts(this.loginService.getUser().id).subscribe(ws => {
       this.workouts = ws as [Workout];
       console.log(this.workouts.length + " **********");
     }, error => {
