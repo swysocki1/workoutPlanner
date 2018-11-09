@@ -61,7 +61,10 @@ function generateToken(req, res, next) {
   next();
 }
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.get('/test', function(req, res) {
+  helper.respond(res, null, 'Success - Test Pass!');
+});
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 app.post('/login', passport.authenticate(
   'local', {
     session: false
@@ -150,3 +153,4 @@ app.post(`${exercisePath}/delete`, authenticate, (req, res) => {
 //   next(err);
 // });
 
+module.exports = app;

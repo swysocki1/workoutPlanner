@@ -1,5 +1,4 @@
 const MongoClient = require('mongodb').MongoClient;
-const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 const helper = require("../middleware/expressHelper");
 const uuid = require('uuid');
