@@ -4,7 +4,7 @@ import {CalendarComponent} from './calendar.component';
 import {CalendarService} from './calendar.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DayComponent} from './day/day.component';
-import {ModalModule} from "../modal/modal.module";
+import {WorkoutModalModule} from "../workoutModal/workoutModal.module";
 
 
 @NgModule({
@@ -15,9 +15,13 @@ import {ModalModule} from "../modal/modal.module";
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    WorkoutModalModule
   ],
-  exports: [CalendarComponent],
+  exports: [
+    CalendarComponent,
+    DayComponent
+  ],
   providers: [CalendarService]
 })
 export class CalendarModule { }

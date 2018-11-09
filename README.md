@@ -1,39 +1,25 @@
 # WorkoutPlanner
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-_______________________________________________________________________________________________________________________________________________________________________________
 
 Dev Notes:
 
 To run this application locally, use 'npm run start'
 
-_______________________________________________________________________________________________________________________________________________________________________________
+To run just the UI, 'ng serve'
 
-To Run Middleware/API Connection to MongoDB: 
+To run just the Express Back End, node middleware/app.js
 
-nodemon ./middleware/server.js
+To Deploy Express Back End to AWS Lambda 'npm run deploy-express'
+
+For Deployments to AWS, you need the node module aws-cli installed and need to create the profile 'workoutPlanner'
+
+<b>Prod UI URL:</b> http://d6i88f4fzbxyg.cloudfront.net/
+_____________________________________________________________________________________________________________________________________________________________
+
+For Prod API, I set up 2 Environments:
+
+<b>Production:</b> https://9t5lmz7nha.execute-api.us-east-1.amazonaws.com/prod/{Additional Path Params}
+
+<b>Test:</b> https://9t5lmz7nha.execute-api.us-east-1.amazonaws.com/test/{Additional Path Params}
+
+
