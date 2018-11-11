@@ -26,7 +26,11 @@ export class LoginService {
 
   private setUserSession(value: UserSession) {
     this._userSession = value;
-    if (value) {
+    
+    if (this._userSession) {
+      if (this._userSession.token) {
+        this.es.updateToken(this._userSession.token);
+      }
       this.setUser(value.user);
     }
   }

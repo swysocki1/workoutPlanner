@@ -12,7 +12,7 @@
 
                     <a data-toggle="collapse" href="{{'#collapse_' + workout._id}}" style="cursor: pointer;" role="button"
                         aria-expanded="false" id="{{'w_collapse_' + workout._id}}">
-                        <div [ngStyle]="{'background-color': workout.color}" class="panel-heading text-white form-inline">
+                        <div [ngStyle]="{'background-color': workout?.color}" class="panel-heading text-white form-inline">
 
                             <h1 style="margin-left: 10px;">
                                 <label id="{{'w_label_' + workout._id}}">{{workout.name}}</label>
