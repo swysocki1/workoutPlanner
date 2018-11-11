@@ -8,7 +8,12 @@ export class User {
   lastName: string;
   email: string;
   roles: [Role] = [] as [Role];
+  friends: [Friend];
   // TODO add more User Info
+}
+
+export class Friend {
+  username: string;
 }
 
 export class Role {

@@ -6,6 +6,7 @@ import { LoginService } from '../../../services/login.service';
 import { User } from '../../../models/user.model';
 import { ExerciseService } from '../exercise/exercise.service';
 import * as moment from 'moment';
+declare var $:any;
 
 
 @Component({
@@ -16,14 +17,16 @@ import * as moment from 'moment';
 })
 
 export class WorkoutComponent implements OnInit {
+  workout: Workout;
   currentUser: User;
+  friends: Array<User>;
   workouts: Array<Workout> = [];
   constructor(private workoutService: WorkoutService, private loginService: LoginService, 
     private exerciseService: ExerciseService) { }
 
   ngOnInit() {
-    console.log("blah blah blah date.. " + moment().format('LL'));
     this.currentUser = this.loginService.getUser();
+    this.friends = this.loginService.getFriends();
 
     // this.workouts = this.workoutService.getWorkouts() as [Workout];
     this.workoutService.getAllWorkouts(this.currentUser.id).subscribe(ws => {
@@ -33,6 +36,11 @@ export class WorkoutComponent implements OnInit {
       console.error(error);
     });
 
+  }
+
+  showModal(workout) {
+    this.workout = workout;
+    $('#workout-share-modal').modal('show');
   }
 
   /*

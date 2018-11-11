@@ -20,6 +20,7 @@ const port = 4201;
 const workoutPath = '/workout';
 const exercisePath = '/exercise';
 const calendarPath = '/calendar';
+const userPath = '/user';
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -106,6 +107,11 @@ app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
     helper.respond(res, err, result);
   });
 });
+app.get(`${userPath}/get`, authenticate, (req, res) => {
+  mongoDB.getAccount(req.query.username, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
 app.get(`${exercisePath}/get`, authenticate, (req, res) => {
   mongoDB.getExercise(req.query.id, (err, result) => {
     helper.respond(res, err, result);
@@ -118,6 +124,11 @@ app.get(`${calendarPath}/get`, authenticate, (req, res) => {
 });
 app.get(`${workoutPath}/get`, authenticate, (req, res) => {
   mongoDB.getWorkout(req.query.id, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.get(`${userPath}/get`, authenticate, (req, res) => {
+  mongoDB.getAccount(req.query.username, (err, result) => {
     helper.respond(res, err, result);
   });
 });

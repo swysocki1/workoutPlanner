@@ -12,12 +12,19 @@ import {ExternalRequestsService} from "./externalRequests.service";
 export class LoginService {
   private _user: User = new User();
   private _userSession: UserSession = new UserSession();
+  private _friends: Array<User>;
   getUser(): User {
     return this._user;
   }
 
+  getFriends(): Array<User>{
+    return this._friends;
+  }
+
   private setUser(value: User) {
     this._user = value;
+    console.log(value);
+    this.setFriends();
   }
 
   getUserSession(): UserSession {
@@ -25,9 +32,12 @@ export class LoginService {
   }
 
   private setUserSession(value: UserSession) {
+    
     this._userSession = value;
     if (value) {
       this.setUser(value.user);
+      console.log(this._user);
+      
     }
   }
 
@@ -38,6 +48,14 @@ export class LoginService {
       this.setUserSession(cachedSession);
       this.es.updateToken(cachedSession.token);
     }
+  }
+
+  private setFriends() {
+    this._user.friends.forEach(i => {
+      this.es.getUser(i.username).subscribe(res => {
+        this._friends.push(res as User);
+      })
+    })
   }
 
   // isLogedIn(): boolean {
@@ -66,6 +84,7 @@ export class LoginService {
         userSession.created = new Date();
         userSession.userAgent = navigator.userAgent;
         userSession.user = res['user'];
+        
         localStorage.setItem('CFBlocks', JSON.stringify(userSession));
         this.setUserSession(userSession);
   
@@ -76,6 +95,8 @@ export class LoginService {
         subscriber.complete();
       })
     });
+
+    
   }
   logout(): Observable<UserSession> {
     return new Observable(subscriber => {

@@ -88,15 +88,22 @@
                                         style="margin-left: 10px;" [disabled]="workout.isShared">
                                 </div>
                                 <div class="float-right">
-                                    <input type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)">
+                                    <input type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)" style="margin-left: 10px;">
+                                    <input type="button" value="Share" class="btn btn-primary float-right" (click)="showModal(workout)" style="margin-left: 10px;">
+                                    <input type="button" value="Add to calendar" class="btn btn-primary float-right" (click)="clone(workout)">
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
                         <br>
+                        
                     </div>
                 </div>
             </div>
         </div>
 
+        
+        <workout-share-modal [workout]="workout" [user]="currentUser" [friends]="friends"></workout-share-modal>
     </form>
 </div>

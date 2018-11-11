@@ -18,6 +18,17 @@ exports.getAccount = function getAccount(username, funct) {
     });
   });
 };
+exports.getUser = function getUser(username, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'users').findOne({username: username}, (error, result) => {
+      funct(error, result);
+      client.close();
+    });
+  });
+};
 exports.createAccount = function createAccount(user, funct) {
   this.getAccount(user.username, (error, result) => {
     if (error) {
@@ -71,6 +82,7 @@ exports.getAllWorkouts = function getAllWorkouts(userId, funct) {
     });
   });
 };
+
 exports.getWorkoutsForDay = function getWorkoutsForDay(userId, date, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {

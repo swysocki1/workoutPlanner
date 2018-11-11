@@ -4,6 +4,7 @@ import {WorkoutComponent} from './workout.component';
 import { WorkoutService } from './workout.service';
 import {FormsModule} from "@angular/forms";
 import {ExerciseModule} from "../exercise/exercise.module";
+import { ShareModalModule } from '../shareModal/shareModal.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {ExerciseModule} from "../exercise/exercise.module";
   imports: [
     BrowserModule,
     FormsModule,
-    ExerciseModule
+    ExerciseModule,
+    ShareModalModule
   ],
   exports: [WorkoutComponent],
   providers: [WorkoutService]
