@@ -1,0 +1,11 @@
+.workout-hidden {
+    display:none !important;
+}
+
+.workout-show {
+    display:block !important;
+}
+
+.workout-show-inline {
+    display:inline !important;
+}

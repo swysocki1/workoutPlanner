@@ -4,20 +4,20 @@ import { Workout } from './workout.model';
 import { Exercise } from '../exercise/exercise.model';
 import { LoginService } from '../../../services/login.service';
 import { User } from '../../../models/user.model';
-
-
+import { ExerciseService } from '../exercise/exercise.service';
 
 @Component({
   moduleId: module.id,
   selector: 'workout',
   templateUrl: './workout.html',
-  styleUrls: ['../exercise/exercise.css']
+  styleUrls: ['../exercise/exercise.css', './workout.css']
 })
 
 export class WorkoutComponent implements OnInit {
   currentUser: User;
   workouts: Array<Workout> = [];
-  constructor(private workoutService: WorkoutService, private loginService: LoginService) { }
+  constructor(private workoutService: WorkoutService, private loginService: LoginService, 
+    private exerciseService: ExerciseService) { }
 
   ngOnInit() {
     this.currentUser = this.loginService.getUser();
@@ -31,6 +31,7 @@ export class WorkoutComponent implements OnInit {
     });
 
   }
+
   /*
   updateColor(workout: Workout, event: any){
     workout.color = event.target.value;
@@ -47,7 +48,6 @@ export class WorkoutComponent implements OnInit {
     this.workoutService.update(workout).subscribe(result => {
       console.log(result);
     })
-
   }
 
   add() {
@@ -57,10 +57,13 @@ export class WorkoutComponent implements OnInit {
     (<HTMLInputElement>document.getElementById('add_workout_name')).value = "Add New Workout...";
     w.description = "Workout Description";
     w.owner = "current_user";
-    w.color = "#818181";
+    w.color = "#37454E";
     w.owner = this.currentUser.id;
-    var arr: Exercise[] = [];
-    w.exercises = arr;
+    w.isShared = false;
+    var shared: string[] = [];
+    w.sharedWith = shared;
+    var exercises: Exercise[] = [];
+    w.exercises = exercises;
     if (!this.workouts) {
       this.workouts = new Array<Workout>();
     }
@@ -73,7 +76,6 @@ export class WorkoutComponent implements OnInit {
     var idx = this.workouts.indexOf(workout);
 
     this.workoutService.get(workout._id).subscribe(res => {
-
       workout = res as Workout;
       (<HTMLElement>document.getElementById(`w_label_${workout._id}`)).innerHTML = workout.name;
       (<HTMLInputElement>document.getElementById(`w_name_${workout._id}`)).value = workout.name;
@@ -81,15 +83,13 @@ export class WorkoutComponent implements OnInit {
       console.log("cancelling ...");
     });
     
+    document.getElementById(`w_save_cancel_${workout._id}`).className = 'workout-hidden float-left';
+    document.getElementById(`w_edit_delete_${workout._id}`).className = 'show float-left';
 
+    document.getElementById(`w_label2_${workout._id}`).className = 'workout-hidden';
+    document.getElementById(`w_label1_${workout._id}`).className = 'workout-hidden';
 
-    document.getElementById(`w_save_cancel_${workout._id}`).className = 'hidden';
-    document.getElementById(`w_edit_delete_${workout._id}`).className = 'show';
-
-    document.getElementById(`w_label2_${workout._id}`).className = 'hidden';
-    document.getElementById(`w_label1_${workout._id}`).className = 'hidden';
-
-    document.getElementById(`w_color_${workout._id}`).className = 'hidden';
+    document.getElementById(`w_color_${workout._id}`).className = 'workout-hidden';
 
     (<HTMLInputElement>document.getElementById(`w_desc_${workout._id}`)).disabled = true;
     (<HTMLInputElement>document.getElementById(`w_name_${workout._id}`)).disabled = true;
@@ -101,14 +101,15 @@ export class WorkoutComponent implements OnInit {
   save(workout: Workout) {
     this.workoutService.update(workout).subscribe(result => {
       console.log("saved workout");
-    })
+    });
 
     // changing ui
-    document.getElementById(`w_save_cancel_${workout._id}`).className = 'hidden';
-    document.getElementById(`w_edit_delete_${workout._id}`).className = 'show';
+    (<HTMLElement>document.getElementById(`w_label_${workout._id}`)).innerHTML = workout.name;
+    document.getElementById(`w_save_cancel_${workout._id}`).className = 'workout-hidden float-left';
+    document.getElementById(`w_edit_delete_${workout._id}`).className = 'show float-left';
 
-    document.getElementById(`w_label2_${workout._id}`).className = 'hidden';
-    document.getElementById(`w_label1_${workout._id}`).className = 'hidden';
+    document.getElementById(`w_label2_${workout._id}`).className = 'workout-hidden';
+    document.getElementById(`w_label1_${workout._id}`).className = 'workout-hidden';
 
     (<HTMLInputElement>document.getElementById(`w_desc_${workout._id}`)).disabled = true;
     (<HTMLInputElement>document.getElementById(`w_name_${workout._id}`)).disabled = true;
@@ -116,16 +117,16 @@ export class WorkoutComponent implements OnInit {
     document.getElementById(`w_desc_${workout._id}`).classList.add("exercise-text-input");
     document.getElementById(`w_name_${workout._id}`).classList.add("exercise-text-input");
 
-    document.getElementById(`w_color_${workout._id}`).className = 'hidden';
+    document.getElementById(`w_color_${workout._id}`).className = 'workout-hidden';
   }
 
   edit(workout: Workout) {
-    document.getElementById(`w_save_cancel_${workout._id}`).className = 'show';
+    document.getElementById(`w_save_cancel_${workout._id}`).className = 'show float-left';
     document.getElementById(`w_color_${workout._id}`).className = 'show';
-    document.getElementById(`w_edit_delete_${workout._id}`).className = 'hidden';
+    document.getElementById(`w_edit_delete_${workout._id}`).className = 'workout-hidden float-left';
 
-    document.getElementById(`w_label2_${workout._id}`).className = 'show-inline';
-    document.getElementById(`w_label1_${workout._id}`).className = 'show-inline';
+    document.getElementById(`w_label2_${workout._id}`).className = 'workout-show-inline';
+    document.getElementById(`w_label1_${workout._id}`).className = 'workout-show-inline';
 
     (<HTMLInputElement>document.getElementById(`w_desc_${workout._id}`)).disabled = false;
     (<HTMLInputElement>document.getElementById(`w_name_${workout._id}`)).disabled = false;
@@ -145,13 +146,30 @@ export class WorkoutComponent implements OnInit {
     let w: Workout;
     w = new Workout();
     w.name = workout.name;
-    w.owner = "current_owner";
     w.color = workout.color;
     w.description = workout.description;
     w.exercises = workout.exercises;
-    this.workoutService.add(w).subscribe(workout => {
-      this.workouts.push(workout as Workout);
-      console.log("clones workout...");
+    w.owner = this.currentUser.id
+    var shared: string[] = [];
+    w.sharedWith = shared;
+    var exercises: Exercise[] = [];
+    w.exercises = exercises;
+    this.workoutService.add(w).subscribe(result => {
+      let res: Workout = result as Workout;
+      //this.workouts.push(res);
+      console.log("cloned workout...");
+
+      // individually adding the exercises so they each have unique ids
+      workout.exercises.forEach((e, idx, arr) => {
+        var obj = {workoutId: res._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description}};
+        this.exerciseService.add(obj).subscribe(x => {
+          if (idx == arr.length - 1) {
+            this.workouts.push(x as Workout);
+          }
+        });
+      });
     });
+
+    
   }
 }

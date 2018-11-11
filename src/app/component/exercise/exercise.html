@@ -1,6 +1,7 @@
 <form class="well">
-        <div class="form-inline" style="margin-top: 10px;">
-        <input type="text" name="title" class="form-control" placeholder="Add Excercise..." style="width:80%; float: right;" id="add_exercise_name">
+    <div class="form-inline" style="margin-top: 10px;" *ngIf="!workout.isShared">
+        <input type="text" name="title" class="form-control" placeholder="Add Excercise..." style="width:80%; float: right;"
+            id="add_exercise_name">
         <input type="button" value="+" class="btn btn-primary" (click)="add()" style="margin-left: 10px; margin-right: 10px; float: left;">
     </div>
 </form>
@@ -27,13 +28,13 @@
                 <td><input id="{{'e_reps_' + exercise._id}}" class="exercise-text-input" type="number" value={{exercise.reps}}
                         [disabled]="true" [(ngModel)]="exercise.reps"></td>
 
-                <td id="{{'e_edit_delete_' + exercise._id}}">
-                    <input type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">
-                    <input type="button" value="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;">
+                <td id="{{'e_edit_delete_' + exercise._id}}" *ngIf="!workout.isShared">
+                    <input type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)" [disabled]="workout.isShared">
+                    <input type="button" value="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;" [disabled]="workout.isShared">
                 </td>
-                <td id="{{'e_save_cancel_' + exercise._id}}" class="hidden">
-                    <input type="button" value="Save" class="btn btn-primary" (click)="save(exercise)">
-                    <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)"  style="margin-left: 10px;">
+                <td id="{{'e_save_cancel_' + exercise._id}}" class="workout-hidden" *ngIf="!workout.isShared">
+                    <input type="button" value="Save" class="btn btn-primary" (click)="save(exercise)" [disabled]="workout.isShared">
+                    <input type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)" style="margin-left: 10px;" [disabled]="workout.isShared">
                 </td>
             </tr>
         </tbody>

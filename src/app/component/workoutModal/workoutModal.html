@@ -1,8 +1,8 @@
 <div id="workout-modal" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">{{workout?.name}}</h2>
+      <div class="modal-header" [ngStyle]="{'background-color': workout.color}">
+        <h2 class="modal-title text-white">{{workout?.name}}</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

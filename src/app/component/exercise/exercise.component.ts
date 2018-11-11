@@ -7,14 +7,11 @@ import { Workout } from '../workout/workout.model';
   moduleId: module.id,
   selector: 'exercise',
   templateUrl: './exercise.html',
-  styleUrls: ['./exercise.css']
+  styleUrls: ['./exercise.css', '../workout/workout.css']
 })
 
 export class ExerciseComponent {
-    
     @Input() workout: Workout;
-    
-
     constructor(private excerciseService:ExerciseService){
     }
 
@@ -50,14 +47,12 @@ export class ExerciseComponent {
             console.log("cancelling ...");
         });
         
-
-
         (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).disabled = true;
         (<HTMLInputElement>document.getElementById(`e_desc_${exercise._id}`)).disabled = true;
         (<HTMLInputElement>document.getElementById(`e_reps_${exercise._id}`)).disabled = true;
         (<HTMLInputElement>document.getElementById(`e_sets_${exercise._id}`)).disabled = true;
 
-        document.getElementById(`e_save_cancel_${exercise._id}`).className = 'hidden';
+        document.getElementById(`e_save_cancel_${exercise._id}`).className = 'workout-hidden';
         document.getElementById(`e_edit_delete_${exercise._id}`).className = 'show';
 
         document.getElementById(`e_name_${exercise._id}`).classList.add("exercise-text-input");
@@ -68,10 +63,9 @@ export class ExerciseComponent {
     }
 
     save(exercise: Exercise) {
-        document.getElementById(`e_save_cancel_${exercise._id}`).className = 'hidden';
+        document.getElementById(`e_save_cancel_${exercise._id}`).className = 'workout-hidden';
         document.getElementById(`e_edit_delete_${exercise._id}`).className = 'show';
         
-
         this.excerciseService.update(exercise).subscribe(obj => {
             console.log("saved exercise...");
         });
@@ -90,9 +84,8 @@ export class ExerciseComponent {
     edit(exercise) {
     
         document.getElementById(`e_save_cancel_${exercise._id}`).className = 'show';
-        document.getElementById(`e_edit_delete_${exercise._id}`).className = 'hidden';
+        document.getElementById(`e_edit_delete_${exercise._id}`).className = 'workout-hidden';
 
-    
         (<HTMLInputElement>document.getElementById(`e_name_${exercise._id}`)).disabled = false;
         (<HTMLInputElement>document.getElementById(`e_desc_${exercise._id}`)).disabled = false;
         (<HTMLInputElement>document.getElementById(`e_reps_${exercise._id}`)).disabled = false;
@@ -111,5 +104,4 @@ export class ExerciseComponent {
             console.log("removed exercise...");
         });
     }
-    
 }
