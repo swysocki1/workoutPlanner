@@ -84,7 +84,7 @@ export class ExternalRequestsService {
   }
 
   getWorkoutsForDay(userId, date): Observable<any>{
-    return this.get(`${this.api}${this.calendarPath}/get?userId=${userId}&date=${date}`);
+    return this.get(`${this.api}${this.calendarPath}/getWorkouts?userId=${userId}&date=${date}`);
   }
 
   getUser(id): Observable<Object>{

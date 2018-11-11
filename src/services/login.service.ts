@@ -12,7 +12,7 @@ import {ExternalRequestsService} from "./externalRequests.service";
 export class LoginService {
   private _user: User = new User();
   private _userSession: UserSession = new UserSession();
-  private _friends: Array<User>;
+  private _friends: Array<User> = new Array<User>();
   getUser(): User {
     return this._user;
   }
@@ -34,7 +34,11 @@ export class LoginService {
   private setUserSession(value: UserSession) {
     
     this._userSession = value;
-    if (value) {
+    
+    if (this._userSession) {
+      if (this._userSession.token) {
+        this.es.updateToken(this._userSession.token);
+      }
       this.setUser(value.user);
       console.log(this._user);
       
@@ -54,6 +58,7 @@ export class LoginService {
     this._user.friends.forEach(i => {
       this.es.getUser(i.username).subscribe(res => {
         this._friends.push(res as User);
+        console.log(res);
       })
     })
   }

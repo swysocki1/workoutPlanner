@@ -12,4 +12,13 @@ export class ShareModalComponent {
   @Input() user: User;
   @Input() friends: Array<User>;
 
+  share(username, val) {
+    if (val == true) {
+      console.log("shared workout with... " + username);
+    }
+    else {
+      console.log("removing");
+    }
+  }
+
 }

@@ -18,8 +18,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let friend of friends">
-              <td>{{friend?.firstName}} {{friend?.lastName}}</td>
-              <td>checkbox goes here</td>
+              <td>{{friend?.firstName}} {{friend?.lastName}} ({{friend?.username}})</td>
+              <td><input type="checkbox" (change)="share(friend?.username, $event.target.checked)"></td>
             </tr>
             </tbody>
           </table>

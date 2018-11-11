@@ -117,7 +117,7 @@ app.get(`${exercisePath}/get`, authenticate, (req, res) => {
     helper.respond(res, err, result);
   });
 });
-app.get(`${calendarPath}/get`, authenticate, (req, res) => {
+app.get(`${calendarPath}/getWorkouts`, authenticate, (req, res) => {
   mongoDB.getWorkoutsForDay(req.query.userId, req.query.date, (err, result) => {
     helper.respond(res, err, result);
   });

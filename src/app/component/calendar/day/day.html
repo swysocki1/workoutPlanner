@@ -4,5 +4,5 @@
       <h5 class="pull-left">{{day?.dayOfMonth}}</h5>
     </div>
   </div>
-  <div class="col pointer workout text-white" [ngStyle]="{'background-color': workout.color}" *ngFor="let workout of workouts" (click)="showWorkoutModal(workout)">{{workout.name}}</div>
+  <div class="col pointer workout text-white" [ngStyle]="{'background-color': workout?.color}" *ngFor="let workout of workouts" (click)="showWorkoutModal(workout)">{{workout.name}}</div>
 </div>
