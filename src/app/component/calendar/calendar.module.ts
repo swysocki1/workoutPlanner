@@ -5,22 +5,22 @@ import {CalendarService} from './calendar.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DayComponent} from './day/day.component';
 import {WorkoutModalModule} from "../workoutModal/workoutModal.module";
+import { DayModule } from './day/day.module';
 
 
 @NgModule({
   declarations: [
-    CalendarComponent,
-    DayComponent
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    WorkoutModalModule
+    WorkoutModalModule,
+    DayModule
   ],
   exports: [
     CalendarComponent,
-    DayComponent
   ],
   providers: [CalendarService]
 })

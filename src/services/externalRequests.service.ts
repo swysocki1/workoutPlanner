@@ -11,6 +11,7 @@ export class ExternalRequestsService {
   api = environment.appAPI;
   workoutPath = '/workout';
   exercisePath = '/exercise';
+  calendarPath = '/calendar';
 
   constructor(private http: HttpClient) { }
 
@@ -80,6 +81,13 @@ export class ExternalRequestsService {
   deleteExercise(obj): Observable<Object> {
     return this.post(`${this.api}${this.exercisePath}/delete`, obj);
   }
+
+
+  getWorkoutsForDay(userId, date): Observable<any>{
+    return this.get(`${this.api}${this.calendarPath}/get?userId=${userId}&date=${date}`);
+  }
+
+
   private get(url) {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Authorization', `Bearer ${this.authorization}`);

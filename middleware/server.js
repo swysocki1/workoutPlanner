@@ -19,6 +19,7 @@ app.use(passport.initialize());
 const port = 4201;
 const workoutPath = '/workout';
 const exercisePath = '/exercise';
+const calendarPath = '/calendar';
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -107,6 +108,11 @@ app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
 });
 app.get(`${exercisePath}/get`, authenticate, (req, res) => {
   mongoDB.getExercise(req.query.id, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.get(`${calendarPath}/get`, authenticate, (req, res) => {
+  mongoDB.getWorkoutsForDay(req.query.userId, req.query.date, (err, result) => {
     helper.respond(res, err, result);
   });
 });

@@ -5,6 +5,8 @@ import { Exercise } from '../exercise/exercise.model';
 import { LoginService } from '../../../services/login.service';
 import { User } from '../../../models/user.model';
 import { ExerciseService } from '../exercise/exercise.service';
+import * as moment from 'moment';
+
 
 @Component({
   moduleId: module.id,
@@ -20,6 +22,7 @@ export class WorkoutComponent implements OnInit {
     private exerciseService: ExerciseService) { }
 
   ngOnInit() {
+    console.log("blah blah blah date.. " + moment().format('LL'));
     this.currentUser = this.loginService.getUser();
 
     // this.workouts = this.workoutService.getWorkouts() as [Workout];

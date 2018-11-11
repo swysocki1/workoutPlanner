@@ -18,7 +18,7 @@
     <tbody>
     <tr *ngFor="let week of month.weeks;">
       <td *ngFor="let day of week.days">
-        <calendar-day [day]="day" [workouts]="getWorkouts()" (showWorkout)="showWorkout($event)"></calendar-day>
+        <calendar-day [day]="day"  (showWorkout)="showWorkout($event)"></calendar-day>
       </td>
     </tr>
     </tbody>

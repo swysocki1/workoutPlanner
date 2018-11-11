@@ -71,7 +71,17 @@ exports.getAllWorkouts = function getAllWorkouts(userId, funct) {
     });
   });
 };
-
+exports.getWorkoutsForDay = function getWorkoutsForDay(userId, date, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'calendar').find({'user': `${userId}`, 'date': `${date}`}).toArray((error, result) => {
+      funct(error, result);
+      client.close();
+    });
+  });
+};
 exports.addWorkout = function addWorkout(workout, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {

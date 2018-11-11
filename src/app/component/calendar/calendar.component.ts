@@ -12,6 +12,7 @@ declare var $:any;
 
 
 @Component({
+  moduleId: module.id,
   selector: 'calendar',
   templateUrl: './calendar.html'
 })
@@ -43,7 +44,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
     this.daysOfWeek = this.cs.getDaysOfWeek();
     this.monthsOfYear = this.cs.getMonthsOfYear();
     this.month = this.cs.getMonth(moment(this.selectedDate).year(), moment(this.selectedDate).month());
-    this.getMealCalendar();
+    //this.getMealCalendar();
 
     // const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
     // const ref = this.viewContainerRef.createComponent(factory);
@@ -54,13 +55,14 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
 
   ngOnInit() {
     // this.workouts = this.workoutService.getWorkouts() as [Workout];
+    /*
     this.workoutService.getAllWorkouts(this.loginService.getUser().id).subscribe(ws => {
       this.workouts = ws as [Workout];
       console.log(this.workouts.length + " **********");
     }, error => {
       console.error(error);
     });
-    
+    */
   }
   toggleToday() {
   
@@ -88,12 +90,8 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
     }
     return [] as [Meal];
   }
-  getWorkouts() {
-    return this.workouts;
-    //return this.workoutService.getWorkouts();
-  }
+ 
   showWorkout(workout) {
-    console.log(workout);
     this.workout = workout;
     $('#workout-modal').modal('show');
   }
