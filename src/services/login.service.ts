@@ -55,12 +55,14 @@ export class LoginService {
   }
 
   private setFriends() {
-    this._user.friends.forEach(i => {
-      this.es.getUser(i.username).subscribe(res => {
-        this._friends.push(res as User);
-        //console.log(res);
-      })
-    })
+    if(this._user.friends) {
+      this._user.friends.forEach(i => {
+        this.es.getUser(i.username).subscribe(res => {
+          this._friends.push(res as User);
+          //console.log(res);
+        });
+      });
+    }
   }
 
   // isLogedIn(): boolean {

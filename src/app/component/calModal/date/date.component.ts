@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit, AfterViewInit} from '@angular/core';
 import {CalendarDay, Day} from '../../calendar/calendar.model';
 import {Workout} from '../../workout/workout.model';
 import { WorkoutService } from '../../workout/workout.service';
@@ -30,25 +30,44 @@ import * as moment from 'moment';
     
   `]
 })
-export class DateComponent implements OnInit {
+export class DateComponent implements OnInit, AfterViewInit{
   @Input() day: CalendarDay;
   @Output() selectDate: EventEmitter<Day> = new EventEmitter<Day>();
   @Output() removeDate: EventEmitter<Day> = new EventEmitter<Day>();
 
   workouts: Array<Workout> = new Array<Workout>();
+  today: boolean;
 
   constructor(private workoutService: WorkoutService, private loginService: LoginService) {}
 
   ngOnInit() {
+    if (moment().format('LL') === moment(this.day.date).format('LL')) {
+      this.today = true;
+    }
+    else {
+      this.today = false;
+    }
+
     
   }
+  ngAfterViewInit() {
+    document.getElementById(`date_${this.day.dayOfMonth}${this.day.month}`).style.color = this.getColor();
+  }
 
-  
+  getColor() {
+    if (this.today) {
+      return 'blue';
+    }
+    else {
+      return 'black'
+    }
+  }
+
   select(day) {
     console.log(day);
     if (day.selected) {
       day['selected'] = false;
-      document.getElementById(`date_${day.dayOfMonth}${day.month}`).style.color = 'black';
+      document.getElementById(`date_${day.dayOfMonth}${day.month}`).style.color = this.getColor();
       this.removeDate.emit(day);
     }
     else {

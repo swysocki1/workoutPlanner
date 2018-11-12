@@ -98,9 +98,13 @@ export class ExternalRequestsService {
   unshareWorkout(obj): Observable<Object> {
     return this.post(`${this.api}${this.workoutPath}/unshare`, obj);
   }
-  
+
   addWorkoutForDay(obj) {
     return this.post(`${this.api}${this.calendarPath}/addWorkout`, obj);
+  }
+
+  getSharedWorkouts(userId: Observable<Object>) {
+    return this.get(`${this.api}${this.workoutPath}/getSharedWorkouts?userId=${userId}`);
   }
 
 

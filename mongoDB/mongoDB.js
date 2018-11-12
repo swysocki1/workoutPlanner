@@ -83,6 +83,18 @@ exports.getAllWorkouts = function getAllWorkouts(userId, funct) {
   });
 };
 
+exports.getSharedWorkouts = function getSharedWorkouts(userId, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'workout').find({'sharedWith.id': `${userId}`}).toArray((error, result) => {
+      funct(error, result);
+      client.close();
+    });
+  });
+};
+
 exports.getWorkoutsForDay = function getWorkoutsForDay(userId, date, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {

@@ -36,6 +36,14 @@ export class WorkoutComponent implements OnInit {
       console.error(error);
     });
 
+    this.workoutService.getSharedWorkouts(this.currentUser.id).subscribe(result => {
+      let w: Array<Workout> = result as [Workout];
+      w.forEach(e => {
+        e.isShared = true;
+        this.workouts.push(e);
+      });
+    });
+
   }
 
   showShareModal(workout) {
@@ -75,7 +83,7 @@ export class WorkoutComponent implements OnInit {
     w.owner = "current_user";
     w.color = "#37454E";
     w.owner = this.currentUser.id;
-    w.isShared = false;
+    
     var shared: Shared[] = [];
     w.sharedWith = shared;
     var exercises: Exercise[] = [];

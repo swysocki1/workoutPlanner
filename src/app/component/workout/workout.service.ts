@@ -28,6 +28,10 @@ export class WorkoutService {
     return this.er.unshareWorkout(obj);
   }
 
+  getSharedWorkouts(userId) {
+    return this.er.getSharedWorkouts(userId)
+  }
+
 
   getAllWorkouts(userId) {
     return this.er.getAllWorkouts(userId);

@@ -90,9 +90,17 @@
                                         style="margin-left: 10px;" [disabled]="workout.isShared">
                                 </div>
                                 <div class="float-right">
-                                    <input type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)" style="margin-left: 10px;">
-                                    <input type="button" value="Share" class="btn btn-primary float-right" (click)="showShareModal(workout)" style="margin-left: 10px;">
-                                    <input type="button" value="Add to calendar" class="btn btn-primary float-right" (click)="showCalModal(workout)">
+                                    <button type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)" style="margin-left: 10px;">
+                                            <i class="far fa-copy"></i>
+                                        </button>
+                                    <button type="button" value="Share" class="btn btn-primary float-right" (click)="showShareModal(workout)" 
+                                    style="margin-left: 10px;" *ngIf="!workout.isShared">
+                                    <i class="fas fa-share"></i>
+                                    </button>
+                                    <button type="button" value="Add to calendar" class="btn btn-primary float-right" (click)="showCalModal(workout)">
+                                            <i class="far fa-calendar"></i>
+                                        </button>
+                               
                                     
                                     
                                 </div>

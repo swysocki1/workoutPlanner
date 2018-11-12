@@ -102,6 +102,11 @@ app.get(`${workoutPath}/getAll`, authenticate, (req, res) => {
     helper.respond(res, err, result);
   });
 });
+app.get(`${workoutPath}/getSharedWorkouts`, authenticate, (req, res) => {
+  mongoDB.getSharedWorkouts(req.query.userId, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
 app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
   mongoDB.getWorkout(req.params.id, (err, result) => {
     helper.respond(res, err, result);
