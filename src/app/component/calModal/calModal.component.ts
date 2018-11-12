@@ -90,6 +90,18 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
   
   }
 
+  reset() {
+    this.month = this.cs.getMonth(moment(this.selectedDate).year(), moment(this.selectedDate).month());
+    this.selectedDate = moment().toDate();
+  }
+
+  close() {
+    $('#workout-cal-modal').modal('hide');
+    this.days = new Array<CalendarDay>();
+    this.reset();
+    this.reset();
+  }
+  
   addToCalendar() {
     this.days.forEach(d => {
       var req = {
@@ -104,7 +116,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
       })
       
     });
-    $('#workout-cal-modal').modal('hide');
+    this.close();
   }
   goBackMonth() {
     this.selectedDate = moment(this.selectedDate).subtract(1, 'months').toDate();

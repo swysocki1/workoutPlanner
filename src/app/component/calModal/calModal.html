@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header" [ngStyle]="{'background-color': workout?.color}">
         <h6 class="modal-title text-white">{{workout?.name}}</h6>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close text-white" (click)="close()" >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -15,8 +15,8 @@
             </div>
             <div class="col">
               <div class="btn-group pull-right">
-                <input type="button"  class="flat-btn" (click)="goBackMonth()" value="<">
-                <input type="button" class="flat-btn" (click)="goNextMonth()" value=">" style="margin-left: 10px;">
+                <input type="button"  class="flat-btn" (click)="goBackMonth()" value="<" style="cursor: pointer;">
+                <input type="button" class="flat-btn" (click)="goNextMonth()" value=">" style="margin-left: 15px; cursor: pointer;">
               </div>
             </div>
           </div>
@@ -37,7 +37,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary btn-sm" (click)="addToCalendar()">Add to Calendar</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="close()">Close</button>
       </div>
     </div>
   </div>

@@ -64,7 +64,6 @@ export class DateComponent implements OnInit, AfterViewInit{
   }
 
   select(day) {
-    console.log(day);
     if (day.selected) {
       day['selected'] = false;
       document.getElementById(`date_${day.dayOfMonth}${day.month}`).style.color = this.getColor();
