@@ -9,6 +9,11 @@ export class Workout {
     exercises: Exercise[];
     owner: string; 
     color: string;
-    sharedWith: string[];
+    sharedWith: Shared[];
     isShared: boolean = false;
+}
+
+export class Shared {
+    id: string
+    username: string;
 }

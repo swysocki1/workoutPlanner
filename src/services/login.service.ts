@@ -23,7 +23,7 @@ export class LoginService {
 
   private setUser(value: User) {
     this._user = value;
-    console.log(value);
+    //console.log(value);
     this.setFriends();
   }
 
@@ -40,7 +40,7 @@ export class LoginService {
         this.es.updateToken(this._userSession.token);
       }
       this.setUser(value.user);
-      console.log(this._user);
+      //console.log(this._user);
       
     }
   }
@@ -58,7 +58,7 @@ export class LoginService {
     this._user.friends.forEach(i => {
       this.es.getUser(i.username).subscribe(res => {
         this._friends.push(res as User);
-        console.log(res);
+        //console.log(res);
       })
     })
   }

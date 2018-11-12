@@ -12,4 +12,8 @@ export class DayService {
         return this.er.getWorkoutsForDay(userId, date);
     }
 
+    addWorkoutForDay(obj) {
+        return this.er.addWorkoutForDay(obj);
+    }
+
 }

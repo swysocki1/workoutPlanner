@@ -94,6 +94,19 @@ exports.getWorkoutsForDay = function getWorkoutsForDay(userId, date, funct) {
     });
   });
 };
+
+exports.addWorkoutForDay = function addWorkoutForDay(obj, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'calendar').insertOne({'user': `${obj.user}`, 'date': `${obj.date}`, 'workout': `${obj.workout}`}, (error, result) => {
+      funct(error, result);
+      client.close();
+    });
+  });
+};
+
 exports.addWorkout = function addWorkout(workout, funct) {
   MongoClient.connect(uri, (err, client) => {
     if (err) {
@@ -150,6 +163,34 @@ exports.addExercise = function addExercise(obj, funct) {
     var exercise = obj.exercise;
     getCollection(client, 'workout').findOneAndUpdate({_id: ObjectId(obj.workoutId)}, {$push: {exercises: {_id: new ObjectId(), name: exercise.name,
       description: exercise.description, reps: exercise.reps, sets: exercise.sets}}}, {returnOriginal: false}, (error, result) => {
+      funct(error, result.value);
+      client.close();
+    });
+  });
+};
+
+exports.unshareWorkout = function unshareWorkout(obj, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    var user = obj.user;
+    getCollection(client, 'workout').updateOne({_id: ObjectId(obj.workoutId)}, {$pull: {sharedWith: {id: user.id,
+      username: user.username}}}, {returnOriginal: false}, (error, result) => {
+      funct(error, result.value);
+      client.close();
+    });
+  });
+};
+
+exports.shareWorkout = function shareWorkout(obj, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    var user = obj.user;
+    getCollection(client, 'workout').updateOne({_id: ObjectId(obj.workoutId)}, {$push: {sharedWith: {_id: new ObjectId(), id: user.id,
+      username: user.username}}}, {returnOriginal: false}, (error, result) => {
       funct(error, result.value);
       client.close();
     });

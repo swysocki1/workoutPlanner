@@ -20,9 +20,14 @@ export class WorkoutService {
     return this.er.deleteWorkout(workout);
   }
 
-  getWorkoutsForDay(userId, day) {
-
+  share(obj) {
+    return this.er.shareWorkout(obj);
   }
+
+  unshare(obj) {
+    return this.er.unshareWorkout(obj);
+  }
+
 
   getAllWorkouts(userId) {
     return this.er.getAllWorkouts(userId);

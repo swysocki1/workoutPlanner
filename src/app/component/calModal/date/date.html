@@ -1,0 +1,8 @@
+<div class="day" [ngClass]="{'valid-month': day?.isThisMonth}" style="width: 10px; height: 10px;">
+    <div class="row">
+        <div class="col" (click)="select(day)" id="{{'date_' + day.dayOfMonth + day.month}}">
+            <p class="pull-left">{{day?.dayOfMonth}}</p>
+        </div>
+    </div>
+    
+</div>

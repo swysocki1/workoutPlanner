@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
     return this.calendarService.getDayOfWeek(day.getDay());
   }
   getWorkout(id: number, td: Date){
-    return this.workoutService.getWorkoutsForDay(id, td);
+    //return this.workoutService.getWorkoutsForDay(id, td);
   }
   private genNextDates(){
     

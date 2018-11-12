@@ -91,8 +91,8 @@
                                 </div>
                                 <div class="float-right">
                                     <input type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)" style="margin-left: 10px;">
-                                    <input type="button" value="Share" class="btn btn-primary float-right" (click)="showModal(workout)" style="margin-left: 10px;">
-                                    <input type="button" value="Add to calendar" class="btn btn-primary float-right" (click)="clone(workout)">
+                                    <input type="button" value="Share" class="btn btn-primary float-right" (click)="showShareModal(workout)" style="margin-left: 10px;">
+                                    <input type="button" value="Add to calendar" class="btn btn-primary float-right" (click)="showCalModal(workout)">
                                     
                                     
                                 </div>
@@ -107,5 +107,7 @@
 
         
         <workout-share-modal [workout]="workout" [user]="currentUser" [friends]="friends"></workout-share-modal>
+        <workout-cal-modal [workout]="workout"></workout-cal-modal>
+        
     </form>
 </div>

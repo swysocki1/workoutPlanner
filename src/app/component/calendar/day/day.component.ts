@@ -38,7 +38,7 @@ export class DayComponent implements OnInit {
 
   ngOnInit() {
     //let workouts: Array<Workout> = new Array<Workout>();
-    console.log(this.day.isThisMonth + "  *****" + this.day.dayOfMonth)
+    //console.log(this.day.isThisMonth + "  *****" + this.day.dayOfMonth)
     this.dayService.getWorkoutsForDay(this.loginService.getUser().id, moment(this.day.date).format('LL')).subscribe(result => {
       let res: Array<Day>;
       res = result as [Day];

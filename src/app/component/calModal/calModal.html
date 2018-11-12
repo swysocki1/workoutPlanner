@@ -1,0 +1,44 @@
+<div id='workout-cal-modal' class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog cal-modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header" [ngStyle]="{'background-color': workout?.color}">
+        <h6 class="modal-title text-white">{{workout?.name}}</h6>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class='card-body bg-light'>
+          <div class="row">
+            <div class="col">
+              <p>{{month.name}} {{month.year}}</p>
+            </div>
+            <div class="col">
+              <div class="btn-group pull-right">
+                <input type="button"  class="flat-btn" (click)="goBackMonth()" value="<">
+                <input type="button" class="flat-btn" (click)="goNextMonth()" value=">" style="margin-left: 10px;">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              
+              <tbody>
+                <tr *ngFor="let week of month.weeks;">
+                  <td *ngFor="let day of week.days">
+                    <date [day]="day" (selectDate)="selectDate($event)" (removeDate)="removeDate($event)"></date>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" (click)="addToCalendar()">Add to Calendar</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

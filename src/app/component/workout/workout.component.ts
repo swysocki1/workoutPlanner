@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutService } from './workout.service';
-import { Workout } from './workout.model';
+import { Workout, Shared } from './workout.model';
 import { Exercise } from '../exercise/exercise.model';
 import { LoginService } from '../../../services/login.service';
 import { User } from '../../../models/user.model';
@@ -38,9 +38,14 @@ export class WorkoutComponent implements OnInit {
 
   }
 
-  showModal(workout) {
+  showShareModal(workout) {
     this.workout = workout;
     $('#workout-share-modal').modal('show');
+  }
+
+  showCalModal(workout) {
+    this.workout = workout;
+    $('#workout-cal-modal').modal('show');
   }
 
   /*
@@ -71,7 +76,7 @@ export class WorkoutComponent implements OnInit {
     w.color = "#37454E";
     w.owner = this.currentUser.id;
     w.isShared = false;
-    var shared: string[] = [];
+    var shared: Shared[] = [];
     w.sharedWith = shared;
     var exercises: Exercise[] = [];
     w.exercises = exercises;
@@ -161,7 +166,7 @@ export class WorkoutComponent implements OnInit {
     w.description = workout.description;
     w.exercises = workout.exercises;
     w.owner = this.currentUser.id
-    var shared: string[] = [];
+    var shared: Shared[] = [];
     w.sharedWith = shared;
     var exercises: Exercise[] = [];
     w.exercises = exercises;

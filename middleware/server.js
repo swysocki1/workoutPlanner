@@ -122,6 +122,13 @@ app.get(`${calendarPath}/getWorkouts`, authenticate, (req, res) => {
     helper.respond(res, err, result);
   });
 });
+
+app.post(`${calendarPath}/addWorkout`, authenticate, (req, res) => {
+  mongoDB.addWorkoutForDay(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+
 app.get(`${workoutPath}/get`, authenticate, (req, res) => {
   mongoDB.getWorkout(req.query.id, (err, result) => {
     helper.respond(res, err, result);
@@ -145,6 +152,18 @@ app.post(`${exercisePath}/update`, authenticate, (req, res) => {
 
 app.post(`${workoutPath}/add`, authenticate, (req, res) => {
   mongoDB.addWorkout(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+
+app.post(`${workoutPath}/share`, authenticate, (req, res) => {
+  mongoDB.shareWorkout(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+
+app.post(`${workoutPath}/unshare`, authenticate, (req, res) => {
+  mongoDB.unshareWorkout(req.body, (err, result) => {
     helper.respond(res, err, result);
   });
 });

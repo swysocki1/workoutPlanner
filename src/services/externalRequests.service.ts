@@ -91,6 +91,19 @@ export class ExternalRequestsService {
     return this.get(`${this.api}${this.userPath}/get?username=${id}`);
   }
 
+  shareWorkout(obj): Observable<Object> {
+    return this.post(`${this.api}${this.workoutPath}/share`, obj);
+  }
+
+  unshareWorkout(obj): Observable<Object> {
+    return this.post(`${this.api}${this.workoutPath}/unshare`, obj);
+  }
+  
+  addWorkoutForDay(obj) {
+    return this.post(`${this.api}${this.calendarPath}/addWorkout`, obj);
+  }
+
+
   private get(url) {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Authorization', `Bearer ${this.authorization}`);

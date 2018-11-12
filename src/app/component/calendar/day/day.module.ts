@@ -6,13 +6,8 @@ import {DayService} from './day.service';
 
 
 @NgModule({
-  declarations: [
-    DayComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-  ],
+  declarations: [DayComponent],
+  imports: [BrowserModule, FormsModule],
   exports: [DayComponent],
   providers: [DayService]
 })
