@@ -28,7 +28,7 @@ import { ProfileComponent } from './component/profile/profile.component';
 import {ExerciseModule} from "./component/exercise/exercise.module";
 import {WorkoutModule} from "./component/workout/workout.module";
 import {WorkoutModalModule} from "./component/workoutModal/workoutModal.module";
-import {DpDatePickerModule} from 'ng2-date-picker';
+
 
 
 
@@ -51,7 +51,7 @@ import {DpDatePickerModule} from 'ng2-date-picker';
     WorkoutModule,
     HttpClientModule,
     WorkoutModalModule,
-    DpDatePickerModule
+    
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
