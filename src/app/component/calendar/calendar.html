@@ -12,51 +12,16 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th scope="col" *ngFor="let day of daysOfWeek">{{day}}</th>
+      <th scope="col" *ngFor="let day of daysOfWeek" style="width:calc(100%/7);">{{day}}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let week of month.weeks;">
-      <td *ngFor="let day of week.days">
-        <calendar-day [day]="day"  (showWorkout)="showWorkout($event)"></calendar-day>
+      <td *ngFor="let day of week.days" style="overflow: hidden;padding:0;">
+        <calendar-day [day]="day"  (showWorkout)="showWorkout($event)" (showWorkout)="showWorkout($event)"></calendar-day>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
 <workout-modal [workout]="workout"></workout-modal>
-<!--<div id="workout-modal" class="modal" tabindex="-1" role="dialog">-->
-  <!--<div class="modal-dialog modal-lg" role="document">-->
-    <!--<div class="modal-content">-->
-      <!--<div class="modal-header">-->
-        <!--<h2 class="modal-title">{{workout?.name}}</h2>-->
-        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-          <!--<span aria-hidden="true">&times;</span>-->
-        <!--</button>-->
-      <!--</div>-->
-      <!--<div class="modal-body">-->
-        <!--<div class='card-body bg-light'>-->
-          <!--<table class='table'>-->
-            <!--<thead>-->
-            <!--<tr>-->
-              <!--<th>Exercise</th>-->
-              <!--<th>Rep Scheme</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr *ngFor="let exercise of workout?.exercises">-->
-              <!--<td>{{exercise?.name}}</td>-->
-              <!--<td>{{exercise?.sets}} X {{exercise?.reps}}</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-          <!--</table>-->
-        <!--</div>-->
-        <!--<p>{{workout?.description}}</p>-->
-      <!--</div>-->
-      <!--<div class="modal-footer">-->
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->

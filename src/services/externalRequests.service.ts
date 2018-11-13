@@ -4,15 +4,18 @@ import {RequestOptions} from "@angular/http";
 import {Headers} from "@angular/http";
 import {environment} from "../environments/environment";
 import {Observable} from "rxjs";
+import {User} from "../models/user.model";
+import {Notification} from '../models/notification.model';
 
 @Injectable()
 export class ExternalRequestsService {
   authorization: string;
   api = environment.appAPI;
-  workoutPath = '/workout';
-  exercisePath = '/exercise';
-  calendarPath = '/calendar';
-  userPath = '/user';
+  userPath = `${this.api}/user`;
+  calendarPath = `${this.api}/calendar`;
+  workoutPath = `${this.api}/workout`;
+  exercisePath = `${this.api}/exercise`;
+  notificationsPath = `${this.api}/notifications`;
 
   constructor(private http: HttpClient) { }
 
@@ -46,65 +49,73 @@ export class ExternalRequestsService {
   updateUser(user) {
     return this.post(`${this.api}/updateAccount`, user);
   }
-  
+  getNotifications(user: User) {
+    return this.post(`${this.notificationsPath}/${user._id}`, {});
+  }
+  viewNotification(user: User, notification: Notification) {
+    this.post(`${this.notificationsPath}/view`, {notification: notification._id, user: user._id});
+  }
+  createNotification(notification: Notification) {
+    this.post(`${this.notificationsPath}/create`, notification);
+  }
   getAllWorkouts(userId): Observable<Object> {
-    return this.get(`${this.api}${this.workoutPath}/getAll?userId=${userId}`);
+    return this.get(`${this.workoutPath}/getAll?userId=${userId}`);
   }
   
   addWorkout(workout) {
-    return this.post(`${this.api}${this.workoutPath}/add`, workout);
+    return this.post(`${this.workoutPath}/add`, workout);
   }
 
   deleteWorkout(workout) {
-    return this.post(`${this.api}${this.workoutPath}/delete`, workout);
+    return this.post(`${this.workoutPath}/delete`, workout);
   }
 
   addExercise(obj): Observable<Object> {
-    return this.post(`${this.api}${this.exercisePath}/add`, obj);
+    return this.post(`${this.exercisePath}/add`, obj);
   }
 
  getExercise(obj): Observable<Object> {
-    return this.get(`${this.api}${this.exercisePath}/get?id=${obj}`);
+    return this.get(`${this.exercisePath}/get?id=${obj}`);
   }
 
   getWorkout(obj): Observable<Object> {
-    return this.get(`${this.api}${this.workoutPath}/get?id=${obj}`);
+    return this.get(`${this.workoutPath}/get?id=${obj}`);
   }
 
   updateWorkout(workout) {
-    return this.post(`${this.api}${this.workoutPath}/update`, workout);
+    return this.post(`${this.workoutPath}/update`, workout);
   }
 
   updateExercise(exercise) {
-    return this.post(`${this.api}${this.exercisePath}/update`, exercise);
+    return this.post(`${this.exercisePath}/update`, exercise);
   }
 
   deleteExercise(obj): Observable<Object> {
-    return this.post(`${this.api}${this.exercisePath}/delete`, obj);
+    return this.post(`${this.exercisePath}/delete`, obj);
   }
 
   getWorkoutsForDay(userId, date): Observable<any>{
-    return this.get(`${this.api}${this.calendarPath}/getWorkouts?userId=${userId}&date=${date}`);
+    return this.get(`${this.calendarPath}/getWorkouts?userId=${userId}&date=${date}`);
   }
 
   getUser(id): Observable<Object>{
-    return this.get(`${this.api}${this.userPath}/get?username=${id}`);
+    return this.get(`${this.userPath}/get?username=${id}`);
   }
 
   shareWorkout(obj): Observable<Object> {
-    return this.post(`${this.api}${this.workoutPath}/share`, obj);
+    return this.post(`${this.workoutPath}/share`, obj);
   }
 
   unshareWorkout(obj): Observable<Object> {
-    return this.post(`${this.api}${this.workoutPath}/unshare`, obj);
+    return this.post(`${this.workoutPath}/unshare`, obj);
   }
 
   addWorkoutForDay(obj) {
-    return this.post(`${this.api}${this.calendarPath}/addWorkout`, obj);
+    return this.post(`${this.calendarPath}/addWorkout`, obj);
   }
 
   getSharedWorkouts(userId: Observable<Object>) {
-    return this.get(`${this.api}${this.workoutPath}/getSharedWorkouts?userId=${userId}`);
+    return this.get(`${this.workoutPath}/getSharedWorkouts?userId=${userId}`);
   }
 
 

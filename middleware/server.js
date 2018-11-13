@@ -21,6 +21,7 @@ const workoutPath = '/workout';
 const exercisePath = '/exercise';
 const calendarPath = '/calendar';
 const userPath = '/user';
+const notificationsPath = '/notifications';
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -56,7 +57,7 @@ function serialize(req, res, next) {
 }
 function generateToken(req, res, next) {
   req.token = require('jsonwebtoken').sign({
-    id: req.user.id,
+    id: req.user._id,
   }, 'server secret', {
     expiresIn: '24h'
   });
@@ -96,6 +97,26 @@ app.post('/updateAccount', authenticate, function(req, res) {
 });
 app.get('/test', (req, res) => {
   res.send('Success');
+});
+// app.get(`${notificationsPath}/all`, authenticate, (req, res) => {
+//   mongoDB.getAllNotifications((err, results) => {
+//     helper.respond(res, err, results);
+//   });
+// });
+app.post(`${notificationsPath}/:id`, authenticate, (req, res) => {
+  mongoDB.getNotifications(req.params.id, (err, results) => {
+    helper.respond(res, err, results);
+  });
+});
+app.post(`${notificationsPath}/view`, authenticate, (req, res) => {
+  mongoDB.viewNotification(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.post(`${notificationsPath}/create`, authenticate, (req, res) => {
+  mongoDB.createNotification(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
 });
 app.get(`${workoutPath}/getAll`, authenticate, (req, res) => {
   mongoDB.getAllWorkouts(req.query.userId, (err, result) => {

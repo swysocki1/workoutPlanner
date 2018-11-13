@@ -25,8 +25,8 @@ export class NavbarComponent {
   });
   constructor(private loginService: LoginService, private valid: ValidationService, private searchService: NavbarSearchService, private notificationService: NotificationService){
     this.updateUserSession(this.loginService.getUserSession());
-    this.notificationService.getNotifications(this.userSession.user).subscribe(notifications => {
-      this.notifications.push(notifications);
+    this.notificationService.getNotifications().subscribe(notifications => {
+      this.notifications = notifications;
     });
   }
   

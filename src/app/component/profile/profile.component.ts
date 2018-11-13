@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { User } from "../../../models/user.model";
 import { WorkoutService } from '../workout/workout.service';
@@ -20,19 +20,19 @@ export class ProfileComponent implements OnInit {
   //next7Days: number[];
   next7Dates: Date[];
   private today: Date;
-  constructor(private workoutService: WorkoutService, private calendarService: CalendarService) { 
+  constructor(private workoutService: WorkoutService, private calendarService: CalendarService) {
       //define test user for testing purposes only
       this.pTestUser = new User();
       this.pTestUser.firstName = 'Jim';
       this.pTestUser.lastName = 'Dandy';
-      this.pTestUser.id = '12321';
+      this.pTestUser._id = '12321';
       this.pTestUser.email = 'jim.dandy@me.org';
       //view variables
       this.showMeals = true;
       this.showFeed = true;
       this.showSchedule = true;
-      this.showUserDetails = true;  
-      this.today = new Date(); 
+      this.showUserDetails = true;
+      this.today = new Date();
       //this.next7Days = this.genNext7();
       this.next7Dates = this.genNextDates();
       

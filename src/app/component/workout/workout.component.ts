@@ -21,7 +21,7 @@ export class WorkoutComponent implements OnInit {
   currentUser: User;
   friends: Array<User>;
   workouts: Array<Workout> = [];
-  constructor(private workoutService: WorkoutService, private loginService: LoginService, 
+  constructor(private workoutService: WorkoutService, private loginService: LoginService,
     private exerciseService: ExerciseService) { }
 
   ngOnInit() {
@@ -29,14 +29,14 @@ export class WorkoutComponent implements OnInit {
     this.friends = this.loginService.getFriends();
 
     // this.workouts = this.workoutService.getWorkouts() as [Workout];
-    this.workoutService.getAllWorkouts(this.currentUser.id).subscribe(ws => {
+    this.workoutService.getAllWorkouts(this.currentUser._id).subscribe(ws => {
       this.workouts = ws as [Workout];
       console.log("Total workouts: " + this.workouts.length);
     }, error => {
       console.error(error);
     });
 
-    this.workoutService.getSharedWorkouts(this.currentUser.id).subscribe(result => {
+    this.workoutService.getSharedWorkouts(this.currentUser._id).subscribe(result => {
       let w: Array<Workout> = result as [Workout];
       w.forEach(e => {
         e.isShared = true;
@@ -82,7 +82,7 @@ export class WorkoutComponent implements OnInit {
     w.description = "Workout Description";
     w.owner = "current_user";
     w.color = "#37454E";
-    w.owner = this.currentUser.id;
+    w.owner = this.currentUser._id;
     
     var shared: Shared[] = [];
     w.sharedWith = shared;
@@ -173,7 +173,7 @@ export class WorkoutComponent implements OnInit {
     w.color = workout.color;
     w.description = workout.description;
     w.exercises = workout.exercises;
-    w.owner = this.currentUser.id
+    w.owner = this.currentUser._id;
     var shared: Shared[] = [];
     w.sharedWith = shared;
     var exercises: Exercise[] = [];

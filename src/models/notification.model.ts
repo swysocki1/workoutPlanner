@@ -1,7 +1,9 @@
 export class Notification {
-  id: string;
+  _id: string;
+  users: [string];
   message: string;
   created: Date;
-  viewed: boolean;
+  viewed: [{user: string, seen: Date}];
   type: string;
+  link: string;
 }
