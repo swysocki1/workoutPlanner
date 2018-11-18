@@ -1,21 +1,21 @@
 import {Injectable} from "@angular/core";
-import {User} from "../models/user.model";
 import {Observable} from "rxjs/Observable";
 import {Notification} from "../models/notification.model";
+import {ExternalRequestsService} from "./externalRequests.service";
+import {LoginService} from "./login.service";
+import {flatMap} from "rxjs/operators";
+import {interval} from "rxjs/observable/interval";
 
 @Injectable()
 export class NotificationService {
-  private notifications: Observable<Notification> = new Observable<Notification>();
-  getNotifications(user: User): Observable<Notification> { //TODO need to correct how to emit
-    return new Observable<Notification>(subscriber => {
-      let notification = new Notification();
-      notification.id = '1';
-      notification.created = new Date();
-      notification.message = 'New Notification TEST';
-      notification.type = 'alert';
-      notification.viewed = false;
-      subscriber.next(notification);
-      subscriber.complete();
-    });
+  constructor(private es: ExternalRequestsService, private ls: LoginService) { }
+  getNotifications(): Observable<any> {
+    return interval(10 * 1000).pipe(flatMap(() => this.es.getNotifications(this.ls.getUser()))); // Repeats every 10 seconds
+  }
+  viewNotification(notification: Notification) {
+    this.es.viewNotification(this.ls.getUser(), notification);
+  }
+  createNotification(notification: Notification) {
+    this.es.createNotification(notification);
   }
 }

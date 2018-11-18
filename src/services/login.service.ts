@@ -7,9 +7,11 @@ import {User, UserSession} from '../models/user.model';
 import * as moment from 'moment';
 import {Observable} from 'rxjs/Observable';
 import {ExternalRequestsService} from "./externalRequests.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Injectable()
 export class LoginService {
+  loginSubscription: Subscription = new Subscription();
   private _user: User = new User();
   private _userSession: UserSession = new UserSession();
   private _friends: Array<User> = new Array<User>();
@@ -114,6 +116,24 @@ export class LoginService {
       subscriber.complete();
 
       // TODO error on logging out
+    });
+  }
+  private closeActiveLoginSubscription() {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
+  }
+  createAccount(username: string, password: string) {
+    return new Observable(subscriber => {
+      this.es.createAccount(username, password).subscribe(res => {
+        this.closeActiveLoginSubscription();
+        this.loginSubscription = this.login(username, password).subscribe(userSession => {
+          subscriber.next(userSession);
+        });
+      }, error => {
+        subscriber.error(error);
+        subscriber.complete();
+      });
     });
   }
   hasAdmin() {

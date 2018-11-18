@@ -56,9 +56,8 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
   ngOnInit() {
     // this.workouts = this.workoutService.getWorkouts() as [Workout];
     /*
-    this.workoutService.getAllWorkouts(this.loginService.getUser().id).subscribe(ws => {
+    this.workoutService.getAllWorkouts(this.loginService.getUser()._id).subscribe(ws => {\
       this.workouts = ws as [Workout];
-      console.log(this.workouts.length + " **********");
     }, error => {
       console.error(error);
     });

@@ -106,7 +106,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
     this.days.forEach(d => {
       var req = {
         date:moment(d.date).format('LL'),
-        user:this.loginService.getUser().id,
+        user:this.loginService.getUser()._id,
         workout: this.workout._id
 
       }

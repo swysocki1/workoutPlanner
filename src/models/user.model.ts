@@ -2,7 +2,7 @@ import {ValidationService} from "../services/validation.service";
 
 
 export class User {
-  id: string;
+  _id: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -18,7 +18,7 @@ export class Friend {
 }
 
 export class Role {
-  id: string;
+  _id: string;
   type: string;
   permissions: [Permission] = [] as [Permission];
   lastUpdated: Date = new Date();
@@ -27,7 +27,7 @@ export class Role {
 }
 
 export class Permission {
-  id: string;
+  _id: string;
   permission: string;
 }
 
@@ -40,7 +40,7 @@ export class UserSession {
   authenticated: boolean;
   
   setTestUser() {
-    this.user.id = 'abc123';
+    this.user._id = 'abc123';
     this.user = new User();
     this.user.email = 'swysoc1@students.towson.edu';
     this.user.firstName = 'Sean';
@@ -53,11 +53,11 @@ export class UserSession {
     let adminRole = new Role();
     adminRole.active = true;
     adminRole.type = 'ADMIN';
-    adminRole.id = '123';
+    adminRole._id = '123';
     adminRole.lastUpdated = new Date();
-    adminRole.updatedBy = this.user.id;
+    adminRole.updatedBy = this.user._id;
     let permission = new Permission();
-    permission.id = 'xyz';
+    permission._id = 'xyz';
     permission.permission = 'system-settings';
     adminRole.permissions.push(permission);
     this.user.roles.push(adminRole);

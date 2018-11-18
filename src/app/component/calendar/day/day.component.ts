@@ -17,6 +17,7 @@ declare var $: any;
       opacity: .25;
       height: 0;
       padding-bottom: 100%;
+      width: 100%;
     }
     .day.valid-month {
       opacity: 1;
@@ -39,7 +40,7 @@ export class DayComponent implements OnInit {
   ngOnInit() {
     //let workouts: Array<Workout> = new Array<Workout>();
     //console.log(this.day.isThisMonth + "  *****" + this.day.dayOfMonth)
-    this.dayService.getWorkoutsForDay(this.loginService.getUser().id, moment(this.day.date).format('LL')).subscribe(result => {
+    this.dayService.getWorkoutsForDay(this.loginService.getUser()._id, moment(this.day.date).format('LL')).subscribe(result => {
       let res: Array<Day>;
       res = result as [Day];
       res.forEach((r, idx, arr) => {

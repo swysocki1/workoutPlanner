@@ -43,7 +43,7 @@
             <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
             <ul class="list-group">
                 <li *ngFor="let date of next7Dates" class="list-group-item">
-                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(pTestUser.id, date) }}</span>
+                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(pTestUser._id, date) }}</span>
                 </li>
             </ul>
         </div>
