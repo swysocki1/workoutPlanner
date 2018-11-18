@@ -11,6 +11,7 @@ import { CalendarService } from '../calendar/calendar.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  imagePath: string;
   pTestUser: User; //test user not for final product
   //declare viewing variables
   showMeals: boolean;
@@ -28,13 +29,14 @@ export class ProfileComponent implements OnInit {
       this.pTestUser.id = '12321';
       this.pTestUser.email = 'jim.dandy@me.org';
       //view variables
-      this.showMeals = true;
+      this.showMeals = false; //leaving this false as meals doesn't seem to be in the works
       this.showFeed = true;
       this.showSchedule = true;
       this.showUserDetails = true;  
       this.today = new Date(); 
       //this.next7Days = this.genNext7();
       this.next7Dates = this.genNextDates();
+      this.imagePath = 'assets/images/';
       
   }
   /*private genNext7(){
@@ -48,7 +50,7 @@ export class ProfileComponent implements OnInit {
   }*/
   
   getDay(day: Date){
-    console.log(day);
+    //console.log(day);
     return this.calendarService.getDayOfWeek(day.getDay());
   }
   getWorkout(id: number, td: Date){
@@ -69,4 +71,5 @@ export class ProfileComponent implements OnInit {
   toggleFeed(){this.showFeed = !this.showFeed;}
   toggleMeals(){this.showMeals = !this.showMeals;}
   toggleSched(){this.showSchedule = !this.showSchedule;}
+
 }
