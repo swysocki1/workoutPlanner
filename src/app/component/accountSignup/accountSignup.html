@@ -2,31 +2,19 @@
     Welcome!
     <h2>
         <br>
-        <form [formGroup]="signUp" ngSubmit="signUp()">
+        <form [formGroup]="signUp" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col ml-5">
-                    <input formControlName="firstName" type="text" class="form-control" placeholder="First name" required>
-                </div>
-                <div class="col mr-5">
-                    <input formControlName="lastName" type="text" class="form-control" placeholder="Last name" required>
+                    <input id="emailInput" formControlName="email" type="email" class="form-control" placeholder="Username, please use a valid Email address." required>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col ml-5">
-                    <input formControlName="email" type="text" class="form-control" placeholder="Email" required>
+                    <input id="pwInput" formControlName="pWord" type="password" class="form-control" placeholder="Password" required>
                 </div>
                 <div class="col mr-5">
-                    <input formControlName="username" type="text" class="form-control" placeholder="Username" required>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col ml-5">
-                    <input formControlName="pWord" type="text" class="form-control" placeholder="Password" required>
-                </div>
-                <div class="col mr-5">
-                    <input formControlName="vPWord" type="text" class="form-control" placeholder="Verify Password" required>
+                    <input id="vpwInput" formControlName="vPWord" type="password" class="form-control" placeholder="Verify Password" required>
                 </div>
             </div>
             <br>

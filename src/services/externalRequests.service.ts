@@ -20,6 +20,8 @@ export class ExternalRequestsService {
   constructor(private http: HttpClient) { }
 
   createAccount(username: string, password: string) {
+    console.log("external service request received...")
+    console.log(username + " " + password);
     return this.http.post(`${this.api}/createAccount`, {
       username: username,
       password: password

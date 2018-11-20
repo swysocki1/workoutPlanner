@@ -4,6 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { User } from "../../../models/user.model";
 import { WorkoutService } from '../workout/workout.service';
 import { CalendarService } from '../calendar/calendar.service';
+import { LoginService } from '../../../services/login.service';
+import { ActivatedRoute } from '@angular/router';
+import { query } from '@angular/core/src/render3/instructions';
+import 'rxjs/add/operator/filter';
+import { stringify } from '@angular/core/src/render3/util';
+import { ExternalRequestsService } from '../../../services/externalRequests.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -18,10 +25,18 @@ export class ProfileComponent implements OnInit {
   showFeed: boolean;
   showSchedule: boolean;
   showUserDetails: boolean;
+  selfView: boolean;
+  currentUser: User;
   //next7Days: number[];
   next7Dates: Date[];
   private today: Date;
-  constructor(private workoutService: WorkoutService, private calendarService: CalendarService) {
+  targetuser: string;
+  obUser: Object;
+
+  constructor
+    (private workoutService: WorkoutService, private calendarService: CalendarService, 
+      private loginService: LoginService, private route: ActivatedRoute, private requests: ExternalRequestsService) {
+      this.currentUser = this.loginService.getUser();
       //define test user for testing purposes only
       this.pTestUser = new User();
       this.pTestUser.firstName = 'Jim';
@@ -37,6 +52,9 @@ export class ProfileComponent implements OnInit {
       //this.next7Days = this.genNext7();
       this.next7Dates = this.genNextDates();
       this.imagePath = 'assets/images/';
+      this.selfView = false;
+
+
       
   }
   /*private genNext7(){
@@ -65,15 +83,29 @@ export class ProfileComponent implements OnInit {
     return dates;
   }
   ngOnInit() {
+    
+    if(this.route.queryParams.isEmpty && this.loginService.getUserSession()) {
+      this.selfView = true;
+      this.pTestUser = this.loginService.getUser();
+    }
+    else if(this.route.queryParams.isEmpty && !this.loginService.getUserSession()){
+      document.write('<p>Please sign in to view your profile.</p>');
+    }
+    else{
+      try{
+        var userId = this.route.queryParams.filter(params => params.userId).subscribe(params => {
+          this.targetuser = params.userId;
+        });
+        this.obUser = this.requests.getUser(userId).subscribe(obUser => {return obUser}); 
+      }
+      catch(err){
+        document.write('<p>404: Page Not Found.</p>');
+      }
+    }
   }
   //switches for views
   toggleDetails(){this.showUserDetails = !this.showUserDetails;}
   toggleFeed(){this.showFeed = !this.showFeed;}
   toggleMeals(){this.showMeals = !this.showMeals;}
   toggleSched(){this.showSchedule = !this.showSchedule;}
-<<<<<<< HEAD
-
 }
-=======
-}
->>>>>>> 90382cfc94b8920f3ed94beff70f037db2fd27e8
