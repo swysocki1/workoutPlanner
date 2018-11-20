@@ -23,7 +23,7 @@ export class ShareModalComponent {
     if (this.workout) {
       //console.log("workout not null");
       this.workout.sharedWith.forEach(e => {
-        if (e.username === friend.username || e.id === friend.id) {
+        if (e.username === friend.username) {
           //console.log(e.username);
           r = true;
         }
@@ -38,7 +38,7 @@ export class ShareModalComponent {
     var req = {
       workoutId: this.workout._id, 
       user: {
-        id: friend.id,
+        id: friend._id,
         username: friend.username
       }};
     if (val == true) {
