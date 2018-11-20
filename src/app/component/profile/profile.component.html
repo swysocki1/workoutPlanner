@@ -15,8 +15,11 @@
 
     <div class="card" *ngIf='showFeed'>
         <div class="card-body">
+            <div class="card-header">
+                <h5 class="card-title">News Feed</h5>
+            </div>
             <!--TODO GET THE FOLLOWER DETAILS SOMEHOW-->
-            <h5 class="card-title">News Feed</h5>
+
             <p class="card-text">Latest from followed users here.</p>
         </div>
 
@@ -31,8 +34,13 @@
     </div>
     <div class="card" *ngIf='showSchedule'>
         <div class="card-body">
+            <div class="card-header">
+                <div class="row">
+                    <img class='col-3' src="assets/images/calendar.svg" height="24px">
+                    <h5 class="card-title col-9">Workouts This Week:</h5>
+                </div>
+            </div>
             <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
-            <h5 class="card-title">Workouts This Week:</h5>
             <ul class="list-group">
                 <li *ngFor="let date of next7Dates" class="list-group-item">
                     <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(pTestUser._id, date) }}</span>

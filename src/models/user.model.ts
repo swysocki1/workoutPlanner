@@ -9,6 +9,7 @@ export class User {
   email: string;
   roles: [Role] = [] as [Role];
   friends: [Friend];
+  password: string;
   // TODO add more User Info
 }
 
