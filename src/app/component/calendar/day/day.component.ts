@@ -38,8 +38,6 @@ export class DayComponent implements OnInit {
   constructor(private workoutService: WorkoutService, private dayService: DayService, private loginService: LoginService) {}
 
   ngOnInit() {
-    //let workouts: Array<Workout> = new Array<Workout>();
-    //console.log(this.day.isThisMonth + "  *****" + this.day.dayOfMonth)
     this.dayService.getWorkoutsForDay(this.loginService.getUser()._id, moment(this.day.date).format('LL')).subscribe(result => {
       let res: Array<Day>;
       res = result as [Day];
@@ -53,11 +51,6 @@ export class DayComponent implements OnInit {
     });
   }
 
-  hideWorkoutModal() {
-    // this.modal.hide();
-    this.hideWorkout.emit(true);
-  }
-x
   showWorkoutModal(workout: Workout, day: Day) {
     var obj = {workout: workout};
     this.showWorkout.emit(obj);
