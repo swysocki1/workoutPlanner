@@ -6,6 +6,8 @@ import { LoginService } from '../../../services/login.service';
 import { User } from '../../../models/user.model';
 import { ExerciseService } from '../exercise/exercise.service';
 import * as moment from 'moment';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
 declare var $:any;
 
 
@@ -18,31 +20,48 @@ declare var $:any;
 
 export class WorkoutComponent implements OnInit {
   workout: Workout;
+  workoutId: string;
   currentUser: User;
   friends: Array<User>;
   workouts: Array<Workout> = [];
   constructor(private workoutService: WorkoutService, private loginService: LoginService,
-    private exerciseService: ExerciseService) { }
+    private exerciseService: ExerciseService, private router: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentUser = this.loginService.getUser();
     this.friends = this.loginService.getFriends();
 
-    // this.workouts = this.workoutService.getWorkouts() as [Workout];
-    this.workoutService.getAllWorkouts(this.currentUser._id).subscribe(ws => {
-      this.workouts = ws as [Workout];
-      console.log("Total workouts: " + this.workouts.length);
-    }, error => {
-      console.error(error);
+
+    this.router.paramMap.subscribe((params: ParamMap) => {
+      this.workoutId = params.get('id');
     });
 
-    this.workoutService.getSharedWorkouts(this.currentUser._id).subscribe(result => {
-      let w: Array<Workout> = result as [Workout];
-      w.forEach(e => {
-        e.isShared = true;
-        this.workouts.push(e);
+    if (!this.workoutId && this.currentUser._id) {
+      console.log(this.currentUser +  "  user...");
+      this.workoutService.getAllWorkouts(this.currentUser._id).subscribe(ws => {
+        this.workouts = ws as [Workout];
+        console.log("Total workouts: " + this.workouts.length);
+      }, error => {
+        console.error(error);
       });
-    });
+  
+      this.workoutService.getSharedWorkouts(this.currentUser._id).subscribe(result => {
+        let w: Array<Workout> = result as [Workout];
+        w.forEach(e => {
+          e.isShared = true;
+          this.workouts.push(e);
+        });
+      });
+    }
+
+    else {
+      this.workoutService.get(this.workoutId).subscribe(result => {
+        let w: Workout = result as Workout;
+        this.workouts = new Array<Workout>();
+        this.workouts.push(w);
+      })
+    }
+    
 
   }
 
@@ -80,7 +99,6 @@ export class WorkoutComponent implements OnInit {
     w.name = (<HTMLInputElement>document.getElementById('add_workout_name')).value;
     (<HTMLInputElement>document.getElementById('add_workout_name')).value = "Add New Workout...";
     w.description = "Workout Description";
-    w.owner = "current_user";
     w.color = "#37454E";
     w.owner = this.currentUser._id;
     

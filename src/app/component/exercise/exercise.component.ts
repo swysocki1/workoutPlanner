@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ExerciseService} from './exercise.service';
 import {Exercise} from './exercise.model';
 import { Workout } from '../workout/workout.model';
+import { User } from '../../../models/user.model';
+import { LoginService } from '../../../services/login.service';
+
 
 @Component({
   moduleId: module.id,
@@ -10,9 +13,14 @@ import { Workout } from '../workout/workout.model';
   styleUrls: ['./exercise.css', '../workout/workout.css']
 })
 
-export class ExerciseComponent {
+export class ExerciseComponent implements OnInit {
     @Input() workout: Workout;
-    constructor(private excerciseService:ExerciseService){
+    currentUser: User;
+    constructor(private excerciseService:ExerciseService, private loginService: LoginService){
+    }
+
+    ngOnInit() {
+        this.currentUser = this.loginService.getUser();
     }
 
     add(exercise?: Exercise) {

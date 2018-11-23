@@ -300,3 +300,14 @@ exports.updateExercise = function updateExercise(exercise, funct) {
   });
 };
 
+exports.deleteWorkoutForDay = function deleteWorkoutForDay(obj, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'calendar').deleteOne({_id: ObjectId(obj._id)}, (err, res) => {
+      funct(err, res);
+      client.close();
+    });
+  });
+};

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ComponentFactoryResolver, ViewContainerRef} from '@angular/core';
-import {CalendarDay, CalendarMonth} from './calendar.model';
+import {CalendarDay, CalendarMonth, Day} from './calendar.model';
 import {CalendarService} from './calendar.service';
 import * as moment from 'moment';
 import {Meal, MealCalendar} from '../../../models/meal.module';
@@ -24,6 +24,7 @@ export class CalendarComponent implements OnInit {
   selectedDate = moment().toDate();
   mealCalendar: [MealCalendar];
   workout: Workout;
+  day: Day;
 
   /*
 
@@ -78,46 +79,20 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
     const month = moment(this.selectedDate).month();
     this.month = this.cs.getMonth(year, month);
   }
-  getMeal(day: CalendarDay): [Meal] {
-    if (day) {
-      console.log(day);
-      console.log(this.mealCalendar);
-      const mealCalendar = this.mealCalendar.find(meal => moment(meal.date).isSame(moment(day.date)));
-      if (mealCalendar) {
-        return mealCalendar.meals;
-      }
-    }
-    return [] as [Meal];
+  
+  
+  updateWorkouts(workouts) {
+    this.workouts = workouts;
   }
- 
-  showWorkout(workout) {
-    this.workout = workout;
+
+  deleteWorkoutForDay(workout) {
+    this.workouts.splice(this.workouts.indexOf(workout), 1);
+  }
+
+  showWorkout(obj) {
+    this.workout = obj.workout;
+    console.log(this.day);
     $('#workout-modal').modal('show');
   }
-  getMealCalendar(start?: Date, end?: Date) {
-    if (start && end) {
-      this.mealService.getMealCalendar(start, end).subscribe(mealCalendar => {
-        this.mealCalendar = mealCalendar;
-      });
-    } else {
-      this.month.weeks.forEach(week => {
-        week.days.forEach(day => {
-          if (moment(day.date).isBefore(moment(start)) || start === null) {
-            start = day.date;
-          }
-          if (moment(day.date).isAfter(moment(end)) || end === null) {
-            end = day.date;
-          }
-        });
-      });
-      if (start && end) {
-        this.mealService.getMealCalendar(start, end).subscribe(mealCalendar => {
-          this.mealCalendar = mealCalendar;
-        });
-      } else {
-        console.error('Unable to get the current start and end dates of the calendar');
-        this.mealCalendar = [] as [MealCalendar];
-      }
-    }
-  }
+  
 }

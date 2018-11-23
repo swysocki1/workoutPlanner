@@ -30,8 +30,8 @@ declare var $: any;
 })
 export class DayComponent implements OnInit {
   @Input() day: CalendarDay;
-  @Output() showWorkout: EventEmitter<Workout> = new EventEmitter<Workout>();
-  @Output() hideWorkout: EventEmitter<any> = new EventEmitter<any>();
+  @Output() showWorkout: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateWorkouts: EventEmitter<any> = new EventEmitter<any>();
 
   workouts: Array<Workout> = new Array<Workout>();
 
@@ -44,8 +44,10 @@ export class DayComponent implements OnInit {
       let res: Array<Day>;
       res = result as [Day];
       res.forEach((r, idx, arr) => {
-        this.workoutService.get(r.workout).subscribe(w => {
-          this.workouts.push(w as Workout);
+        this.workoutService.get(r.workout).subscribe(ws => {
+          let w: Workout = ws as Workout;
+          w.cal = r._id;
+          this.workouts.push(w);
         });
       });
     });
@@ -55,9 +57,11 @@ export class DayComponent implements OnInit {
     // this.modal.hide();
     this.hideWorkout.emit(true);
   }
-
-  showWorkoutModal(workout: Workout) {
-    this.showWorkout.emit(workout);
+x
+  showWorkoutModal(workout: Workout, day: Day) {
+    var obj = {workout: workout};
+    this.showWorkout.emit(obj);
+    this.updateWorkouts.emit(this.workouts);
   }
   
   

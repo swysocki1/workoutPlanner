@@ -11,6 +11,7 @@ export class Workout {
     color: string;
     sharedWith: Shared[];
     isShared: boolean = false;
+    cal: string;
 }
 
 export class Shared {

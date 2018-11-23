@@ -16,4 +16,8 @@ export class DayService {
         return this.er.addWorkoutForDay(obj);
     }
 
+    deleteWorkoutForDay(obj) {
+        //return this.er.deleteWorkoutForDay(obj);
+    }
+
 }

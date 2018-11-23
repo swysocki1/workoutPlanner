@@ -71,9 +71,5 @@ export class ProfileComponent implements OnInit {
   toggleFeed(){this.showFeed = !this.showFeed;}
   toggleMeals(){this.showMeals = !this.showMeals;}
   toggleSched(){this.showSchedule = !this.showSchedule;}
-<<<<<<< HEAD
 
 }
-=======
-}
->>>>>>> 90382cfc94b8920f3ed94beff70f037db2fd27e8

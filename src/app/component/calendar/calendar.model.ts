@@ -33,6 +33,7 @@ export class CalendarDay {
 }
 
 export class Day {
+  _id: string;
   date: string;
   user: string;
   workout: string;

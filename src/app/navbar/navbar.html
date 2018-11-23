@@ -9,12 +9,14 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
       </li>
-      <!--<li class="nav-item">-->
-        <!--<a class="nav-link" routerLink="/link-1">LINK 1</a>-->
-      <!--</li>-->
-      <!--<li class="nav-item">-->
-        <!--<a class="nav-link" routerLink="/link-2">LINK 2</a>-->
-      <!--</li>-->
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/workouts">Workouts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/calendar">Calendar</a>
+      </li>
+      
+      <!--
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Resources
@@ -29,6 +31,7 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
+      -->
     </ul>
     <form class="form-inline my-2 my-lg-0"  [formGroup]="search" (ngSubmit)="onSearch()">
       <input class="form-control mr-sm-2" type="search" formControlName="search" placeholder="Search" aria-label="Search">

@@ -11,9 +11,11 @@ import {CalendarComponent} from "./component/calendar/calendar.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'home', component: CalendarComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'signup', component: AccountSignupComponent },
   { path: 'workouts', component: WorkoutComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'workout/:id', component: WorkoutComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'calendar', component: CalendarComponent}
 ];

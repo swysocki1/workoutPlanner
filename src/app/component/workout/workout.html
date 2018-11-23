@@ -1,6 +1,6 @@
 <div style="padding-top: 15px;">
     <form class="well container-fluid">
-        <div class="form-inline" style="margin-top: 10px;">
+        <div class="form-inline" style="margin-top: 10px;" *ngIf="!workoutId">
             <input type="text" name="workout_name" class="form-control" id="add_workout_name" placeholder="Add New Workout..."
                 style="width:95%;">
             <button type="button" class="btn btn-primary" (click)="add()" style="margin-left: 10px; width: 4%;">
@@ -13,7 +13,7 @@
                 <div class="panel panel-default" id="{{'w_collapse' + workout._id}}">
 
                     <a data-toggle="collapse" href="{{'#collapse_' + workout._id}}" style="cursor: pointer;" role="button"
-                        aria-expanded="false" id="{{'w_collapse_' + workout._id}}">
+                        aria-expanded="true" id="{{'w_collapse_' + workout._id}}">
 
                         <div [ngStyle]="{'background-color': workout.color}" class="panel-heading text-white form-inline">
 
@@ -23,7 +23,7 @@
                         </div>
                     </a>
 
-                    <div class="collapse" id="{{'collapse_' + workout._id}}">
+                    <div class="collapse" [class.show]="workoutId" id="{{'collapse_' + workout._id}}">
                         <div class="form-inline">
                             <h2 style="margin-left: 10px;">
                                 <label id="{{'w_label1_' + workout._id}}" style="margin-right: 5px;" class="workout-hidden">Name:
@@ -81,7 +81,7 @@
 
                         <div class="panel-footer bg-light text-white" style="overflow: auto; padding: 10px;">
                             <div class="clear-fix">
-                                <div id="{{'w_edit_delete_' + workout._id}}" class="float-left" *ngIf="!workout.isShared">
+                                <div id="{{'w_edit_delete_' + workout._id}}" class="float-left" *ngIf="workout.owner == currentUser._id">
                                     <button type="button" value="Edit" class="btn btn-primary" (click)="edit(workout)">
                                         <i class="far fa-edit"></i>
                                     </button>
@@ -90,7 +90,7 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>
-                                <div id="{{'w_save_cancel_' + workout._id}}" class="workout-hidden float-left" *ngIf="!workout.isShared">
+                                <div id="{{'w_save_cancel_' + workout._id}}" class="workout-hidden float-left" *ngIf="workout.owner == currentUser._id">
                                     <button type="button" value="Save" class="btn btn-primary" (click)="save(workout)">
                                         <i class="far fa-save"></i>
                                     </button>

@@ -1,5 +1,5 @@
 <form class="well">
-    <div class="form-inline" style="margin-top: 10px;" *ngIf="!workout.isShared">
+    <div class="form-inline" style="margin-top: 10px;" *ngIf="workout.owner == currentUser._id">
         <input type="text" name="title" class="form-control" placeholder="Add Excercise..." style="width:80%; float: right;"
             id="add_exercise_name">
         <button type="button" class="btn btn-primary" (click)="add()" style="margin-left: 10px; margin-right: 10px; float: left;">
@@ -30,7 +30,7 @@
                 <td><input id="{{'e_reps_' + exercise._id}}" class="exercise-text-input" type="number" value={{exercise.reps}}
                         [disabled]="true" [(ngModel)]="exercise.reps"></td>
 
-                <td id="{{'e_edit_delete_' + exercise._id}}" *ngIf="!workout.isShared">
+                <td id="{{'e_edit_delete_' + exercise._id}}" *ngIf="workout.owner == currentUser._id">
                     <button type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">
                         <i class="far fa-edit"></i>
                     </button>
@@ -38,7 +38,7 @@
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>
-                <td id="{{'e_save_cancel_' + exercise._id}}" class="workout-hidden" *ngIf="!workout.isShared">
+                <td id="{{'e_save_cancel_' + exercise._id}}" class="workout-hidden" *ngIf="workout.owner == currentUser._id">
                     <button type="button" value="Save" class="btn btn-primary" (click)="save(exercise)">
                         <i class="far fa-save"></i>
                     </button>

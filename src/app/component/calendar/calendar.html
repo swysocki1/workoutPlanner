@@ -18,10 +18,10 @@
     <tbody>
     <tr *ngFor="let week of month.weeks;">
       <td *ngFor="let day of week.days" style="overflow: hidden;padding:0;">
-        <calendar-day [day]="day"  (showWorkout)="showWorkout($event)" (showWorkout)="showWorkout($event)"></calendar-day>
+        <calendar-day [day]="day"  (showWorkout)="showWorkout($event)" (updateWorkouts)="updateWorkouts($event)"></calendar-day>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-<workout-modal [workout]="workout"></workout-modal>
+<workout-modal [workout]="workout" (deleteWorkout)="deleteWorkoutForDay($event)"></workout-modal>
