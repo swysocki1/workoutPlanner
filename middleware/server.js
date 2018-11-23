@@ -187,6 +187,12 @@ app.post(`${exercisePath}/add`, authenticate, (req, res) => {
     });
 });
 
+app.post(`${exercisePath}/updateWeight`, authenticate, (req, res) => {
+    mongoDB.updateWeight(req.body, (err, result) => {
+        helper.respond(res, err, result);
+    });
+});
+
 app.post(`${exercisePath}/delete`, authenticate, (req, res) => {
     mongoDB.deleteExercise(req.body, (err, result) => {
         helper.respond(res, err, result);

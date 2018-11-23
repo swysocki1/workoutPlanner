@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {ExerciseService} from './exercise.service';
-import {Exercise} from './exercise.model';
+import {Exercise, Weight} from './exercise.model';
 import { Workout } from '../workout/workout.model';
 import { User } from '../../../models/user.model';
 import { LoginService } from '../../../services/login.service';
@@ -31,7 +31,8 @@ export class ExerciseComponent implements OnInit {
         e.reps = 0;
         e.sets = 0;
         e.description = "description"
-        var obj = {workoutId: this.workout._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description}};
+        e.weights = new Array<Weight>();
+        var obj = {workoutId: this.workout._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description, weights: e.weights}};
         this.excerciseService.add(obj).subscribe(workout => {
             this.workout = workout as Workout;
             console.log("added exercise...");

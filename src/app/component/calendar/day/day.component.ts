@@ -44,15 +44,17 @@ export class DayComponent implements OnInit {
       res.forEach((r, idx, arr) => {
         this.workoutService.get(r.workout).subscribe(ws => {
           let w: Workout = ws as Workout;
-          w.cal = r._id;
-          this.workouts.push(w);
+          if (w) {
+            w.cal = r._id;
+            this.workouts.push(w);
+          }
         });
       });
     });
   }
 
-  showWorkoutModal(workout: Workout, day: Day) {
-    var obj = {workout: workout};
+  showWorkoutModal(workout: Workout) {
+    var obj = {workout: workout, day: workout.cal};
     this.showWorkout.emit(obj);
     this.updateWorkouts.emit(this.workouts);
   }

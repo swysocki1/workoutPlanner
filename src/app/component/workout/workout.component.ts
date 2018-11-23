@@ -179,8 +179,11 @@ export class WorkoutComponent implements OnInit {
 
   delete(workout: Workout) {
     this.workoutService.delete(workout).subscribe(result => {
+      
+      this.workoutService.deleteWorkoutFromCalendar(workout).subscribe(res => {
+        
+      });
       this.workouts.splice(this.workouts.indexOf(workout), 1);
-      console.log("deleted workout...");
     })
   }
 

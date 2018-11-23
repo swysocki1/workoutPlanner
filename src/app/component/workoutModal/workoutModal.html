@@ -14,12 +14,14 @@
             <tr>
               <th>Exercise</th>
               <th>Sets X Reps</th>
+              <th>Weight</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let exercise of workout?.exercises">
               <td>{{exercise?.name}}</td>
               <td>{{exercise?.sets}} X {{exercise?.reps}}</td>
+              <td>lbs: <input id="exercise_weight" type="number" value="{{getWeight(exercise)}}" (change)="updateWeight(exercise._id, exercise._id)"> </td>
             </tr>
             </tbody>
           </table>

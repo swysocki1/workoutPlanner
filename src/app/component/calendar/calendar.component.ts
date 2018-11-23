@@ -24,7 +24,7 @@ export class CalendarComponent implements OnInit {
   selectedDate = moment().toDate();
   mealCalendar: [MealCalendar];
   workout: Workout;
-  day: Day;
+  dayId: string;
 
   /*
 
@@ -91,7 +91,7 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
 
   showWorkout(obj) {
     this.workout = obj.workout;
-    console.log(this.day);
+    this.dayId = obj.day;
     $('#workout-modal').modal('show');
   }
   
