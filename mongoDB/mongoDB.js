@@ -341,3 +341,15 @@ exports.deleteWorkoutForDay = function deleteWorkoutForDay(obj, funct) {
     });
   });
 };
+
+exports.deleteWorkoutFromCalendar = function deleteWorkoutFromCalendar(obj, funct) {
+  MongoClient.connect(uri, (err, client) => {
+    if (err) {
+      funct(err);
+    }
+    getCollection(client, 'calendar').deleteAll({workout: obj._id}, (err, res) => {
+      funct(err, res);
+      client.close();
+    });
+  });
+};

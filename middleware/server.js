@@ -199,6 +199,12 @@ app.post(`${calendarPath}/deleteWorkoutForDay`, authenticate, (req, res) => {
   });
 });
 
+app.post(`${calendarPath}/deleteWorkoutFromCalendar`, authenticate, (req, res) => {
+  mongoDB.deleteWorkoutFromCalendar(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   console.log(req);

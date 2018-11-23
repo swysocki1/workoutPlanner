@@ -32,6 +32,9 @@ export class WorkoutService {
     return this.er.getSharedWorkouts(userId)
   }
 
+  deleteWorkoutFromCalendar(workout) {
+    return this.er.deleteWorkoutFromCalendar(workout);
+  }
 
   getAllWorkouts(userId) {
     return this.er.getAllWorkouts(userId);

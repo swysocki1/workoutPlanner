@@ -104,6 +104,10 @@ export class ExternalRequestsService {
     return this.post(`${this.calendarPath}/deleteWorkoutForDay`, obj);
   }
 
+  deleteWorkoutFromCalendar(obj): Observable<any> {
+    return this.post(`${this.calendarPath}/deleteWorkoutFromCalendar`, obj);
+  }
+
   getUser(id): Observable<Object> {
     return this.get(`${this.userPath}/get?username=${id}`);
   }
