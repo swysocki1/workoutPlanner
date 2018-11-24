@@ -400,7 +400,7 @@ exports.deleteWorkoutFromCalendar = function deleteWorkoutFromCalendar(obj, func
     if (err) {
       funct(err);
     }
-    getCollection(client, 'calendar').deleteAll({workout: obj._id}, (err, res) => {
+    getCollection(client, 'calendar').deleteMany({workout: obj._id}, (err, res) => {
       funct(err, res);
       client.close();
     });
