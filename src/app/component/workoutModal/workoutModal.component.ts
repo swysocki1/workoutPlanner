@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Day } from '../calendar/calendar.model';
 import * as moment from 'moment';
 import { ExternalRequestsService } from '../../../services/externalRequests.service';
-import { Exercise } from '../exercise/exercise.model';
+import { Exercise, Weight } from '../exercise/exercise.model';
 
 @Component({
   selector: 'workout-modal',
@@ -36,16 +36,35 @@ export class WorkoutModalComponent implements OnInit {
 
   getWeight(exercise: Exercise) {
     var w = 0;
-    
     exercise.weights.forEach(e => {
       if (e.dayId == this.dayId) {w = e.weight;}
     });
-
     return w;
   }
 
-  updateWeight(exerciseId) {
-    var obj = {exerciseId: exerciseId, dayId: this.dayId, weight: 15};
-    this.er.updateWeight(obj).subscribe(res => {console.log(res)});
+  updateWeight(exercise: Exercise) {
+    let w: Weight;
+    var found = false;
+    var num = (<HTMLInputElement>document.getElementById(`e_w_${exercise._id}`)).value;
+    
+    exercise.weights.forEach(e => {
+      if (e.dayId == this.dayId) {w = e; found = true;}
+    });
+    
+    if (found) {
+      w.weight = parseInt(num);
+      this.er.updateExercise(exercise).subscribe(r => {});
+    }
+    else {
+      var obj2 = {exerciseId: exercise._id, dayId: this.dayId, weight: num};
+      this.er.addWeight(obj2).subscribe(workout => {
+        this.workout = workout as Workout;
+        this.workout.exercises.forEach(a => {
+          if (a._id == exercise._id) {
+            exercise = a;
+          }
+        });
+      });
+    }
   }
 }

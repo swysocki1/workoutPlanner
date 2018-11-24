@@ -328,27 +328,28 @@ exports.updateExercise = function updateExercise(exercise, funct) {
       if (err) {
           funct(err);
       }
-      getCollection(client, 'workout').updateOne({ 'exercises._id': ObjectId(exercise._id) }, {
+      getCollection(client, 'workout').findOneAndUpdate({ 'exercises._id': ObjectId(exercise._id) }, {
           $set: {
               'exercises.$.name': exercise.name,
               'exercises.$.reps': exercise.reps,
               'exercises.$.sets': exercise.sets,
-              'exercises.$.description': exercise.description
+              'exercises.$.description': exercise.description,
+              'exercises.$.weights': exercise.weights
           }
-      }, (err, res) => {
-          funct(err, res);
-          client.close();
-      });
+      }, { returnOriginal: false }, (error, result) => {
+        funct(error, result.value);
+        client.close();
+    });
   });
 }
 
-exports.updateWeight = function updateWeight(obj, funct) {
+exports.addWeight = function addWeight(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
         if (err) {
             funct(err);
         }
         
-        getCollection(client, 'workout').updateOne({ 'exercises._id': ObjectId(obj.exerciseId) }, {
+        getCollection(client, 'workout').findOneAndUpdate({ 'exercises._id': ObjectId(obj.exerciseId) }, {
             $push: {
                 'exercises.$.weights': {
                     _id: new ObjectId(),
@@ -356,6 +357,25 @@ exports.updateWeight = function updateWeight(obj, funct) {
                     weight: obj.weight
                 }
             }
+        }, { returnOriginal: false }, (error, result) => {
+            funct(error, result.value);
+            client.close();
+        });
+    });
+}
+
+
+exports.updateWeight = function updateWeight(obj, funct) {
+    MongoClient.connect(uri, (err, client) => {
+        if (err) {
+            funct(err);
+        }
+        
+        getCollection(client, 'workout').updateOne({ 'exercises.$.weights._id': ObjectId(obj.weightId) }, {
+            $set: {
+                'exercises.$.weights.$.weight': obj.weight
+                }
+            
         }, (err, res) => {
             funct(err, res);
             client.close();

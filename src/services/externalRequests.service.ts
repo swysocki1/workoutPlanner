@@ -96,6 +96,10 @@ export class ExternalRequestsService {
     return this.post(`${this.exercisePath}/updateWeight`, obj);
   }
 
+  addWeight(obj) {
+    return this.post(`${this.exercisePath}/addWeight`, obj);
+  }
+
   deleteExercise(obj): Observable<Object> {
     return this.post(`${this.exercisePath}/delete`, obj);
   }
