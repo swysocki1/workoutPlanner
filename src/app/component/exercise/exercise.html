@@ -3,7 +3,7 @@
         <input type="text" name="title" class="form-control" placeholder="Add Excercise..." style="width:80%; float: right;"
             id="add_exercise_name">
         <button type="button" class="btn btn-primary" (click)="add()" style="margin-left: 10px; margin-right: 10px; float: left;">
-            <i class="fas fa-plus"></i>
+            <fa name="plus"></fa>
         </button>
     </div>
 </form>
@@ -32,18 +32,18 @@
 
                 <td id="{{'e_edit_delete_' + exercise._id}}" *ngIf="workout.owner == currentUser._id">
                     <button type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">
-                        <i class="far fa-edit"></i>
+                        <fa name="edit"></fa>
                     </button>
                     <button type="button" value="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;">
-                        <i class="fa fa-trash"></i>
+                        <fa name="trash"></fa>
                     </button>
                 </td>
                 <td id="{{'e_save_cancel_' + exercise._id}}" class="workout-hidden" *ngIf="workout.owner == currentUser._id">
                     <button type="button" value="Save" class="btn btn-primary" (click)="save(exercise)">
-                        <i class="far fa-save"></i>
+                        <fa name="save"></fa>
                     </button>
                     <button type="button" value="Cancel" class="btn btn-primary" (click)="cancel(exercise)" style="margin-left: 10px;">
-                        <i class="fas fa-times"></i>
+                        <fa name="times"></fa>
                     </button>
                 </td>
             </tr>

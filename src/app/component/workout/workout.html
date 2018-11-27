@@ -4,7 +4,7 @@
             <input type="text" name="workout_name" class="form-control" id="add_workout_name" placeholder="Add New Workout..."
                 style="width:95%;">
             <button type="button" class="btn btn-primary" (click)="add()" style="margin-left: 10px; width: 4%;">
-                <i class="fas fa-plus"></i>
+                <fa name="plus"></fa>
             </button>
         </div>
 
@@ -83,34 +83,35 @@
                             <div class="clear-fix">
                                 <div id="{{'w_edit_delete_' + workout._id}}" class="float-left" *ngIf="workout.owner == currentUser._id">
                                     <button type="button" value="Edit" class="btn btn-primary" (click)="edit(workout)">
-                                        <i class="far fa-edit"></i>
+                                        <fa name="edit"></fa>
                                     </button>
                                     <button type="button" value="Delete" class="btn btn-danger" style="margin-left: 10px;"
                                         (click)="delete(workout)">
-                                        <i class="fa fa-trash"></i>
+                                        <fa name="trash"></fa>
                                     </button>
                                 </div>
                                 <div id="{{'w_save_cancel_' + workout._id}}" class="workout-hidden float-left" *ngIf="workout.owner == currentUser._id">
                                     <button type="button" value="Save" class="btn btn-primary" (click)="save(workout)">
-                                        <i class="far fa-save"></i>
+                                        <fa name="save"></fa>
                                     </button>
                                     <button type="button" value="Cancel" class="btn btn-primary" (click)="cancel(workout)"
                                         style="margin-left: 10px;">
-                                        <i class="fas fa-times"></i>
+                                        <fa name="times"></fa>
                                     </button>
                                 </div>
                                 <div class="float-right">
                                     <button type="button" value="Clone" class="btn btn-primary float-right" (click)="clone(workout)"
                                         style="margin-left: 10px;">
-                                        <i class="far fa-copy"></i>
+                                        <fa name="copy"></fa>
                                     </button>
                                     <button type="button" value="Share" class="btn btn-primary float-right" (click)="showShareModal(workout)"
                                         style="margin-left: 10px;" *ngIf="!workout.isShared">
-                                        <i class="fas fa-share"></i>
+                                        <fa name="share"></fa>
+                                        
                                     </button>
                                     <button type="button" value="Add to calendar" class="btn btn-primary float-right"
                                         (click)="showCalModal(workout)">
-                                        <i class="far fa-calendar"></i>
+                                        <fa name="calendar"></fa>
                                     </button>
                                 </div>
                             </div>

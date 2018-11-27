@@ -22,7 +22,7 @@ import {ExerciseService} from "./component/exercise/exercise.service";
 import {WorkoutService} from "./component/workout/workout.service";
 import {ExternalRequestsService} from "../services/externalRequests.service";
 import {UserService} from "../services/user.service";
-
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { ProfileComponent } from './component/profile/profile.component';
 import {ExerciseModule} from "./component/exercise/exercise.module";
@@ -51,6 +51,7 @@ import {WorkoutModalModule} from "./component/workoutModal/workoutModal.module";
     WorkoutModule,
     HttpClientModule,
     WorkoutModalModule,
+    AngularFontAwesomeModule
     
     
   ],

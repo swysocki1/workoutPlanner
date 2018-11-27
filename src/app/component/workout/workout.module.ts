@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {WorkoutComponent} from './workout.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { WorkoutService } from './workout.service';
 import {FormsModule} from "@angular/forms";
 import {ExerciseModule} from "../exercise/exercise.module";
@@ -17,7 +18,8 @@ import { CalModalModule } from '../calModal/calModal.module';
     FormsModule,
     ExerciseModule,
     ShareModalModule,
-    CalModalModule
+    CalModalModule,
+    AngularFontAwesomeModule
   ],
   exports: [WorkoutComponent],
   providers: [WorkoutService]

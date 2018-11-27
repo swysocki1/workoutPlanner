@@ -3,6 +3,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ExerciseComponent} from './exercise.component';
 import { ExerciseService } from './exercise.service';
 import {FormsModule} from "@angular/forms";
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 @NgModule({
   declarations: [
@@ -11,7 +13,8 @@ import {FormsModule} from "@angular/forms";
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AngularFontAwesomeModule
   ],
   exports: [ExerciseComponent],
   providers: [ExerciseService]
