@@ -57,16 +57,38 @@ function serialize(req, res, next) {
 }
 
 function generateToken(req, res, next) {
+  console.log(req.user);
     req.token = require('jsonwebtoken').sign({
-        id: req.user.id,
+        id: req.user._id,
     }, 'server secret', {
         expiresIn: '24h'
     });
     next();
 }
 
-app.get('/test', function(req, res) {
-    helper.respond(res, null, 'Success - Test Pass!');
+app.get('/test', (req, res) => {
+  res.send('Success');
+});
+// app.get(`${notificationsPath}/all`, authenticate, (req, res) => {
+//   mongoDB.getAllNotifications((err, results) => {
+//     helper.respond(res, err, results);
+//   });
+// });
+app.post(`${notificationsPath}/:id`, authenticate, (req, res) => {
+  mongoDB.getNotifications(req.params.id, (err, results) => {
+    helper.respond(res, err, results);
+  });
+});
+app.post(`${notificationsPath}/view`, authenticate, (req, res) => {
+  mongoDB.viewNotification(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.post(`${notificationsPath}/create`, authenticate, (req, res) => {
+  mongoDB.createNotification(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+  res.send('Success');
 });
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 app.post('/login', passport.authenticate(

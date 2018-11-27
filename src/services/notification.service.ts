@@ -10,7 +10,7 @@ import {interval} from "rxjs/observable/interval";
 export class NotificationService {
   constructor(private es: ExternalRequestsService, private ls: LoginService) { }
   getNotifications(): Observable<any> {
-    return interval(10 * 1000).pipe(flatMap(() => this.es.getNotifications(this.ls.getUser()))); // Repeats every 10 seconds
+    return interval(10 * 1000).pipe(flatMap(() => this.ls.getUserSession().authenticated ? this.es.getNotifications(this.ls.getUser()) : new Observable(subscriber => subscriber.complete()))); // Repeats every 10 seconds
   }
   viewNotification(notification: Notification) {
     this.es.viewNotification(this.ls.getUser(), notification);

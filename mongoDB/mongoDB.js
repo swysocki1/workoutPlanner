@@ -29,7 +29,7 @@ exports.getAccount = function getAccount(username, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getUser = function getUser(username, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -41,7 +41,7 @@ exports.getUser = function getUser(username, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.createAccount = function createAccount(user, funct) {
     console.log("creating account...");
@@ -61,7 +61,7 @@ exports.createAccount = function createAccount(user, funct) {
             this.updateAccount(user, funct);
         }
     });
-}
+};
 
 exports.updateAccount = function updateAccount(user, funct) {
     console.log("inside updateAccount...");
@@ -75,7 +75,7 @@ exports.updateAccount = function updateAccount(user, funct) {
             funct(error, result);
         });
     });
-}
+};
 
 exports.verifyPassword = function verifyPassword(user, password) {
     if (user) {
@@ -87,7 +87,7 @@ exports.verifyPassword = function verifyPassword(user, password) {
     } else {
         return false;
     }
-}
+};
 
 exports.getAllNotifications = function getAllNotifications(funct) {
     connect(funct, (err, client) => {
@@ -96,7 +96,7 @@ exports.getAllNotifications = function getAllNotifications(funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getNotifications = function getNotifications(user, funct) {
     connect(funct, (err, client) => {
@@ -105,7 +105,7 @@ exports.getNotifications = function getNotifications(user, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.createNotification = function createNotification(notification, funct) {
     notification._id = uuid();
@@ -115,7 +115,7 @@ exports.createNotification = function createNotification(notification, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.viewNotification = function viewNotification(body, funct) {
     connect(funct, (err, client) => {
@@ -124,7 +124,7 @@ exports.viewNotification = function viewNotification(body, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getAllWorkouts = function getAllWorkouts(userId, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -136,7 +136,7 @@ exports.getAllWorkouts = function getAllWorkouts(userId, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getSharedWorkouts = function getSharedWorkouts(userId, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -148,7 +148,7 @@ exports.getSharedWorkouts = function getSharedWorkouts(userId, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getWorkoutsForDay = function getWorkoutsForDay(userId, date, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -160,7 +160,7 @@ exports.getWorkoutsForDay = function getWorkoutsForDay(userId, date, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.addWorkoutForDay = function addWorkoutForDay(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -172,7 +172,7 @@ exports.addWorkoutForDay = function addWorkoutForDay(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.addWorkout = function addWorkout(workout, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -184,7 +184,7 @@ exports.addWorkout = function addWorkout(workout, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.deleteWorkout = function deleteWorkout(workout, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -196,7 +196,7 @@ exports.deleteWorkout = function deleteWorkout(workout, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.deleteExercise = function deleteWorkout(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -208,7 +208,7 @@ exports.deleteExercise = function deleteWorkout(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getExercise = function getExercise(id, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -220,7 +220,7 @@ exports.getExercise = function getExercise(id, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.addExercise = function addExercise(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -244,7 +244,7 @@ exports.addExercise = function addExercise(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.unshareWorkout = function unshareWorkout(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -264,7 +264,7 @@ exports.unshareWorkout = function unshareWorkout(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.shareWorkout = function shareWorkout(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -348,7 +348,7 @@ exports.addWeight = function addWeight(obj, funct) {
         if (err) {
             funct(err);
         }
-        
+
         getCollection(client, 'workout').findOneAndUpdate({ 'exercises._id': ObjectId(obj.exerciseId) }, {
             $push: {
                 'exercises.$.weights': {
@@ -370,12 +370,12 @@ exports.updateWeight = function updateWeight(obj, funct) {
         if (err) {
             funct(err);
         }
-        
+
         getCollection(client, 'workout').updateOne({ 'exercises.$.weights._id': ObjectId(obj.weightId) }, {
             $set: {
                 'exercises.$.weights.$.weight': obj.weight
                 }
-            
+
         }, (err, res) => {
             funct(err, res);
             client.close();

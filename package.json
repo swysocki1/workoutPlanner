@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "npm run deploy-ui && npm run deploy-express",
+    "deploy": "npm run deploy-ui | npm run deploy-express",
     "deploy-ui": "sh ./deploy-ui.sh",
     "deploy-express": "sh ./deploy-express.sh"
   },

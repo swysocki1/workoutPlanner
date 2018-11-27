@@ -17,5 +17,6 @@ export const routes: Routes = [
   { path: 'workouts', component: WorkoutComponent },
   { path: 'workout/:id', component: WorkoutComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'calendar', component: CalendarComponent}
+  { path: 'calendar', component: CalendarComponent},
+  { path: '**', redirectTo: '/home' }
 ];
