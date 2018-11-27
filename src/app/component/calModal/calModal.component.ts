@@ -8,6 +8,7 @@ import {WorkoutService} from '../workout/workout.service';
 import { Workout } from '../workout/workout.model';
 import { LoginService } from '../../../services/login.service';
 import { DayService } from '../calendar/day/day.service';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 declare var $:any;
 
 @Component({
@@ -36,6 +37,7 @@ export class CalModalComponent implements OnInit {
   month: CalendarMonth = new CalendarMonth();
   selectedDate = moment().toDate();
   days: Array<CalendarDay> = new Array<CalendarDay>();
+  dayToRemove: CalendarDay;
   @Input() workout: Workout;
 
 
@@ -79,13 +81,24 @@ onstructor(private componentFactoryResolver: ComponentFactoryResolver,
 
   selectDate(day) {
     this.days.push(day);
-    console.log('added day to list');
+    console.log('added day to list' + this.days.length);
+
   }
 
   removeDate(day) {
-    this.days = this.days.splice(this.days.indexOf(day), 1);
+    this.dayToRemove = day;
+    this.days = this.days.filter(
+      (d) => {
+        if (d.date === this.dayToRemove.date) {
+          return false;
+        }
+        return true;
+      }
+    );
+    console.log('removed day' + this.days.length);
+  
   }
-
+  
   toggleToday() {
   
   }

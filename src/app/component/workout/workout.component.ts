@@ -206,7 +206,7 @@ export class WorkoutComponent implements OnInit {
 
       // individually adding the exercises so they each have unique ids
       workout.exercises.forEach((e, idx, arr) => {
-        var obj = {workoutId: res._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description}};
+        var obj = {workoutId: res._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description, weights:[]}};
         this.exerciseService.add(obj).subscribe(x => {
           if (idx == arr.length - 1) {
             this.workouts.push(x as Workout);
