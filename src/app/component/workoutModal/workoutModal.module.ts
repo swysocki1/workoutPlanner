@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {WorkoutModalComponent} from "./workoutModal.component";
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import {WorkoutModalComponent} from "./workoutModal.component";
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFontAwesomeModule
   ],
   exports: [
     WorkoutModalComponent
