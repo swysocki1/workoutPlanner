@@ -31,12 +31,12 @@ exports.getAccount = function getAccount(username, funct) {
     });
 };
 
-exports.getUser = function getUser(username, funct) {
+exports.getUser = function getUser(id, funct) {
     MongoClient.connect(uri, (err, client) => {
         if (err) {
             funct(err);
         }
-        getCollection(client, 'users').findOne({ username: username }, (error, result) => {
+        getCollection(client, 'users').findOne({ _id: ObjectId(id) }, (error, result) => {
             funct(error, result);
             client.close();
         });
@@ -108,7 +108,7 @@ exports.getNotifications = function getNotifications(user, funct) {
 };
 
 exports.createNotification = function createNotification(notification, funct) {
-    notification._id = uuid();
+    //notification._id = uuid();
     connect(funct, (err, client) => {
         getCollection(client, 'notifications').insertOne(notification, (error, result) => {
             funct(error, result);

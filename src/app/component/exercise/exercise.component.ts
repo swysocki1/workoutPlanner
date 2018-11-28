@@ -28,6 +28,10 @@ export class ExerciseComponent implements OnInit {
         let e: Exercise;
         e = new Exercise();
         e.name = (<HTMLInputElement>document.getElementById('add_exercise_name')).value;
+        if(e.name === '') {
+            alert('provide a name....');
+            return;
+        }
         e.reps = 0;
         e.sets = 0;
         e.description = "description"

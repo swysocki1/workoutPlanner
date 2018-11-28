@@ -14,7 +14,7 @@ export class User {
 }
 
 export class Friend {
-  username: string;
+  id: string;
 }
 
 export class Role {

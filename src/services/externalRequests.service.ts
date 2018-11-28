@@ -58,7 +58,7 @@ export class ExternalRequestsService {
     this.post(`${this.notificationsPath}/view`, {notification: notification._id, user: user._id});
   }
   createNotification(notification: Notification) {
-    this.post(`${this.notificationsPath}/create`, notification);
+    return this.post(`${this.notificationsPath}/create`, notification);
   }
   getAllWorkouts(userId): Observable<Object> {
     return this.get(`${this.workoutPath}/getAll?userId=${userId}`);
@@ -117,7 +117,7 @@ export class ExternalRequestsService {
   }
 
   getUser(id): Observable<Object> {
-    return this.get(`${this.userPath}/get?username=${id}`);
+    return this.get(`${this.userPath}/get?id=${id}`);
   }
 
   shareWorkout(obj): Observable<Object> {

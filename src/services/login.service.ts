@@ -59,7 +59,7 @@ export class LoginService {
   private setFriends() {
     if(this._user.friends) {
       this._user.friends.forEach(i => {
-        this.es.getUser(i.username).subscribe(res => {
+        this.es.getUser(i.id).subscribe(res => {
           this._friends.push(res as User);
           //console.log(res);
         });

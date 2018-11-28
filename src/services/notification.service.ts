@@ -15,7 +15,7 @@ export class NotificationService {
   viewNotification(notification: Notification) {
     this.es.viewNotification(this.ls.getUser(), notification);
   }
-  createNotification(notification: Notification) {
-    this.es.createNotification(notification);
+  createNotification(notification: Notification): Observable<any> {
+    return this.es.createNotification(notification);
   }
 }

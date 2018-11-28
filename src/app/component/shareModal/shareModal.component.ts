@@ -1,7 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {Workout} from "../workout/workout.model";
 import { User } from '../../../models/user.model';
 import { WorkoutService } from '../workout/workout.service';
+import { NotificationService } from '../../../services/notification.service';
+import { Notification } from '../../../models/notification.model';
+import { LoginService } from '../../../services/login.service';
+import * as moment from 'moment';
 
 
 
@@ -9,13 +13,18 @@ import { WorkoutService } from '../workout/workout.service';
   selector: 'workout-share-modal',
   templateUrl: './shareModal.html'
 })
-export class ShareModalComponent {
+export class ShareModalComponent implements OnInit {
   @Input() workout: Workout;
   @Input() user: User;
   @Input() friends: Array<User>;
 
-  constructor(private workoutService: WorkoutService) {}
+  currentUser: User;
 
+  constructor(private workoutService: WorkoutService, private notificationService: NotificationService, private loginService: LoginService) {}
+
+  ngOnInit() {
+    this.currentUser = this.loginService.getUser();
+  }
 
   isShared(friend): boolean {
     //console.log("workout is null");
@@ -34,6 +43,7 @@ export class ShareModalComponent {
     
    
   }
+
   share(friend, val) {
     var req = {
       workoutId: this.workout._id, 
@@ -43,6 +53,17 @@ export class ShareModalComponent {
       }};
     if (val == true) {
       this.workoutService.share(req).subscribe(res => {
+        var notification: Notification = new Notification();
+        notification.message = `${this.currentUser.username} shared a workout`;
+        notification.link = `/workout/${this.workout._id}`;
+        notification.created = moment().toDate() as Date;
+        notification.type = 'WORKOUT_UPDATE';
+        notification.users = [friend._id];
+        //notification.viewed = [{}];
+
+        this.notificationService.createNotification(notification).subscribe(n => {
+          console.log(n);
+        })
         console.log("shared workout with... " + friend.username);
       })
     }

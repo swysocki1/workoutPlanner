@@ -37,21 +37,22 @@ export class WorkoutComponent implements OnInit {
     });
 
     if (!this.workoutId && this.currentUser._id) {
-      console.log(this.currentUser +  "  user...");
       this.workoutService.getAllWorkouts(this.currentUser._id).subscribe(ws => {
         this.workouts = ws as [Workout];
         console.log("Total workouts: " + this.workouts.length);
+        this.workoutService.getSharedWorkouts(this.currentUser._id).subscribe(result => {
+          console.log("getting shared workouts ....");
+          let w: Array<Workout> = result as [Workout];
+          w.forEach(e => {
+            e.isShared = true;
+            this.workouts.push(e);
+          });
+        });
       }, error => {
         console.error(error);
       });
   
-      this.workoutService.getSharedWorkouts(this.currentUser._id).subscribe(result => {
-        let w: Array<Workout> = result as [Workout];
-        w.forEach(e => {
-          e.isShared = true;
-          this.workouts.push(e);
-        });
-      });
+      
     }
 
     else {
@@ -97,6 +98,10 @@ export class WorkoutComponent implements OnInit {
     let w: Workout;
     w = new Workout();
     w.name = (<HTMLInputElement>document.getElementById('add_workout_name')).value;
+    if (w.name === '') {
+      alert('provide a name...');
+      return;
+    }
     (<HTMLInputElement>document.getElementById('add_workout_name')).value = "Add New Workout...";
     w.description = "Workout Description";
     w.color = "#37454E";
@@ -203,7 +208,6 @@ export class WorkoutComponent implements OnInit {
       let res: Workout = result as Workout;
       //this.workouts.push(res);
       console.log("cloned workout...");
-
       // individually adding the exercises so they each have unique ids
       workout.exercises.forEach((e, idx, arr) => {
         var obj = {workoutId: res._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description, weights:[]}};

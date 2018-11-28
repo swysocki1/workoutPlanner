@@ -137,7 +137,7 @@ app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
     });
 });
 app.get(`${userPath}/get`, authenticate, (req, res) => {
-    mongoDB.getAccount(req.query.username, (err, result) => {
+    mongoDB.getUser(req.query.id, (err, result) => {
         helper.respond(res, err, result);
     });
 });
