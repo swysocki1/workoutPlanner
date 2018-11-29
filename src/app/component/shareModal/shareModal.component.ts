@@ -53,13 +53,13 @@ export class ShareModalComponent implements OnInit {
       }};
     if (val == true) {
       this.workoutService.share(req).subscribe(res => {
-        var notification: Notification = new Notification();
+        let notification: Notification = new Notification();
         notification.message = `${this.currentUser.username} shared a workout`;
         notification.link = `/workout/${this.workout._id}`;
         notification.created = moment().toDate() as Date;
         notification.type = 'WORKOUT_UPDATE';
         notification.users = [friend._id];
-        //notification.viewed = [{}];
+        notification.viewed = new Array<{user: string, seen: Date}>();
 
         this.notificationService.createNotification(notification).subscribe(n => {
           console.log(n);

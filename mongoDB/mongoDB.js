@@ -111,7 +111,7 @@ exports.createNotification = function createNotification(notification, funct) {
     //notification._id = uuid();
     connect(funct, (err, client) => {
         getCollection(client, 'notifications').insertOne(notification, (error, result) => {
-            funct(error, result);
+            funct(error, result.ops[0]);
             client.close();
         });
     });
