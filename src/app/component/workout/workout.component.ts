@@ -186,7 +186,7 @@ export class WorkoutComponent implements OnInit {
     this.workoutService.delete(workout).subscribe(result => {
       
       this.workoutService.deleteWorkoutFromCalendar(workout).subscribe(res => {
-        
+      
       });
       this.workouts.splice(this.workouts.indexOf(workout), 1);
     })
@@ -220,5 +220,10 @@ export class WorkoutComponent implements OnInit {
     });
 
     
+  }
+  refreshWorkout(workoutId: string) {
+    this.workoutService.get(workoutId).subscribe((workout: Workout) => {
+      this.workout = workout;
+    });
   }
 }

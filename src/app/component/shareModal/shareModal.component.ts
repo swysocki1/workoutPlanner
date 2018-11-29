@@ -17,6 +17,7 @@ export class ShareModalComponent implements OnInit {
   @Input() workout: Workout;
   @Input() user: User;
   @Input() friends: Array<User>;
+  @Output() refresh = new EventEmitter();
 
   currentUser: User;
 
@@ -44,14 +45,14 @@ export class ShareModalComponent implements OnInit {
    
   }
 
-  share(friend, val) {
+  share(friend: User, share: boolean) {
     var req = {
-      workoutId: this.workout._id, 
+      workoutId: this.workout._id,
       user: {
         id: friend._id,
         username: friend.username
       }};
-    if (val == true) {
+    if (share) {
       this.workoutService.share(req).subscribe(res => {
         let notification: Notification = new Notification();
         notification.message = `${this.currentUser.username} shared a workout`;
@@ -63,13 +64,21 @@ export class ShareModalComponent implements OnInit {
 
         this.notificationService.createNotification(notification).subscribe(n => {
           console.log(n);
-        })
+          this.refresh.emit();
+        }, error => {
+          this.refresh.emit();
+          console.error(error);
+        });
         console.log("shared workout with... " + friend.username);
+      }, error => {
+        console.error(error);
       })
-    }
-    else {
+    } else {
       this.workoutService.unshare(req).subscribe(res => {
         console.log("unsharing workout with " + friend.username);
+        this.refresh.emit();
+      }, error => {
+        console.error(error);
       })
     }
   }
