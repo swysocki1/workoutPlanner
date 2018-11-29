@@ -19,8 +19,12 @@
             <tbody>
             <tr *ngFor="let friend of friends">
               <td>{{friend?.firstName}} {{friend?.lastName}} ({{friend?.username}})</td>
-              <td><input type="checkbox" (change)="share(friend, $event.target.checked)" 
-                [checked]="isShared(friend)"></td>
+              <!--<td><input type="checkbox" (change)="share(friend, $event.target.checked)" [checked]="isShared(friend)"></td>-->
+              <td class="text-center">
+                <label class="control-label">Currently
+                  <button type="button" class="btn btn-primary" (click)="share(friend, !isShared(friend))">{{isShared(friend)?'':'Not '}}Sharing</button>
+                </label>
+              </td>
             </tr>
             </tbody>
           </table>

@@ -52,7 +52,7 @@ export class ExternalRequestsService {
     return this.post(`${this.api}/updateAccount`, user);
   }
   getNotifications(user: User) {
-    return this.post(`${this.notificationsPath}/${user._id}`, {});
+    return this.post(`${this.notificationsPath}/getAllByUserId/${user._id}`, {});
   }
   viewNotification(user: User, notification: Notification) {
     this.post(`${this.notificationsPath}/view`, {notification: notification._id, user: user._id});
@@ -147,6 +147,7 @@ export class ExternalRequestsService {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     headers = headers.append('Authorization', `Bearer ${this.authorization}`);
+    console.log(url);
     return this.http.post(url, data, {headers});
   }
 }

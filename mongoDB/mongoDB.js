@@ -9,12 +9,14 @@ function getCollection(client, collection) {
     return client.db('test').collection(collection);
 }
 
-function connect(returnFunct, funct) {
+function connect(errorFunct, funct) {
     MongoClient.connect(uri, (err, client) => {
         if (err) {
-            returnFunct(err);
+          console.log(err);
+            errorFunct(err);
         } else {
-            funct(err, client);
+          console.log('success');
+            funct(client);
         }
     });
 }
@@ -90,7 +92,7 @@ exports.verifyPassword = function verifyPassword(user, password) {
 };
 
 exports.getAllNotifications = function getAllNotifications(funct) {
-    connect(funct, (err, client) => {
+    connect(uri, (client) => {
         getCollection(client, 'notifications').find({}).toArray((error, result) => {
             funct(error, result);
             client.close();
@@ -99,7 +101,7 @@ exports.getAllNotifications = function getAllNotifications(funct) {
 };
 
 exports.getNotifications = function getNotifications(user, funct) {
-    connect(funct, (err, client) => {
+    connect(uri, (client) => {
         getCollection(client, 'notifications').find({ users: { $in: [`${user}`] } }).sort({ created: 1 }).toArray((error, result) => {
             funct(error, result);
             client.close();
@@ -108,8 +110,8 @@ exports.getNotifications = function getNotifications(user, funct) {
 };
 
 exports.createNotification = function createNotification(notification, funct) {
-    //notification._id = uuid();
-    connect(funct, (err, client) => {
+    notification._id = uuid();
+    connect(uri, (client) => {
         getCollection(client, 'notifications').insertOne(notification, (error, result) => {
             funct(error, result);
             client.close();
@@ -118,7 +120,7 @@ exports.createNotification = function createNotification(notification, funct) {
 };
 
 exports.viewNotification = function viewNotification(body, funct) {
-    connect(funct, (err, client) => {
+    connect(uri, (client) => {
         getCollection(client, 'notifications').update({ _id: body.notification }, { $push: { user: user, seen: new Date() } }, (error, result) => {
             funct(error, result);
             client.close();

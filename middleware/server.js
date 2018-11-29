@@ -74,7 +74,7 @@ app.get('/test', (req, res) => {
 //     helper.respond(res, err, results);
 //   });
 // });
-app.post(`${notificationsPath}/:id`, authenticate, (req, res) => {
+app.post(`${notificationsPath}/getAllByUserId/:id`, authenticate, (req, res) => {
   mongoDB.getNotifications(req.params.id, (err, results) => {
     helper.respond(res, err, results);
   });
@@ -88,7 +88,6 @@ app.post(`${notificationsPath}/create`, authenticate, (req, res) => {
   mongoDB.createNotification(req.body, (err, result) => {
     helper.respond(res, err, result);
   });
-  res.send('Success');
 });
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 app.post('/login', passport.authenticate(
