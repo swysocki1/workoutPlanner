@@ -10,7 +10,7 @@ function getCollection(client, collection) {
 }
 
 function connect(errorFunct, funct) {
-    MongoClient.connect(uri, (err, client) => {
+    MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
         if (err) {
           console.log(err);
             errorFunct(err);
@@ -22,7 +22,7 @@ function connect(errorFunct, funct) {
 }
 
 exports.getAccount = function getAccount(username, funct) {
-    MongoClient.connect(uri, (err, client) => {
+    MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
         if (err) {
             funct(err);
         }
@@ -34,7 +34,7 @@ exports.getAccount = function getAccount(username, funct) {
 };
 
 exports.getUser = function getUser(id, funct) {
-    MongoClient.connect(uri, (err, client) => {
+    MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
         if (err) {
             funct(err);
         }
@@ -67,7 +67,7 @@ exports.createAccount = function createAccount(user, funct) {
 
 exports.updateAccount = function updateAccount(user, funct) {
     console.log("inside updateAccount...");
-    MongoClient.connect(uri, (err, client) => {
+    MongoClient.connect(uri, { useNewUrlParser: true }, (err, client) => {
         if (err) {
             funct(err);
         }

@@ -114,6 +114,7 @@ export class LoginService {
       this.setUserSession(null);
       subscriber.next(this.getUserSession());
       subscriber.complete();
+      this._user = new User();
 
       // TODO error on logging out
     });
