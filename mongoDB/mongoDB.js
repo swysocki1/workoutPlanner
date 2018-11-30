@@ -15,7 +15,6 @@ function connect(errorFunct, funct) {
           console.log(err);
             errorFunct(err);
         } else {
-          console.log('success');
             funct(client);
         }
     });

@@ -19,9 +19,20 @@
   </ul>
 
   <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
-      <li class="nav-item order-2 order-md-1" [ngClass]="{'active': notifications.length > 0}"><a href="#" class="nav-link" title="notifications"><i class="fa fa-bell fa-fw fa-lg"></i></a></li>
-      <li class="nav-item order-2 order-md-1"><a href="#" class="nav-link" title="settings"><i class="fa fa-cog fa-fw fa-lg"></i></a></li>
-      <li class="dropdown order-1" *ngIf="!(userSession?.user?.username)">
+        <li class="nav-item dropdown" [ngClass]="{'active': notifications.length > 0}">
+          <!-- <a href="#" class="nav-link dropdown-toggle"  id="dropdown-notifications" title="notifications"><i class="fa fa-bell fa-fw fa-lg"></i></a> -->
+          <button type="button" id="dropdown-notifications" title="notifications" data-toggle="dropdown" class="btn btn-link nav-link dropdown-toggle"><i class="fa fa-bell fa-fw fa-lg"></i></button>
+          <ul class="dropdown-menu dropdown-menu-right mt-2">
+              <li class="px-3 py-2" *ngFor="let notification of notifications">
+                  <a [routerLink]="notification.link" class="list-item">{{notification.message}}</a>
+              </li>
+              <li *ngIf="notifications.length < 1">
+                <div class="text-center">No Notifications</div>
+              </li>
+          </ul>
+        </li>
+      <li class="nav-item"><a href="#" class="nav-link" title="settings"><i class="fa fa-cog fa-fw fa-lg"></i></a></li>
+      <li class="nav-item dropdown" *ngIf="!(userSession?.user?.username)">
           <button type="button" id="dropdown-login" data-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">Login <span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right mt-2">
               <li class="px-3 py-2">
