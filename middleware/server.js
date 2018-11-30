@@ -162,11 +162,13 @@ app.get(`${workoutPath}/get`, authenticate, (req, res) => {
         helper.respond(res, err, result);
     });
 });
+/*
 app.get(`${userPath}/get`, authenticate, (req, res) => {
     mongoDB.getAccount(req.query.username, (err, result) => {
         helper.respond(res, err, result);
     });
 });
+*/
 app.post(`${workoutPath}/update`, authenticate, (req, res) => {
     mongoDB.updateWorkout(req.body, (err, result) => {
         helper.respond(res, err, result);

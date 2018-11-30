@@ -6,7 +6,7 @@ import { LoginService } from '../../../services/login.service';
 import { User } from '../../../models/user.model';
 import { ExerciseService } from '../exercise/exercise.service';
 import * as moment from 'moment';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 declare var $:any;
 
@@ -19,20 +19,22 @@ declare var $:any;
 })
 
 export class WorkoutComponent implements OnInit {
+  viewOnly: boolean;
   workout: Workout;
   workoutId: string;
   currentUser: User;
   friends: Array<User>;
   workouts: Array<Workout> = [];
   constructor(private workoutService: WorkoutService, private loginService: LoginService,
-    private exerciseService: ExerciseService, private router: ActivatedRoute) { }
+    private exerciseService: ExerciseService, private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.currentUser = this.loginService.getUser();
     this.friends = this.loginService.getFriends();
 
 
-    this.router.paramMap.subscribe((params: ParamMap) => {
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.workoutId = params.get('id');
     });
 
@@ -58,12 +60,27 @@ export class WorkoutComponent implements OnInit {
     else {
       this.workoutService.get(this.workoutId).subscribe(result => {
         let w: Workout = result as Workout;
+        let shared: boolean = false;
+        w.sharedWith.forEach((e, i, a) => {
+          if (e.id == this.currentUser._id) {
+            w.isShared = true;
+            shared = true;
+          }
+        })
+        if (!shared) {
+          this.viewOnly = true;
+        }
         this.workouts = new Array<Workout>();
         this.workouts.push(w);
       })
     }
     
 
+  }
+
+  viewUserProfile(user) {
+    console.log(`/profile/${user}`);
+    this.router.navigate([`/profile/${user}`]);
   }
 
   showShareModal(workout) {
@@ -99,7 +116,7 @@ export class WorkoutComponent implements OnInit {
     w = new Workout();
     w.name = (<HTMLInputElement>document.getElementById('add_workout_name')).value;
     if (w.name === '') {
-      alert('provide a name...');
+      alert('Provide a name for the workout');
       return;
     }
     (<HTMLInputElement>document.getElementById('add_workout_name')).value = "Add New Workout...";

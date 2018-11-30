@@ -5,7 +5,7 @@ import { User } from "../../../models/user.model";
 import { WorkoutService } from '../workout/workout.service';
 import { CalendarService } from '../calendar/calendar.service';
 import { LoginService } from '../../../services/login.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { query } from '@angular/core/src/render3/instructions';
 import 'rxjs/add/operator/filter';
 import { stringify } from '@angular/core/src/render3/util';
@@ -32,10 +32,12 @@ export class ProfileComponent implements OnInit {
   private today: Date;
   targetuser: string;
   obUser: Object;
+  userToDisplay: User;
+  profileId: string;
 
   constructor
     (private workoutService: WorkoutService, private calendarService: CalendarService, 
-      private loginService: LoginService, private route: ActivatedRoute, private requests: ExternalRequestsService) {
+      private loginService: LoginService, private route: ActivatedRoute, private es: ExternalRequestsService) {
       this.currentUser = this.loginService.getUser();
       //define test user for testing purposes only
       this.pTestUser = new User();
@@ -83,7 +85,27 @@ export class ProfileComponent implements OnInit {
     return dates;
   }
   ngOnInit() {
+
+    this.currentUser = this.loginService.getUser();
     
+
+
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.profileId = params.get('id');
+      console.log(this.profileId);
+    });
+
+    if (this.profileId) {
+      this.es.getUser(this.profileId).subscribe(res => {
+        this.userToDisplay = res as User;
+      })
+    }
+    else {
+      this.userToDisplay = this.currentUser;
+    }
+
+    console.log(this.userToDisplay);
+    /*
     if(this.route.queryParams.isEmpty && this.loginService.getUserSession()) {
       this.selfView = true;
       this.pTestUser = this.loginService.getUser();
@@ -102,6 +124,7 @@ export class ProfileComponent implements OnInit {
         document.write('<p>404: Page Not Found.</p>');
       }
     }
+    */
   }
   //switches for views
   toggleDetails(){this.showUserDetails = !this.showUserDetails;}

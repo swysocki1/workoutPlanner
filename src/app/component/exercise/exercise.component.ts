@@ -29,7 +29,7 @@ export class ExerciseComponent implements OnInit {
         e = new Exercise();
         e.name = (<HTMLInputElement>document.getElementById('add_exercise_name')).value;
         if(e.name === '') {
-            alert('provide a name....');
+            alert('Provide a name for the exercise');
             return;
         }
         e.reps = 0;
