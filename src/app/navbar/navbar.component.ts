@@ -6,6 +6,7 @@ import {ValidationService} from "../../services/validation.service";
 import {NavbarSearchService} from "./navbar-search.service";
 import {NotificationService} from "../../services/notification.service";
 import {Notification} from "../../models/notification.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'navbar',
@@ -23,7 +24,8 @@ export class NavbarComponent {
   search: FormGroup = new FormGroup({
     search: new FormControl()
   });
-  constructor(private loginService: LoginService, private valid: ValidationService, private searchService: NavbarSearchService, private notificationService: NotificationService){
+  constructor(private loginService: LoginService, private valid: ValidationService, private searchService: NavbarSearchService, 
+    private notificationService: NotificationService, private router: Router){
     this.updateUserSession(this.loginService.getUserSession());
     this.notificationService.getNotifications().subscribe(notifications => {
       this.notifications = notifications;
@@ -60,7 +62,8 @@ export class NavbarComponent {
       if (validateLogin.valid) {
         this.loginService.login(loginCombo.username, loginCombo.password).subscribe(userSession => {
           this.updateUserSession(userSession);
-          // Navigate to page???
+          this.router.navigate(['/home'])
+          location.reload();
         }, error => {
           console.error(error);
         });
@@ -76,6 +79,9 @@ export class NavbarComponent {
     this.loginService.logout().subscribe(userSession => {
       this.userSession = userSession;
       // TODO navigate to logout page
+      //
+      this.router.navigate(['/home'])
+      location.reload();
     }, error => {
       console.error(error);
     });

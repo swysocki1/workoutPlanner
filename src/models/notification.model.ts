@@ -3,7 +3,7 @@ export class Notification {
   users: [string];
   message: string;
   created: Date;
-  viewed: [{user: string, seen: Date}];
+  viewed: Array<{user: string, seen: Date}>;
   type: string;
   link: string;
 }
