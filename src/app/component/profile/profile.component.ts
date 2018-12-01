@@ -101,12 +101,10 @@ export class ProfileComponent implements OnInit {
     });
   }*/
   ngOnInit() {
-/*
+
     this.currentUser = this.loginService.getUser();
     console.log('currentUser:' + this.currentUser);
     
-
-
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.profileId = params.get('id');
       console.log(this.profileId);
@@ -124,7 +122,7 @@ export class ProfileComponent implements OnInit {
     this.profile = this.pTestUser;
     this.selfView = false;
 
-    console.log(this.profile);*/
+    console.log(this.profile);
   }
    /*this.toggleDetails();
     this.toggleFeed();

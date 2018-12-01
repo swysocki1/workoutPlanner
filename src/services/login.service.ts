@@ -48,7 +48,7 @@ export class LoginService {
   }
 
   constructor(private es: ExternalRequestsService) {
-    const cachedSession: UserSession = JSON.parse(localStorage.getItem('CFBlocks'));
+    const cachedSession: UserSession = JSON.parse(localStorage.getItem('FitPals'));
     if (cachedSession && cachedSession.user.username && cachedSession.lastLogin &&
       moment(cachedSession.lastLogin).isSameOrAfter(moment().subtract(1, 'days'))) {
       this.setUserSession(cachedSession);
