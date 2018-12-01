@@ -2,20 +2,11 @@
     <div class="card" *ngIf='showUserDetails'>
         <!-- TODO: REPLACE WITH PROFILE PHOTO-->
         <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap">
-        <div class="card-body">
-<<<<<<< Updated upstream
-            <h5 class="card-title">{{ userToDisplay.firstName}} {{userToDisplay.lastName}}</h5>
-            <ul>
-                <li><span>Email: </span> {{userToDisplay.username}}</li>
-                <!--TODO FIGURE OUT HOW TO GET FOLLOW INFORMATION IN HERE-->
-                <li>Friends: {{userToDisplay.friends.length}}</li>
-                
-=======
+        <div class="card-body" *ngIf='selfView'>
             <ul>
                 <li><span>Username / Email: </span> {{profile.username}}</li>
                 <!--TODO FIGURE OUT HOW TO GET FOLLOW INFORMATION IN HERE-->
-                <li>Friends: <span> 2 </span></li>
->>>>>>> Stashed changes
+                <li>Friends: <span> {{profile.friends.length}} </span></li>
             </ul>
         </div>
     </div>
@@ -31,16 +22,6 @@
         </div>
 
     </div>
-    <!-- 
-        This section not needed
-        <div class="card" *ngIf='showMeals'>
-        <div class="card-body">
-            <h5 class="card-title">Meal Plan This Week:</h5>
-            <p class="card-text">Meal plans</p>
-        </div>
-
-    </div> 
--->
     <div class="card" *ngIf='showSchedule'>
         <div class="card-body">
             <div class="card-header">
@@ -52,19 +33,19 @@
             <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
             <ul class="list-group">
                 <li *ngFor="let date of next7Dates" class="list-group-item">
-                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(userToDisplay._id, date) }}</span>
+                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(profile._id, date) }}</span>
                 </li>
             </ul>
         </div>
     </div>
     <div class="card" *ngIf='selfView==false'>
-        <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap">
+        <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap" style="max-width: 300px">
         <div class='card-body'>
             <div class='card-header'>
-                <h5 class="card-title">Statistics for: <span>{{ profile.username }}</span></h5>
+                <h5 class="card-title">Statistics for: <span>{{profile.username}}</span></h5>
             </div>
             <p class='card-text'>Workouts shared: <span>2 <!--TODO add variable--></span></p>
-            <input class="btn btn-primary" value="Add Friend" onclick="" *ngIf='isFriend == false'>
+            <input class="btn btn-primary" value="Add Friend" onclick="">
             <input class="btn btn-primary" value="Unfriend" onclick="" *ngIf='isFriend'>
         </div>
     </div>

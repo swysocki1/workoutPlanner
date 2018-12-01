@@ -31,6 +31,7 @@ export class WorkoutComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.loginService.getUser();
+    console.log('Current User: ' + this.currentUser);
     this.friends = this.loginService.getFriends();
 
 

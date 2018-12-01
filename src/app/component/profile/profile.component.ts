@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DayService } from '../calendar/day/day.service';
 import { Workout } from '../workout/workout.model';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -34,15 +35,6 @@ export class ProfileComponent implements OnInit {
   next7Dates: Date[];
   private today: Date;
   targetuser: string;
-<<<<<<< Updated upstream
-  obUser: Object;
-  userToDisplay: User;
-  profileId: string;
-
-  constructor
-    (private workoutService: WorkoutService, private calendarService: CalendarService, 
-      private loginService: LoginService, private route: ActivatedRoute, private es: ExternalRequestsService) {
-=======
   profileId: string;
   profile: User;
   isFriend: boolean;
@@ -51,9 +43,8 @@ export class ProfileComponent implements OnInit {
   constructor
     (private workoutService: WorkoutService, private calendarService: CalendarService, 
       private loginService: LoginService, private route: ActivatedRoute, private requests: ExternalRequestsService, 
-      private dayService: DayService) {
+      private dayService: DayService, private userService: UserService) {
       
->>>>>>> Stashed changes
       this.currentUser = this.loginService.getUser();
 
       //define test user for testing purposes only
@@ -62,6 +53,8 @@ export class ProfileComponent implements OnInit {
       this.pTestUser.lastName = 'Dandy';
       this.pTestUser._id = '12321';
       this.pTestUser.email = 'jim.dandy@me.org';
+      this.pTestUser.friends = [new Friend()];
+      this.pTestUser.username = 'jim.dandy@me.org';
       //view variables
       this.showMeals = false; //leaving this false as meals doesn't seem to be in the works
       this.showFeed = false;
@@ -108,9 +101,9 @@ export class ProfileComponent implements OnInit {
     });
   }*/
   ngOnInit() {
-<<<<<<< Updated upstream
-
+/*
     this.currentUser = this.loginService.getUser();
+    console.log('currentUser:' + this.currentUser);
     
 
 
@@ -120,64 +113,23 @@ export class ProfileComponent implements OnInit {
     });
 
     if (this.profileId) {
-      this.es.getUser(this.profileId).subscribe(res => {
-        this.userToDisplay = res as User;
+      this.requests.getUser(this.profileId).subscribe(res => {
+        this.profile = res as User;
       })
     }
     else {
-      this.userToDisplay = this.currentUser;
-    }
-
-    console.log(this.userToDisplay);
-    /*
-    if(this.route.queryParams.isEmpty && this.loginService.getUserSession()) {
+      this.profile = this.currentUser;
       this.selfView = true;
-      this.pTestUser = this.loginService.getUser();
-    }
-    else if(this.route.queryParams.isEmpty && !this.loginService.getUserSession()){
-      document.write('<p>Please sign in to view your profile.</p>');
-    }
-    else{
-      try{
-        var userId = this.route.queryParams.filter(params => params.userId).subscribe(params => {
-          this.targetuser = params.userId;
-        });
-        this.obUser = this.requests.getUser(userId).subscribe(obUser => {return obUser}); 
-      }
-      catch(err){
-        document.write('<p>404: Page Not Found.</p>');
-      }
-    }
-    */
-=======
+    } 
     this.profile = this.pTestUser;
-    this.selfView = true;
-    this.toggleDetails();
-    this.toggleSched();
-    this.toggleFeed();
-    /*
-    console.log(this.currentUser);
-    this.route.queryParams.subscribe(params => {
-      if(params['userId']){
-        this.profileId = params['userId'];
-      }
-      else this.profileId = this.currentUser._id;
-    });
-    console.log(this.profileId);
-    this.requests.getUser(this.profileId).subscribe(result => {
-      this.profile = result as User;
-  }, error => {console.log('error loading profile')});
-  if(this.currentUser._id == this.profile._id){
-    this.selfView = true;
+    this.selfView = false;
+
+    console.log(this.profile);*/
   }
-  if(this.selfView){
-    this.toggleDetails();
+   /*this.toggleDetails();
     this.toggleFeed();
-    this.toggleSched();
->>>>>>> Stashed changes
-  }
-  this.isFriend = this.getFriendStatus(); */
-}
+    this.toggleSched();*/
+  
   //switches for views
   toggleDetails(){this.showUserDetails = !this.showUserDetails;}
   toggleFeed(){this.showFeed = !this.showFeed;}
@@ -186,18 +138,18 @@ export class ProfileComponent implements OnInit {
   //friend button function
   addFriend(){
     //new notification to profile
-    this.currentUser.friends.push({username: this.profile.username} as Friend);
+    this.currentUser.friends.push({id: this.profile._id} as Friend);
     return this.requests.updateUser(this.currentUser);
   }
   addRemoveFriend(){
     var res;
-    this.profile.friends.splice(this.profile.friends.indexOf({username: this.currentUser.username} as Friend), 1);
-    this.currentUser.friends.splice(this.currentUser.friends.indexOf({username: this.profile.username} as Friend), 1);
+    this.profile.friends.splice(this.profile.friends.indexOf({id: this.currentUser._id} as Friend), 1);
+    this.currentUser.friends.splice(this.currentUser.friends.indexOf({id: this.profile._id} as Friend), 1);
     res = this.requests.updateUser(this.profile);
     res = res + this.requests.updateUser(this.currentUser);
     return res;
   }
   getFriendStatus(){
-    return (this.profile.friends.indexOf({username: this.currentUser.username} as Friend) != -1);
+    return (this.profile.friends.indexOf({id: this.currentUser._id} as Friend) != -1);
   }
 }
