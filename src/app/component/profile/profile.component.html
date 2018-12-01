@@ -30,7 +30,6 @@
                     <h5 class="card-title col-9">Workouts This Week:</h5>
                 </div>
             </div>
-            <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
             <ul class="list-group">
                 <li *ngFor="let date of next7Dates; index as i" class="list-group-item">
                     <span>{{ getDay(date) }}</span>:
@@ -45,9 +44,9 @@
         <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap" style="max-width: 300px">
         <div class='card-body'>
             <div class='card-header'>
-                <h5 class="card-title">Statistics for: <span>{{profile.username}}</span></h5>
+                <h5 class="card-title">{{profile.username}}</h5>
             </div>
-            <p class='card-text'>Workouts shared: <span>2 <!--TODO add variable--></span></p>
+            <!--<p class='card-text'>Workouts shared: <span>2 </span></p>-->
             <input class="btn btn-primary" value="Add Friend" onclick="">
             <input class="btn btn-primary" value="Unfriend" onclick="" *ngIf='isFriend'>
         </div>

@@ -55,12 +55,10 @@ export class ProfileComponent implements OnInit {
 
       //define test user for testing purposes only
       this.pTestUser = new User();
-      this.pTestUser.firstName = 'Jim';
-      this.pTestUser.lastName = 'Dandy';
-      this.pTestUser._id = '12321';
-      this.pTestUser.email = 'jim.dandy@me.org';
+      this.pTestUser._id = 'fa246377-99df-43d2-9be1-f7e6a71379e9';
+      this.pTestUser.email = 'jventura@conspiracy.org';
       this.pTestUser.friends = [new Friend()];
-      this.pTestUser.username = 'jim.dandy@me.org';
+      this.pTestUser.username = 'jventura@conspiracy.org';
       //view variables
       this.showMeals = false; //leaving this false as meals doesn't seem to be in the works
       this.showFeed = false;
@@ -72,25 +70,10 @@ export class ProfileComponent implements OnInit {
       this.imagePath = 'assets/images/';
       this.selfView = false;
   }
-  /*private genNext7(){
-    var days = this.today.getDay();
-    var n7 = [];
-    for(var i = 0; i < 7; i++){
-      if(days + i < 7) n7.push(days + i);
-      else n7.push(days + i - 7);
-    }
-    return n7;
-  }*/
-  
   getDay(day: Date){
     //console.log(day);
     return this.calendarService.getDayOfWeek(day.getDay());
   }
-  getWorkout(){
-  
-    //return this.workoutService.getWorkoutsForDay(id, td);
-  }
-
   private genNextDates(){
     var dates = [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()];
     for(var i = 0; i < 7; i++){
@@ -98,7 +81,6 @@ export class ProfileComponent implements OnInit {
     }
     return dates;
   }
-
   private genWorkoutWeek(){
     console.log('generating week.....')
     this.next7Dates.forEach((iDay, index)=>{
@@ -119,39 +101,25 @@ export class ProfileComponent implements OnInit {
         console.log(this.workouts);
       });
     });
-    /*this.dayService.getWorkoutsForDay(this.loginService.getUser()._id, moment(this.day.date).format('LL')).subscribe(result => {
-      let res: Array<Day>;
-      res = result as [Day];
-      res.forEach((r, idx, arr) => {
-        this.workoutService.get(r.workout).subscribe(ws => {
-          let w: Workout = ws as Workout;
-          if (w) {
-            w.cal = r._id;
-            this.workouts.push(w);
-          }
-        });
-      });
-    }); */
   }
-  /*addFriend(){
-    this.currentUser.friends.push(this.profile)
-  }
-  removeFriend(){
-    this.currentUser.friends = this.currentUser.friends.filter(item =>{
-      return item.username != this.profile.username;
-    });
-  }*/
   ngOnInit() {
     this.currentUser = this.loginService.getUser();
     console.log('currentUser:' + this.currentUser);
-
+    //testing code only
+    
+    this.profileId = location.search;
+    this.profileId = this.profileId.replace('?id=', '');
+    /*
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.profileId = params.get('id');
       console.log('inside parammap: ' + 'Id = ' + this.profileId)
-    });
+    }); */
     if (this.profileId) {
       this.requests.getUser(this.profileId).subscribe(res => {
         this.profile = res as User;
+      }, err=>{
+        console.log("hard coded profile mode engaged due to ERROR");
+        this.staticTest();
       })
     }
     else {
@@ -168,7 +136,6 @@ export class ProfileComponent implements OnInit {
       this.toggleSched();
       this.genWorkoutWeek();
     } 
-    this.selfView = true;
     console.log(this.profile);
   }
    /*this.toggleDetails();
@@ -196,4 +163,16 @@ export class ProfileComponent implements OnInit {
   getFriendStatus(){
     return (this.profile.friends.indexOf({id: this.currentUser._id} as Friend) != -1);
   }
+  staticTest(){
+    this.profile = this.pTestUser;
+    this.profile.friends.pop();
+    this.isFriend = false;
+    if(!this.currentUser.friends){
+      //initialize friends if it doesn't exist
+      this.currentUser.friends = [new Friend()];
+      this.currentUser.friends.pop();
+      this.requests.updateUser(this.currentUser);
+    }
+  }
+
 }
