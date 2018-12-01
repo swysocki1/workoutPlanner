@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { DayService } from '../calendar/day/day.service';
 import { Workout } from '../workout/workout.model';
 import { UserService } from '../../../services/user.service';
+import { Day } from '../calendar/calendar.model';
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +39,12 @@ export class ProfileComponent implements OnInit {
   profileId: string;
   profile: User;
   isFriend: boolean;
-  workouts: Array<Workout> = new Array<Workout>();
+  //week: Array<string>;
+  workouts: Array<Array<Workout>> = 
+  [new Array<Workout>(), new Array<Workout>(), new Array<Workout>(), new Array<Workout>(), 
+    new Array<Workout>(), new Array<Workout>() , new Array<Workout>()];
+  
+  days: Array<Day>;
 
   constructor
     (private workoutService: WorkoutService, private calendarService: CalendarService, 
@@ -92,6 +98,41 @@ export class ProfileComponent implements OnInit {
     }
     return dates;
   }
+
+  private genWorkoutWeek(){
+    console.log('generating week.....')
+    this.next7Dates.forEach((iDay, index)=>{
+      this.dayService.getWorkoutsForDay(this.loginService.getUser()._id, moment(iDay).format('LL')).subscribe(result => {
+        let res: Array<Day>;
+        res = result as [Day];
+        res.forEach((r, idx, arr) => {
+          this.workoutService.get(r.workout).subscribe(ws => {
+            console.log('inner subscribe');
+            let w: Workout = ws as Workout;
+            if (w) {
+              w.cal = r._id;
+              this.workouts[index].push(w);
+              console.log("workout added to week on day number:" + index);
+            }
+          });
+        });
+        console.log(this.workouts);
+      });
+    });
+    /*this.dayService.getWorkoutsForDay(this.loginService.getUser()._id, moment(this.day.date).format('LL')).subscribe(result => {
+      let res: Array<Day>;
+      res = result as [Day];
+      res.forEach((r, idx, arr) => {
+        this.workoutService.get(r.workout).subscribe(ws => {
+          let w: Workout = ws as Workout;
+          if (w) {
+            w.cal = r._id;
+            this.workouts.push(w);
+          }
+        });
+      });
+    }); */
+  }
   /*addFriend(){
     this.currentUser.friends.push(this.profile)
   }
@@ -101,15 +142,13 @@ export class ProfileComponent implements OnInit {
     });
   }*/
   ngOnInit() {
-
     this.currentUser = this.loginService.getUser();
     console.log('currentUser:' + this.currentUser);
-    
+
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.profileId = params.get('id');
-      console.log(this.profileId);
+      console.log('inside parammap: ' + 'Id = ' + this.profileId)
     });
-
     if (this.profileId) {
       this.requests.getUser(this.profileId).subscribe(res => {
         this.profile = res as User;
@@ -117,17 +156,24 @@ export class ProfileComponent implements OnInit {
     }
     else {
       this.profile = this.currentUser;
+      if(!this.currentUser.friends){
+        //initialize friends if it doesn't exist
+        this.currentUser.friends = [new Friend()];
+        this.currentUser.friends.pop();
+        this.requests.updateUser(this.currentUser);
+      }
       this.selfView = true;
+      this.toggleDetails();
+      //this.toggleFeed(); //commented out. function replaced by notifications
+      this.toggleSched();
+      this.genWorkoutWeek();
     } 
-    this.profile = this.pTestUser;
-    this.selfView = false;
-
+    this.selfView = true;
     console.log(this.profile);
   }
    /*this.toggleDetails();
     this.toggleFeed();
     this.toggleSched();*/
-  
   //switches for views
   toggleDetails(){this.showUserDetails = !this.showUserDetails;}
   toggleFeed(){this.showFeed = !this.showFeed;}

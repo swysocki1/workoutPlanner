@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import { User } from "../../../models/user.model";
+import { User, Friend } from "../../../models/user.model";
 import {FormGroup} from "@angular/forms";
 import {FormControl} from "@angular/forms";
 import {LoginService} from '../../../services/login.service';

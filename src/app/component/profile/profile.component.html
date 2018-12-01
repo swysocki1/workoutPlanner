@@ -32,8 +32,11 @@
             </div>
             <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
             <ul class="list-group">
-                <li *ngFor="let date of next7Dates" class="list-group-item">
-                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(profile._id, date) }}</span>
+                <li *ngFor="let date of next7Dates; index as i" class="list-group-item">
+                    <span>{{ getDay(date) }}</span>:
+                    <span *ngFor="let workout of workouts[i]">
+                        {{ workout.name }}
+                    </span>
                 </li>
             </ul>
         </div>
