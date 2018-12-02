@@ -16,6 +16,7 @@ import { LoginService } from '../../../services/login.service';
 export class ExerciseComponent implements OnInit {
     @Input() workout: Workout;
     currentUser: User;
+    newExerciseName: string = '';
     constructor(private excerciseService:ExerciseService, private loginService: LoginService){
     }
 
@@ -23,12 +24,10 @@ export class ExerciseComponent implements OnInit {
         this.currentUser = this.loginService.getUser();
     }
 
-    add(exercise?: Exercise) {
-        
-        let e: Exercise;
-        e = new Exercise();
-        e.name = (<HTMLInputElement>document.getElementById('add_exercise_name')).value;
-        if(e.name === '') {
+    add() {
+        const e = new Exercise();
+        e.name = this.newExerciseName;
+        if(!e.name || !e.name.trim()) {
             alert('provide a name....');
             return;
         }
@@ -36,12 +35,12 @@ export class ExerciseComponent implements OnInit {
         e.sets = 0;
         e.description = "description"
         e.weights = new Array<Weight>();
-        var obj = {workoutId: this.workout._id, exercise: {name: e.name, reps: e.reps, sets: e.sets, description: e.description, weights: e.weights}};
+        var obj = {workoutId: this.workout._id, exercise: e};
         this.excerciseService.add(obj).subscribe(workout => {
             this.workout = workout as Workout;
             console.log("added exercise...");
         });
-        (<HTMLInputElement>document.getElementById('add_exercise_name')).value = "Add Exercise...";
+        this.newExerciseName = '';
     }
 
     cancel(exercise: Exercise) {

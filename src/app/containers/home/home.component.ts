@@ -9,7 +9,6 @@ export class HomeComponent implements OnInit {
   constructor(private loginService: LoginService){}
 
   ngOnInit(){
-    this.loggedIn = !(this.loginService.getUser()._id == undefined);
-    console.log(this.loginService.getUser()._id);
+    this.loggedIn = this.loginService.getUserSession().authenticated;
   }
 }

@@ -135,10 +135,25 @@ app.get(`${workoutPath}/getById/:id`, authenticate, (req, res) => {
         helper.respond(res, err, result);
     });
 });
-app.get(`${userPath}/get`, authenticate, (req, res) => {
-    mongoDB.getUser(req.query.id, (err, result) => {
+app.get(`${userPath}/get/:id`, authenticate, (req, res) => {
+    mongoDB.getUser(req.params.id, (err, result) => {
         helper.respond(res, err, result);
     });
+});
+app.get(`${userPath}/getAll`, authenticate, (req, res) => {
+  mongoDB.getAllUsers(req.query, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.post(`${userPath}/befriendUser`, authenticate, (req, res) => {
+  mongoDB.befriendUser(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
+});
+app.post(`${userPath}/unfriendUser`, authenticate, (req, res) => {
+  mongoDB.unfriendUser(req.body, (err, result) => {
+    helper.respond(res, err, result);
+  });
 });
 app.get(`${exercisePath}/get`, authenticate, (req, res) => {
     mongoDB.getExercise(req.query.id, (err, result) => {

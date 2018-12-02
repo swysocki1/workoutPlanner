@@ -88,17 +88,18 @@ export class ProfileComponent implements OnInit {
       this.selfView = true;
       this.pTestUser = this.loginService.getUser();
     }
-    else if(this.route.queryParams.isEmpty && !this.loginService.getUserSession()){
+    else if(this.route.queryParams.isEmpty && !this.loginService.getUserSession().authenticated){
       document.write('<p>Please sign in to view your profile.</p>');
     }
     else{
       try{
-        var userId = this.route.queryParams.filter(params => params.userId).subscribe(params => {
+        this.route.queryParams.filter(params => params.userId).subscribe(params => {
           this.targetuser = params.userId;
+          this.requests.getUser(this.targetuser).subscribe(obUser => {
+            this.obUser = obUser;
+          }); 
         });
-        this.obUser = this.requests.getUser(userId).subscribe(obUser => {return obUser}); 
-      }
-      catch(err){
+      } catch(err){
         document.write('<p>404: Page Not Found.</p>');
       }
     }

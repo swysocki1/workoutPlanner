@@ -117,9 +117,17 @@ export class ExternalRequestsService {
   }
 
   getUser(id): Observable<Object> {
-    return this.get(`${this.userPath}/get?id=${id}`);
+    return this.get(`${this.userPath}/get/${id}`);
   }
-
+  getAllUsers() {
+    return this.get(`${this.userPath}/getAll`);
+  }
+  befriendUser(currentUserId: string, newFriendId: string) {
+    return this.post(`${this.userPath}/befriendUser`, {currentUser: currentUserId, newFriend: newFriendId});
+  }
+  unfriendUser(currentUserId: string, friendId: string) {
+    return this.post(`${this.userPath}/unfriendUser`, {currentUser: currentUserId, friend: friendId});
+  }
   shareWorkout(obj): Observable<Object> {
     return this.post(`${this.workoutPath}/share`, obj);
   }

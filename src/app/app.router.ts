@@ -8,6 +8,7 @@ import {WorkoutComponent} from "./component/workout/workout.component";
 
 import {ProfileComponent} from "./component/profile/profile.component";
 import {CalendarComponent} from "./component/calendar/calendar.component";
+import {FriendFinderComponent} from "./component/friendFinder/friendFinder.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,8 @@ export const routes: Routes = [
   { path: 'workouts', component: WorkoutComponent },
   { path: 'workout/:id', component: WorkoutComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
   { path: 'calendar', component: CalendarComponent},
+  { path: 'friendFinder', component: FriendFinderComponent},
   { path: '**', redirectTo: '/home' }
 ];

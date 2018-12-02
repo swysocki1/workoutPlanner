@@ -10,6 +10,7 @@ export class User {
   roles: [Role] = [] as [Role];
   friends: [Friend];
   password: string;
+  imgURL?: string;
   // TODO add more User Info
 }
 
