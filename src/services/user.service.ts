@@ -19,7 +19,7 @@ export class UserService {
         if(user != false) {
             this.loginService.createAccount(user.username, user.password).subscribe(result => {
                 this.router.navigate(['/home']);
-            }, error => {});
+            }, error => {console.log(error);});
             //this.loginService.login(User.username, User.password);
         }
         else window.alert("signup failed!");

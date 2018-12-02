@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
 
       //define test user for testing purposes only
       this.pTestUser = new User();
-      this.pTestUser._id = 'fa246377-99df-43d2-9be1-f7e6a71379e9';
+      this.pTestUser._id = 
       this.pTestUser.email = 'jventura@conspiracy.org';
       this.pTestUser.friends = [new Friend()];
       this.pTestUser.username = 'jventura@conspiracy.org';
@@ -146,19 +146,28 @@ export class ProfileComponent implements OnInit {
   toggleMeals(){this.showMeals = !this.showMeals;}
   toggleSched(){this.showSchedule = !this.showSchedule;}
   //friend button function
-  addFriend(){
-    //new notification to profile
-    console.log('adding friend' + this.profile._id);
-    this.currentUser.friends.push({id: this.profile._id} as Friend);
-    return this.requests.updateUser(this.currentUser);
+  addFriend(friend: User) {
+    this.requests.befriendUser(this.loginService.getUser()._id, friend._id).subscribe(res => {
+      this.loginService.updateUser().subscribe((user: User) => {
+        this.currentUser = user;
+      }, error => {
+        console.error(error);
+      });
+    }, error => {
+      console.error(error);
+    });
   }
-  removeFriend(){
-    var res;
-    this.profile.friends.splice(this.profile.friends.indexOf({id: this.currentUser._id} as Friend), 1);
-    this.currentUser.friends.splice(this.currentUser.friends.indexOf({id: this.profile._id} as Friend), 1);
-    res = this.requests.updateUser(this.profile);
-    res = res + this.requests.updateUser(this.currentUser);
-    return res;
+  removeFriend(friend: User) {
+    this.requests.unfriendUser(this.loginService.getUser()._id, friend._id).subscribe(res => {
+      console.log(res);
+      this.loginService.updateUser().subscribe((user: User) => {
+        this.currentUser = user;
+      }, error => {
+        console.error(error);
+      });
+    }, error => {
+      console.error(error);
+    });
   }
   getFriendStatus(){
     return (this.profile.friends.indexOf({id: this.currentUser._id} as Friend) != -1);
