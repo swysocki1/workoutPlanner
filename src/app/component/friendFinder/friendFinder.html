@@ -19,7 +19,7 @@
             </div>
           </div>
         </div>
-        <button type="button" *ngFor="let tag of searchFilters" class="btn-filter btn btn-sm btn-secondary" (click)="toggleFilter(tag?.tag)"><fa name="times"></fa> {{tag?.label}}</button>
+        <button type="button" *ngFor="let tag of searchFilters" class="btn-filter btn btn-sm btn-secondary mr-1" (click)="toggleFilter(tag?.tag)"><fa name="times"></fa> {{tag?.label}}</button>
       </div>
       <friend-block *ngFor="let friend of allUsers | friendFilter:user:search:searchFilters" [friend]="friend" [currentUser]="user" (befriend)="addFriend($event)"
                     (unFriend)="removeFriend($event)" (viewUserProfile)="viewUserProfile($event)" class="col-lg-6 col-md-12 col-sm-12" style="padding:.2em;"></friend-block>

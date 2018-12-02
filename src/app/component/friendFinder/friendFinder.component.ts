@@ -74,6 +74,8 @@ export class FriendFinderComponent implements OnInit {
   toggleFilter(tag: string) {
     if (tag === 'FILTER_CURRENT_FRIENDS') {
       this.toggleFilterCurrentFriends();
+    } else if (tag === 'FILTER_STRANGERS') {
+      this.toggleFilterStrangers();
     }
   }
   toggleFilterCurrentFriends() {
@@ -87,6 +89,7 @@ export class FriendFinderComponent implements OnInit {
   }
   toggleFilterStrangers() {
     const filterTAG = {label: 'Strangers', tag: 'FILTER_STRANGERS'} as FilterTag;
+    console.log(this.searchFilters);
     const index = this.searchFilters.findIndex(filter => filter.tag === filterTAG.tag);
     if (index >= 0) {
       this.searchFilters.splice(index, 1);
