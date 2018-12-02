@@ -47,8 +47,15 @@
                 <h5 class="card-title">{{profile.username}}</h5>
             </div>
             <!--<p class='card-text'>Workouts shared: <span>2 </span></p>-->
-            <input class="btn btn-primary" value="Add Friend" onclick="">
-            <input class="btn btn-primary" value="Unfriend" onclick="" *ngIf='isFriend'>
+            <button class="btn btn-primary" (click)="addFriend()" *ngIf='isFriend==false'>Add Friend</button>
+            <button class="btn btn-primary" (click)="addFriend()" *ngIf='isFriend'>Add Friend</button>
+        </div>
+    </div>
+    <div class="card" *ngIf='selfView==false'>
+        <div class='card-body'>
+            <div class='card-header'>
+                <h5 class="card-title">{{profile.username}} <span>Is not your friend yet. Friend them to start sharing!</span></h5>
+            </div>
         </div>
     </div>
 </div>

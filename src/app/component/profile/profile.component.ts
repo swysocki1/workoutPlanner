@@ -149,10 +149,11 @@ export class ProfileComponent implements OnInit {
   //friend button function
   addFriend(){
     //new notification to profile
+    console.log('adding friend' + this.profile._id);
     this.currentUser.friends.push({id: this.profile._id} as Friend);
     return this.requests.updateUser(this.currentUser);
   }
-  addRemoveFriend(){
+  removeFriend(){
     var res;
     this.profile.friends.splice(this.profile.friends.indexOf({id: this.currentUser._id} as Friend), 1);
     this.currentUser.friends.splice(this.currentUser.friends.indexOf({id: this.profile._id} as Friend), 1);
