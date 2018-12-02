@@ -18,6 +18,20 @@ export class LoginService {
   getUser(): User {
     return this._user;
   }
+  updateUser(): Observable<User> {
+    return new Observable<User>(subscriber => {
+      this.es.getUser(this._user._id).subscribe((user: User) => {
+        console.log(user);
+        this.setUser(user);
+        this._userSession.user = user;
+        subscriber.next(user);
+        subscriber.complete();
+      }, error => {
+        subscriber.error(error);
+        subscriber.complete();
+      })
+    });
+  }
 
   getFriends(): Array<User>{
     return this._friends;

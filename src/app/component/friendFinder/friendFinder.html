@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header">
+    <fa name="users" size="2x"></fa><span style="font-size:36px"> Friends</span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 search-bar">
+        <div class="form-group">
+          <label class="control-label">Search:</label>
+
+          <div class="input-group">
+            <input type="text" [(ngModel)]="search" class="form-control" aria-label="Filter Users...">
+            <div class="input-group-append">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters</button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" (click)="toggleFilterCurrentFriends()">{{filterTagActive('FILTER_CURRENT_FRIENDS') ? 'Show' : 'Hide'}} My Friends</a>
+                <a class="dropdown-item" (click)="toggleFilterStrangers()">{{filterTagActive('FILTER_STRANGERS') ? 'Show' : 'Hide'}} Strangers</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" *ngFor="let tag of searchFilters" class="btn-filter btn btn-sm btn-secondary mr-1" (click)="toggleFilter(tag?.tag)"><fa name="times"></fa> {{tag?.label}}</button>
+      </div>
+      <friend-block *ngFor="let friend of allUsers | friendFilter:user:search:searchFilters" [friend]="friend" [currentUser]="user" (befriend)="addFriend($event)"
+                    (unFriend)="removeFriend($event)" (viewUserProfile)="viewUserProfile($event)" class="col-lg-6 col-md-12 col-sm-12" style="padding:.2em;"></friend-block>
+    </div>
+  </div>
+</div>

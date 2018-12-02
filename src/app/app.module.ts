@@ -28,6 +28,7 @@ import { ProfileComponent } from './component/profile/profile.component';
 import {ExerciseModule} from "./component/exercise/exercise.module";
 import {WorkoutModule} from "./component/workout/workout.module";
 import {WorkoutModalModule} from "./component/workoutModal/workoutModal.module";
+import {FriendFinderModule} from "./component/friendFinder/friendFinder.module";
 
 
 
@@ -51,8 +52,8 @@ import {WorkoutModalModule} from "./component/workoutModal/workoutModal.module";
     WorkoutModule,
     HttpClientModule,
     WorkoutModalModule,
-    AngularFontAwesomeModule
-    
+    AngularFontAwesomeModule,
+    FriendFinderModule
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

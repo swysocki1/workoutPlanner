@@ -1,7 +1,7 @@
 <form class="well">
     <div class="form-inline" style="margin-top: 10px;" *ngIf="workout.owner == currentUser._id">
         <input type="text" name="title" class="form-control" placeholder="Add Excercise..." style="width:80%; float: right;"
-            id="add_exercise_name">
+            id="add_exercise_name" [(ngModel)]="newExerciseName">
         <button type="button" class="btn btn-primary" (click)="add()" style="margin-left: 10px; margin-right: 10px; float: left;">
             <fa name="plus"></fa>
         </button>

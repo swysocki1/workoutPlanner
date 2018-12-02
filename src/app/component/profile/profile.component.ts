@@ -40,15 +40,15 @@ export class ProfileComponent implements OnInit {
   profile: User;
   isFriend: boolean;
   //week: Array<string>;
-  workouts: Array<Array<Workout>> = 
-  [new Array<Workout>(), new Array<Workout>(), new Array<Workout>(), new Array<Workout>(), 
+  workouts: Array<Array<Workout>> =
+  [new Array<Workout>(), new Array<Workout>(), new Array<Workout>(), new Array<Workout>(),
     new Array<Workout>(), new Array<Workout>() , new Array<Workout>()];
   
   days: Array<Day>;
 
   constructor
-    (private workoutService: WorkoutService, private calendarService: CalendarService, 
-      private loginService: LoginService, private route: ActivatedRoute, private requests: ExternalRequestsService, 
+    (private workoutService: WorkoutService, private calendarService: CalendarService,
+      private loginService: LoginService, private route: ActivatedRoute, private requests: ExternalRequestsService,
       private dayService: DayService, private userService: UserService) {
       
       this.currentUser = this.loginService.getUser();
@@ -106,7 +106,6 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.loginService.getUser();
     console.log('currentUser:' + this.currentUser);
     //testing code only
-    
     this.profileId = location.search;
     this.profileId = this.profileId.replace('?id=', '');
     /*
@@ -135,7 +134,7 @@ export class ProfileComponent implements OnInit {
       //this.toggleFeed(); //commented out. function replaced by notifications
       this.toggleSched();
       this.genWorkoutWeek();
-    } 
+    }
     console.log(this.profile);
   }
    /*this.toggleDetails();

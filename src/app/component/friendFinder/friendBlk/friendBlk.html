@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-3">
+        <img src="friend?.imgURL" alt="Profile Picture" *ngIf="friend?.imgURL" class="responsive-image" (click)="viewFriendProfile()"/>
+        <span style="display:inline-block;padding:.5em 1.1em;background-color: red;" class="rounded-circle ml-3" *ngIf="!friend?.imgURL" (click)="viewFriendProfile()"><fa name="user" size="5x"></fa></span>
+      </div>
+      <div class="col-5 my-auto">
+        <div class="text-center"><button type="button" class="btn btn-link friend-name" (click)="viewFriendProfile()">{{getName()}}</button></div>
+        <div class="text-center text-muted" style="font-style: italic;font-weight:bolder;" *ngIf="isFriend()">* Currently Friends</div>
+      </div>
+      <div class="col-4 my-auto text-center">
+        <button type="button" class="btn btn-primary btn-sm" (click)="toggleFriendship()" [ngClass]="{'btn-primary': !isFriend(), 'btn-secondary': isFriend()}">
+          <span *ngIf="isFriend()"><fa name="times"></fa> Remove Friend</span>
+          <span *ngIf="!isFriend()">Request Friendship</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

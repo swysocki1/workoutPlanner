@@ -1,7 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const helper = require("../middleware/expressHelper");
-const uuid = require('uuid');
 // replace the uri string with your connection string.
 const uri = 'mongodb+srv://swysocki:workout!123@workoutplanner-gerei.mongodb.net/test?retryWrites=true';
 
@@ -44,6 +43,67 @@ exports.getUser = function getUser(id, funct) {
     });
 };
 
+exports.getAllUsers = function getAllUsers(params, funct) {
+  connect(funct, (client) => {
+    getCollection(client, 'users').find({}).toArray((error, result) => {
+      result.forEach((user, index) => {
+        delete result[index].password;
+      });
+      funct(error, result);
+      client.close();
+    });
+  });
+};
+
+exports.befriendUser = function befriendUser(body, funct) {
+  const currentUser = body.currentUser;
+  const newFriend = body.newFriend;
+  connect(uri, (client) => {
+    getCollection(client, 'users').findOne({ _id: ObjectId(currentUser) }, (error, result) => {
+      console.log(result);
+      if (error) {
+        funct(error);
+        client.close();
+      } else if (!result) {
+        funct(new Error('CURRENT_USER_ID_NOT_FOUND'));
+        client.close();
+      } else if (result.friends && result.friends.length > 0 && result.friends.findIndex(friend => friend.id === newFriend) >= 0) {
+        funct(new Error('USER_ALREADY_FRIEND'));
+        client.close();
+      } else {
+        getCollection(client, 'users').updateOne({_id: ObjectId(currentUser)}, {$push : {friends : { id : newFriend}}}, (error, result) => {
+          funct(error, result);
+          client.close();
+        });
+      }
+    });
+  });
+};
+
+exports.unfriendUser = function unfriendUser(body, funct) {
+  const currentUser = body.currentUser;
+  const friend = body.friend;
+  connect(uri, (client) => {
+    getCollection(client, 'users').findOne({ _id: ObjectId(currentUser) }, (error, result) => {
+      if (error) {
+        funct(error);
+        client.close();
+      } else if (!result) {
+        funct(new Error('CURRENT_USER_ID_NOT_FOUND'));
+        client.close();
+      } else if (result.friends && (result.friends.length <= 0 || result.friends.findIndex(f => f.id === friend) < 0)) {
+        funct(new Error('USER_ALREADY_NOT_FRIEND'));
+        client.close();
+      } else {
+        getCollection(client, 'users').updateOne({_id: ObjectId(currentUser)}, {$pull : {friends : { id: friend} } }, (error, result) => {
+          funct(error, result);
+          client.close();
+        });
+      }
+    });
+  });
+};
+
 exports.createAccount = function createAccount(user, funct) {
     console.log("creating account...");
     console.log(user.username + " " + user.password);
@@ -57,7 +117,7 @@ exports.createAccount = function createAccount(user, funct) {
             funct(err);
         } else {
             if (user && !user._id) {
-                user._id = uuid(); // Create new ID since one does not exist!
+                user._id = new ObjectId(); // Create new ID since one does not exist!
             }
             this.updateAccount(user, funct);
         }
@@ -109,7 +169,7 @@ exports.getNotifications = function getNotifications(user, funct) {
 };
 
 exports.createNotification = function createNotification(notification, funct) {
-    notification._id = uuid();
+    notification._id = new ObjectId();
     connect(uri, (client) => {
         getCollection(client, 'notifications').insertOne(notification, (error, result) => {
             funct(error, result.ops[0]);
@@ -286,7 +346,7 @@ exports.shareWorkout = function shareWorkout(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getWorkout = function getWorkout(id, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -298,7 +358,7 @@ exports.getWorkout = function getWorkout(id, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.getAllWorkoutsForUser = function getAllWorkoutsForUser(id, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -310,7 +370,7 @@ exports.getAllWorkoutsForUser = function getAllWorkoutsForUser(id, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.updateWorkout = function updateWorkout(workout, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -322,7 +382,7 @@ exports.updateWorkout = function updateWorkout(workout, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.updateExercise = function updateExercise(exercise, funct) {
   MongoClient.connect(uri, (err, client) => {
@@ -342,7 +402,7 @@ exports.updateExercise = function updateExercise(exercise, funct) {
         client.close();
     });
   });
-}
+};
 
 exports.addWeight = function addWeight(obj, funct) {
     MongoClient.connect(uri, (err, client) => {
@@ -363,7 +423,7 @@ exports.addWeight = function addWeight(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 
 exports.updateWeight = function updateWeight(obj, funct) {
@@ -382,7 +442,7 @@ exports.updateWeight = function updateWeight(obj, funct) {
             client.close();
         });
     });
-}
+};
 
 exports.deleteWorkoutForDay = function deleteWorkoutForDay(obj, funct) {
   MongoClient.connect(uri, (err, client) => {
@@ -394,7 +454,7 @@ exports.deleteWorkoutForDay = function deleteWorkoutForDay(obj, funct) {
       client.close();
     });
   });
-}
+};
 
 exports.deleteWorkoutFromCalendar = function deleteWorkoutFromCalendar(obj, funct) {
   MongoClient.connect(uri, (err, client) => {
@@ -406,4 +466,4 @@ exports.deleteWorkoutFromCalendar = function deleteWorkoutFromCalendar(obj, func
       client.close();
     });
   });
-}
+};
