@@ -108,6 +108,7 @@ exports.createAccount = function createAccount(user, funct) {
     console.log("creating account...");
     console.log(user.username + " " + user.password);
     this.getAccount(user.username, (error, result) => {
+
         if (error) {
             funct(error);
         } else if (result && result.username === user.username) {
@@ -119,7 +120,12 @@ exports.createAccount = function createAccount(user, funct) {
             if (user && !user._id) {
                 user._id = new ObjectId(); // Create new ID since one does not exist!
             }
-            this.updateAccount(user, funct);
+            connect(uri, (client) => {
+              getCollection(client, 'users').updateOne({ _id: ObjectId(user._id) }, { $set: user }, { upsert: true }, (updateError, createResult) => {
+                funct(updateError, createResult);
+                client.close();
+              });
+            });
         }
     });
 };
@@ -130,10 +136,10 @@ exports.updateAccount = function updateAccount(user, funct) {
         if (err) {
             funct(err);
         }
-        console.log(user.id);
-        getCollection(client, 'users').replaceOne({ _id: user._id }, { $set: helper.deepCopy(user) }, { upsert: true }, (error, result) => {
-            client.close();
+        console.log(user._id);
+        getCollection(client, 'users').replaceOne({ _id: ObjectId(user._id) }, { $set: user }, { upsert: true }, (error, result) => {
             funct(error, result);
+            client.close();
         });
     });
 };

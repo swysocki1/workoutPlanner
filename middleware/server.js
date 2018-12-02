@@ -98,10 +98,14 @@ app.post('/createAccount', function(req, res) {
     console.log("post method engaged...");
     mongoDB.createAccount(req.body, function(err, result) {
         if (!err) {
+          console.log('user created');
             mongoDB.getAccount(req.body.username, (getAccountErr, user) => {
+              console.log(getAccountErr);
+              console.log(user);
                 helper.respond(res, getAccountErr, user);
             });
         } else {
+            console.log('err creating account');
             helper.respond(res, err, result);
         }
     });

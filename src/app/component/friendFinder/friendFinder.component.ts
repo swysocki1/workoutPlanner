@@ -39,7 +39,6 @@ export class FriendFinderComponent implements OnInit {
     this.ers.getAllUsers().subscribe((users:[User]) => {
       // this.users = users.filter(user => !this.user.friends.some(friend => friend.id === user._id)) as [User];
       this.allUsers = users;
-      console.log(this.allUsers);
     });
   }
   isLoggedIn(): boolean {
