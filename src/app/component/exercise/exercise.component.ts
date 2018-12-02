@@ -28,7 +28,7 @@ export class ExerciseComponent implements OnInit {
         const e = new Exercise();
         e.name = this.newExerciseName;
         if(!e.name || !e.name.trim()) {
-            alert('provide a name....');
+            alert('Provide a name for the exercise');
             return;
         }
         e.reps = 0;

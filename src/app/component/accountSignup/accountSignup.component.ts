@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import { User } from "../../../models/user.model";
+import { User, Friend } from "../../../models/user.model";
 import {FormGroup} from "@angular/forms";
 import {FormControl} from "@angular/forms";
 import {LoginService} from '../../../services/login.service';
@@ -14,10 +14,10 @@ export class AccountSignupComponent {
   login;
 user = new User(); 
   signUp: FormGroup = new FormGroup({
-    firstName: new FormControl(),
-    lastName: new FormControl(),
+    //firstName: new FormControl(),
+    //lastName: new FormControl(),
     email: new FormControl(),
-    username: new FormControl(),
+    //username: new FormControl(),
     pWord: new FormControl(),
     vPWord: new FormControl()
   });
@@ -28,7 +28,7 @@ user = new User();
     submitted = false;
 
     onSubmit() {
-      console.log(this.signUp);
+      //console.log(this.signUp);
       this.submitted = true;
       this.userService.signUpNow(this.doSignUp());
     }   
@@ -39,13 +39,12 @@ doSignUp(){
   this.user = new User();
   this.user.username = this.signUp.value['email'];
   this.user.password = this.signUp.value['pWord'];
-  console.log("signing up");
+  //console.log("signing up");
   return this.user;} 
   else {
-    console.log("error!");  
+    //console.log("error!");  
     return false;
-    
-  }
+    }
   
-}
+  }
 }

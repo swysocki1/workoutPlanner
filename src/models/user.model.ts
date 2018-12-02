@@ -8,7 +8,7 @@ export class User {
   lastName: string;
   email: string;
   roles: [Role] = [] as [Role];
-  friends: [Friend];
+  friends: [Friend] = [] as [Friend];
   password: string;
   imgURL?: string;
   // TODO add more User Info

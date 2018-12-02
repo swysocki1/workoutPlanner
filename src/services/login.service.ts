@@ -62,7 +62,7 @@ export class LoginService {
   }
 
   constructor(private es: ExternalRequestsService) {
-    const cachedSession: UserSession = JSON.parse(localStorage.getItem('CFBlocks'));
+    const cachedSession: UserSession = JSON.parse(localStorage.getItem('FitPals'));
     if (cachedSession && cachedSession.user.username && cachedSession.lastLogin &&
       moment(cachedSession.lastLogin).isSameOrAfter(moment().subtract(1, 'days'))) {
       this.setUserSession(cachedSession);
@@ -86,14 +86,14 @@ export class LoginService {
   // }
   login(username: string, password: string): Observable<UserSession> {
     return new Observable(subscriber => {
-      const cachedSession: UserSession = JSON.parse(localStorage.getItem('CFBlocks'));
+      const cachedSession: UserSession = JSON.parse(localStorage.getItem('FitPals'));
       if (cachedSession && cachedSession.user.username === username && cachedSession.lastLogin &&
         moment(cachedSession.lastLogin).isSameOrAfter(moment().subtract(1, 'days'))) {
         this.es.updateToken(cachedSession.token);
         subscriber.next(cachedSession);
         subscriber.complete();
       } else if (cachedSession) {
-        localStorage.removeItem('CFBlocks');
+        localStorage.removeItem('FitPals');
       }
 
       // TODO auth user and cache
@@ -108,7 +108,7 @@ export class LoginService {
         userSession.userAgent = navigator.userAgent;
         userSession.user = res['user'];
         
-        localStorage.setItem('CFBlocks', JSON.stringify(userSession));
+        localStorage.setItem('FitPals', JSON.stringify(userSession));
         this.setUserSession(userSession);
   
         subscriber.next(userSession);
@@ -124,7 +124,7 @@ export class LoginService {
   logout(): Observable<UserSession> {
     return new Observable(subscriber => {
       console.log('loggingOut');
-      localStorage.removeItem('CFBlocks');
+      localStorage.removeItem('FitPals');
       this.setUserSession(null);
       subscriber.next(this.getUserSession());
       subscriber.complete();

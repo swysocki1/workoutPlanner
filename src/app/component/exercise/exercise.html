@@ -31,18 +31,18 @@
                         [disabled]="true" [(ngModel)]="exercise.reps"></td>
 
                 <td id="{{'e_edit_delete_' + exercise._id}}" *ngIf="workout.owner == currentUser._id">
-                    <button type="button" value="Edit" class="btn btn-primary" (click)="edit(exercise)">
+                    <button type="button" title="Edit" class="btn btn-primary" (click)="edit(exercise)">
                         <fa name="edit"></fa>
                     </button>
-                    <button type="button" value="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;">
+                    <button type="button" title="Delete" class="btn btn-danger" (click)="delete(exercise)" style="margin-left: 10px;">
                         <fa name="trash"></fa>
                     </button>
                 </td>
                 <td id="{{'e_save_cancel_' + exercise._id}}" class="workout-hidden" *ngIf="workout.owner == currentUser._id">
-                    <button type="button" value="Save" class="btn btn-primary" (click)="save(exercise)">
+                    <button type="button" title="Save" class="btn btn-primary" (click)="save(exercise)">
                         <fa name="save"></fa>
                     </button>
-                    <button type="button" value="Cancel" class="btn btn-secondary" (click)="cancel(exercise)" style="margin-left: 10px;">
+                    <button type="button" title="Cancel" class="btn btn-secondary" (click)="cancel(exercise)" style="margin-left: 10px;">
                         <fa name="times"></fa>
                     </button>
                 </td>

@@ -2,13 +2,11 @@
     <div class="card" *ngIf='showUserDetails'>
         <!-- TODO: REPLACE WITH PROFILE PHOTO-->
         <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">{{ pTestUser.firstName}} {{pTestUser.lastName}}</h5>
+        <div class="card-body" *ngIf='selfView'>
             <ul>
-                <li><span>Email: </span> {{pTestUser.email}}</li>
+                <li><span>Username / Email: </span> {{profile.username}}</li>
                 <!--TODO FIGURE OUT HOW TO GET FOLLOW INFORMATION IN HERE-->
-                <li>Following: 35</li>
-                <li>Followers: 87</li>
+                <li>Friends: <span> {{profile.friends.length}} </span></li>
             </ul>
         </div>
     </div>
@@ -24,14 +22,6 @@
         </div>
 
     </div>
-    <div class="card" *ngIf='showMeals'>
-        <div class="card-body">
-            <!--TODO GET THE MEAL STUFF SOMEHOW-->
-            <h5 class="card-title">Meal Plan This Week:</h5>
-            <p class="card-text">Meal plans</p>
-        </div>
-
-    </div>
     <div class="card" *ngIf='showSchedule'>
         <div class="card-body">
             <div class="card-header">
@@ -40,12 +30,25 @@
                     <h5 class="card-title col-9">Workouts This Week:</h5>
                 </div>
             </div>
-            <!--TODO: IMPLEMENT THE WORKOUT AND CALENDAR SERVICES HERE-->
             <ul class="list-group">
-                <li *ngFor="let date of next7Dates" class="list-group-item">
-                    <span>{{ getDay(date) }}</span>: <span>{{ getWorkout(pTestUser._id, date) }}</span>
+                <li *ngFor="let date of next7Dates; index as i" class="list-group-item">
+                    <span>{{ getDay(date) }}</span>:
+                    <span *ngFor="let workout of workouts[i]">
+                        {{ workout.name }}
+                    </span>
                 </li>
             </ul>
+        </div>
+    </div>
+    <div class="card" *ngIf='selfView==false'>
+        <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap" style="max-width: 300px">
+        <div class='card-body'>
+            <div class='card-header'>
+                <h5 class="card-title">{{profile.username}}</h5>
+            </div>
+            <!--<p class='card-text'>Workouts shared: <span>2 </span></p>-->
+            <input class="btn btn-primary" value="Add Friend" onclick="">
+            <input class="btn btn-primary" value="Unfriend" onclick="" *ngIf='isFriend'>
         </div>
     </div>
 </div>
