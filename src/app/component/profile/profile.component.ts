@@ -55,10 +55,10 @@ export class ProfileComponent implements OnInit {
 
       //define test user for testing purposes only
       this.pTestUser = new User();
-      this.pTestUser._id = 
-      this.pTestUser.email = 'jventura@conspiracy.org';
+      this.pTestUser._id = '5c04038828fdd1662afda466';
+      this.pTestUser.email = 'swysoc3@gmail.com';
       this.pTestUser.friends = [new Friend()];
-      this.pTestUser.username = 'jventura@conspiracy.org';
+      this.pTestUser.username = 'swysoc3@gmail.com';
       //view variables
       this.showMeals = false; //leaving this false as meals doesn't seem to be in the works
       this.showFeed = false;
@@ -104,21 +104,22 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.loginService.getUser();
     console.log('currentUser:' + this.currentUser);
-    //testing code only
+    /*testing code only
     this.profileId = location.search;
-    this.profileId = this.profileId.replace('?id=', '');
-    /*
+    this.profileId = this.profileId.replace('?id=', '');*/
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.profileId = params.get('id');
       console.log('inside parammap: ' + 'Id = ' + this.profileId)
-    }); */
+    });
     if (this.profileId) {
       this.requests.getUser(this.profileId).subscribe(res => {
         this.profile = res as User;
+        this.isFriend = this.getFriendStatus();
+        console.log(this.profile);
       }, err=>{
         console.log("hard coded profile mode engaged due to ERROR");
         this.staticTest();
-      })
+      });
     }
     else {
       this.profile = this.currentUser;
@@ -127,14 +128,15 @@ export class ProfileComponent implements OnInit {
         this.currentUser.friends = [new Friend()];
         this.currentUser.friends.pop();
         this.requests.updateUser(this.currentUser);
+        this.selfView = true;
+        this.toggleDetails();
+        //this.toggleFeed(); //commented out. function replaced by notifications
+        this.toggleSched();
+        this.genWorkoutWeek();
       }
-      this.selfView = true;
-      this.toggleDetails();
-      //this.toggleFeed(); //commented out. function replaced by notifications
-      this.toggleSched();
-      this.genWorkoutWeek();
+      
     }
-    console.log(this.profile);
+    console.log('is friend' + this.isFriend);
   }
    /*this.toggleDetails();
     this.toggleFeed();
@@ -157,6 +159,7 @@ export class ProfileComponent implements OnInit {
     });
   }
   removeFriend(friend: User) {
+    console.log("removing...");
     this.requests.unfriendUser(this.loginService.getUser()._id, friend._id).subscribe(res => {
       console.log(res);
       this.loginService.updateUser().subscribe((user: User) => {
@@ -169,7 +172,18 @@ export class ProfileComponent implements OnInit {
     });
   }
   getFriendStatus(){
-    return (this.profile.friends.indexOf({id: this.currentUser._id} as Friend) != -1);
+    var found;
+    if(this.currentUser.friends){
+      found = this.currentUser.friends.some((f)=>{
+        return f.id == this.profileId;
+      }); 
+      console.log(found);
+      return found;     
+    }
+    else {
+      console.log("no friend array found");
+      return false;
+    }
   }
   staticTest(){
     this.profile = this.pTestUser;
