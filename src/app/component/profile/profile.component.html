@@ -1,7 +1,7 @@
 <div class="card-group">
     <div class="card" *ngIf='showUserDetails'>
         <!-- TODO: REPLACE WITH PROFILE PHOTO-->
-        <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap">
+        <img class="card-img-top" src="http://www.carderator.com/assets/avatar_placeholder_small.png" alt="Card image cap" style="max-width: 350px">
         <div class="card-body" *ngIf='selfView'>
             <ul>
                 <li><span>Username / Email: </span> {{profile.username}}</li>
