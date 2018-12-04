@@ -74,7 +74,6 @@ export class WorkoutComponent implements OnInit {
         this.workouts.push(w);
       })
     }
-    
 
   }
 

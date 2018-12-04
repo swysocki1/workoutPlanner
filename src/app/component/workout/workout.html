@@ -1,11 +1,25 @@
-<div style="padding-top: 15px;">
-    <form class="well container-fluid">
-        <div class="form-inline" style="margin-top: 10px;" *ngIf="!workoutId">
-            <input type="text" name="workout_name" class="form-control" id="add_workout_name" placeholder="Add New Workout..."
-                style="width:95%;">
-            <button type="button" class="btn btn-primary" (click)="add()" style="margin-left: 10px; width: 4%;">
-                <fa name="plus"></fa>
-            </button>
+<form class="well container-fluid">
+    <div class="form-group">
+      <input type="text" name="workout_name" class="form-control" placeholder="Add New Workout...">    
+    </div>  
+</form>
+
+<div class="workout-list" >
+  <div *ngFor="let workout of workouts" style="margin-top: 25px;">
+    <div class="panel panel-default">
+      
+      <div class="panel-heading bg-secondary text-white" style="cursor: pointer;" (click)="!workout.edit_delete && workout.expanded = !workout.expanded">
+            
+          <h1 style="margin-left: 10px;"><label *ngIf="workout.edit_delete" style="margin-right: 5px;">Name: </label><input [ngClass]="!workout.edit_delete? 'exercise-text-input text-white': ''" type="text" value={{workout.name}} [disabled]="!workout.edit_delete" style="margin-top: 5px;"></h1>
+      </div> 
+      
+      <div class="panel-body bg-light" *ngIf="workout.expanded">
+        
+        
+        <h4 style="margin-left: 10px;"><label *ngIf="workout.edit_delete" style="margin-right: 5px;">Description: </label><input [ngClass]="!workout.edit_delete? 'exercise-text-input': ''" type="text" value={{workout.description}} [disabled]="!workout.edit_delete" style="margin-top: 5px;"></h4>
+        <div class="workout-excercise-list" style="margin-left: 10px;">
+            <exercise [exercises]=workout.exercises></exercise>
+
         </div>
 
         <div class="workout-list">
